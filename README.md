@@ -1,0 +1,185 @@
+# Handle — Luxury Medical Concierge
+
+> **You heal. We handle the rest.**
+> Healthcare in Vietnam. Handled.
+
+A production-quality marketing site for **Handle**, a medical-concierge operator that coordinates
+treatment in Vietnam for international patients. Bilingual (Vietnamese / English), statically
+rendered, and built to the brand guideline in [`design-reference/`](design-reference/).
+
+---
+
+## Project Overview
+
+The homepage is one narrative funnel rather than a stack of unrelated blocks:
+
+| Band                     | Job                                                             |
+| ------------------------ | --------------------------------------------------------------- |
+| **Hero**                 | The promise, two CTAs, four trust chips, two headline figures.  |
+| **Partner carousel**     | Borrowed credibility. Infinite marquee, pauses on hover/focus.  |
+| **Why Vietnam**          | The tension — four reasons care at home is slow and expensive.  |
+| **About Handle**         | The turn — what a coordinated journey actually looks like.      |
+| **Why choose us**        | Six commitments, one per objection.                             |
+| **Journey timeline**     | The mechanism — nine steps, horizontal at `lg`, vertical below. |
+| **Services + Lifestyle** | Proof, clinical and non-clinical, side by side from `xl`.       |
+| **Testimonials**         | Social proof. Embla carousel, keyboard + screen-reader ready.   |
+| **CTA banner**           | The ask. The only large dark field on the page.                 |
+
+Design intent, tokens, motion rules and conventions are specified in **[`CLAUDE.md`](CLAUDE.md)** —
+read that before changing anything visual. It is the source of truth; this file is the operator's
+manual.
+
+### What is real, and what is placeholder
+
+Everything is production-shaped, but three things are deliberately stand-ins:
+
+- **Photography.** No licensed images ship with this repo. `Media` renders `MediaPlate` — a seeded,
+  brand-palette composition (gradient mesh, gold arc, grain, subject glyph) at the exact aspect
+  ratio the photograph will occupy. Adding `src` to a record in `/data` switches that slot to
+  `next/image` with **zero layout movement**. Each record's `alt` is written as the art-direction
+  brief for whoever shoots or sources the real thing.
+- **Partner names.** Illustrative placeholders drawn as typographic monograms. No real hospital's
+  name or trademark is reproduced. Replace with licensed marks before launch.
+- **Testimonials and contact details.** Sample content. Replace with consented, verifiable quotes
+  and real contact information.
+
+---
+
+## Tech Stack
+
+| Layer      | Choice                                                 | Why                                                         |
+| ---------- | ------------------------------------------------------ | ----------------------------------------------------------- |
+| Framework  | **Next.js 16** (App Router, Turbopack)                 | Server components by default; both locales prerender static |
+| Language   | **TypeScript 5** (strict)                              | Content shapes are compile-time contracts                   |
+| Styling    | **Tailwind CSS v4**                                    | Design tokens declared once in `@theme`                     |
+| Primitives | **Radix UI** + `cva` + `tailwind-merge`                | shadcn/ui conventions, hand-authored for this design system |
+| Motion     | **Framer Motion 12**                                   | Viewport reveals, scroll progress, reduced-motion fallbacks |
+| Carousel   | **Embla** + autoplay plugin                            | Small, accessible, no layout thrash                         |
+| Icons      | **lucide-react**                                       | Referenced by string key through `lib/icon-map.ts`          |
+| Fonts      | `next/font` — Be Vietnam Pro · Playfair Display · Jost | Self-hosted; full Vietnamese diacritics                     |
+
+Runtime requirements: **Node.js ≥ 20.9** (the Next 16 minimum), npm 10+.
+
+---
+
+## Folder Structure
+
+```
+app/
+  [locale]/              Root layout lives here — locale is a route segment
+    layout.tsx           Fonts, <html lang>, metadata, header/footer shell
+    page.tsx             Homepage — composition only, no markup logic
+    not-found.tsx        Branded 404, rendered inside the real chrome
+    [...slug]/page.tsx   Catch-all → notFound(), so misses keep the layout
+  globals.css            Tailwind v4 @theme tokens + base layer
+  sitemap.ts robots.ts   Generated SEO endpoints
+components/
+  layout/                Navbar, MobileNav, LocaleSwitcher, Footer, SkipLink
+  sections/              One file per homepage band
+  ui/                    Design-system primitives (no business logic)
+content/                 vi.ts · en.ts dictionaries + the SiteContent contract
+data/                    Locale-keyed records + thin selectors (getServices…)
+hooks/                   use-media-query, use-scroll-spy
+lib/                     cn(), motion presets, site config, icon map, JSON-LD
+types/                   Shared TypeScript contracts
+public/                  Static assets
+design-reference/        Brand sheet + layout reference (not shipped)
+proxy.ts                 Locale redirect (Next 16's renamed middleware)
+```
+
+**The rule that matters:** no marketing copy lives inside a component. Strings come from
+`/content`, records come from `/data`, and both are keyed by locale.
+
+---
+
+## How to Run
+
+```bash
+npm install                   # Node 20.9+ required
+cp .env.example .env.local    # optional; sensible defaults exist
+npm run dev                   # http://localhost:3000  →  redirects to /vi
+```
+
+`/` redirects to the best `Accept-Language` match, falling back to `/vi`.
+
+### Scripts
+
+| Command              | What it does                                             |
+| -------------------- | -------------------------------------------------------- |
+| `npm run dev`        | Dev server (Turbopack)                                   |
+| `npm run build`      | Production build; prerenders `/vi` and `/en`             |
+| `npm start`          | Serve the production build                               |
+| `npm run lint`       | ESLint (flat config). `next lint` was removed in Next 16 |
+| `npm run type-check` | `tsc --noEmit`                                           |
+| `npm run check`      | Lint + type-check — run this before every commit         |
+| `npm run format`     | Prettier, with Tailwind class sorting                    |
+
+`lint`, `type-check` and `build` all pass clean.
+
+---
+
+## How to Deploy to Vercel
+
+1. Push the repository to GitHub, GitLab or Bitbucket.
+2. In Vercel, **Add New → Project** and import it. The Next.js preset is detected automatically;
+   build command `npm run build`, output handled for you. No overrides needed.
+3. Add `NEXT_PUBLIC_SITE_URL` under **Settings → Environment Variables** for Production, Preview
+   and Development (see below). Without it, canonical URLs, `sitemap.xml`, `robots.txt` and the
+   JSON-LD graph fall back to `https://handle.vn`.
+4. Deploy. `proxy.ts` handles the locale redirect on the request path — nothing to configure.
+5. After attaching a custom domain, set `NEXT_PUBLIC_SITE_URL` to match it exactly (protocol
+   included, no trailing slash) and redeploy so the canonical tags follow.
+
+Any Node host works too: `npm run build && npm start`. There is no database, no API and no runtime
+secret — the site is static apart from the locale redirect and the 404 catch-all.
+
+---
+
+## Environment Variables
+
+| Variable               | Required | Default             | Used by                                                                      |
+| ---------------------- | -------- | ------------------- | ---------------------------------------------------------------------------- |
+| `NEXT_PUBLIC_SITE_URL` | No       | `https://handle.vn` | `metadataBase`, canonical + `hreflang`, `sitemap.xml`, `robots.txt`, JSON-LD |
+
+Copy `.env.example` to `.env.local` for local overrides. Nothing here is secret — the value is
+public by design, hence the `NEXT_PUBLIC_` prefix.
+
+---
+
+## Accessibility & Performance Notes
+
+- WCAG 2.2 AA target: landmarks with `aria-labelledby`, one `<h1>`, skip link, visible focus rings,
+  44px touch targets, contrast floors documented in `CLAUDE.md`.
+- The carousel exposes real buttons, arrow-key navigation and a polite live region, and pauses
+  autoplay on hover **and** on focus.
+- `prefers-reduced-motion` is honoured everywhere — transforms collapse to a short opacity fade,
+  and the marquee and autoplay stop.
+- Server components by default; `JourneyTimeline`, `ServicesAndLifestyle` and `Testimonials` load
+  via `next/dynamic` so their motion and carousel code stays out of the first load.
+- The marquee animates a CSS keyframe transform (compositor-only), not a JS tick.
+- Every media box declares its aspect ratio, so there is no layout shift when photography lands.
+
+---
+
+## Future Improvements
+
+1. **Real photography.** Add `src`, `width`, `height` and `blurDataURL` to each record's `media`
+   object and allow-list the host in `next.config.ts` → `images.remotePatterns`. No component
+   changes; `MediaPlate` bows out automatically.
+2. **CMS.** The data layer is already CMS-shaped: plain typed records, string icon keys, thin
+   selectors. Point `getServices()` and friends at Sanity or Payload with document types mirroring
+   `types/index.ts` one-for-one, then add ISR (`revalidate`) plus an on-publish webhook calling
+   `revalidateTag(tag, 'max')` — note Next 16 requires that second argument.
+3. **Phase-2 routes.** `/gioi-thieu`, `/dich-vu/[slug]`, `/hanh-trinh`, `/faq`, `/lien-he`. The nav
+   already uses stable Vietnamese slugs; `SECTION_IDS` in `lib/site-config.ts` is the single place
+   to repoint anchors at real URLs.
+4. **A working consultation form.** Server Action with validation and spam protection, replacing
+   the current `mailto:` / WhatsApp deep links. This is health data — treat the transport
+   accordingly.
+5. **Analytics and Core Web Vitals** via `useReportWebVitals`, plus a Lighthouse CI budget gate
+   matching the targets in `CLAUDE.md` (LCP < 2.0s, CLS < 0.02, INP < 150ms).
+6. **A third locale.** Add `content/<locale>.ts`, one key per collection in `/data`, and one entry
+   in `LOCALES`. Routing, `hreflang`, the sitemap and the switcher pick it up with no further
+   changes.
+7. **Visual regression tests** (Playwright screenshots at 375 / 768 / 1024 / 1440) and an axe pass
+   in CI, so the design system cannot drift silently.

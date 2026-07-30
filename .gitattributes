@@ -1,0 +1,17 @@
+# Normalise line endings so Windows and macOS/Linux contributors do not produce
+# whole-file diffs. Text is stored as LF in the repository and checked out with
+# the platform's native endings.
+* text=auto eol=lf
+
+# Binary assets — never touch these.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.avif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+
+# Collapse lockfile noise in pull-request diffs.
+package-lock.json linguist-generated=true -diff
