@@ -50,6 +50,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
 
 interface MedicalServicesProps {
   copy: SectionCopy;
+  step: string;
   services: Service[];
 }
 
@@ -59,11 +60,11 @@ interface MedicalServicesProps {
  * Renders as a `<section>` nested inside `ServicesAndLifestyle`, which owns the
  * landmark and the shared vertical rhythm.
  */
-export function MedicalServices({ copy, services }: MedicalServicesProps) {
+export function MedicalServices({ copy, step, services }: MedicalServicesProps) {
   return (
     <section aria-labelledby="services-title" className="flex flex-col">
       <Reveal>
-        <Eyebrow>{copy.eyebrow}</Eyebrow>
+        <Eyebrow step={step}>{copy.eyebrow}</Eyebrow>
       </Reveal>
 
       <Reveal index={1}>

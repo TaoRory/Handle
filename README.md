@@ -11,19 +11,27 @@ rendered, and built to the brand guideline in [`design-reference/`](design-refer
 
 ## Project Overview
 
-The homepage is one narrative funnel rather than a stack of unrelated blocks:
+The homepage is one narrative funnel rather than a stack of unrelated blocks. Each reading band is
+numbered, and its surface tone marks where one part ends and the next begins:
 
-| Band                     | Job                                                             |
-| ------------------------ | --------------------------------------------------------------- |
-| **Hero**                 | The promise, two CTAs, four trust chips, two headline figures.  |
-| **Partner carousel**     | Borrowed credibility. Infinite marquee, pauses on hover/focus.  |
-| **Why Vietnam**          | The tension — four reasons care at home is slow and expensive.  |
-| **About Handle**         | The turn — what a coordinated journey actually looks like.      |
-| **Why choose us**        | Six commitments, one per objection.                             |
-| **Journey timeline**     | The mechanism — nine steps, horizontal at `lg`, vertical below. |
-| **Services + Lifestyle** | Proof, clinical and non-clinical, side by side from `xl`.       |
-| **Testimonials**         | Social proof. Embla carousel, keyboard + screen-reader ready.   |
-| **CTA banner**           | The ask. The only large dark field on the page.                 |
+| Band                        | Surface     | Job                                                             |
+| --------------------------- | ----------- | --------------------------------------------------------------- |
+| **Hero**                    | cream       | The promise, two CTAs, four trust chips, two headline figures.  |
+| **Partner carousel**        | white panel | Borrowed credibility. Infinite marquee, pauses on hover/focus.  |
+| **01 Why Vietnam**          | cream       | The tension — four reasons, with the answer filled gold.        |
+| **02 About Handle**         | **ink**     | The turn — what a coordinated journey actually looks like.      |
+| **03 Why choose us**        | white       | Six commitments, one per objection.                             |
+| **04 Journey timeline**     | cream       | The mechanism — nine steps, horizontal at `lg`, vertical below. |
+| **05 By the numbers**       | **gold**    | Four figures that count up as they scroll into view.            |
+| **06 Services + Lifestyle** | white       | Proof, clinical and non-clinical, side by side from `xl`.       |
+| **07 Testimonials**         | cream-300   | Social proof. Embla carousel, keyboard + screen-reader ready.   |
+| **08 Questions**            | white       | Accordion, plus a sticky ink card for anything it misses.       |
+| **CTA banner**              | **ink**     | The ask.                                                        |
+
+Three surfaces are loud — ink, gold, ink — spaced so that no two ever sit next to each other.
+Alongside them a wayfinding layer keeps the long scroll legible: a gold **scroll-progress rule**, a
+fixed **section index** down the right edge at `xl` (labels on hover, `aria-current` for assistive
+tech), and a **floating WhatsApp button** that appears once the hero's CTA has scrolled away.
 
 Design intent, tokens, motion rules and conventions are specified in **[`CLAUDE.md`](CLAUDE.md)** —
 read that before changing anything visual. It is the source of truth; this file is the operator's

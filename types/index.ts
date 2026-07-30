@@ -183,12 +183,27 @@ export interface Testimonial {
   media: MediaAsset;
 }
 
-/** A headline number shown floating over the hero. */
+/**
+ * A headline number.
+ *
+ * `value` carries its own locale formatting ("2.400" in vi, "2,400" in en);
+ * `StatCounter` parses the digits back out to animate and re-applies the
+ * separator, so no second numeric field is needed.
+ */
 export interface Stat {
   id: string;
   value: string;
   suffix?: string;
   label: string;
+  /** Optional glyph, used in the gold stats band but not over the hero. */
+  icon?: IconName;
+}
+
+/** One question in the closing accordion. */
+export interface Faq {
+  id: string;
+  question: string;
+  answer: string;
 }
 
 /** A short reassurance chip under the hero CTAs. */
@@ -239,6 +254,13 @@ export interface SectionCopy {
   action?: string;
 }
 
+/** A stop in the fixed section index down the right edge of the page. */
+export interface SectionNavItem {
+  id: string;
+  label: string;
+  step: string;
+}
+
 export interface HeroCopy {
   titleLead: string;
   titleAccent: string;
@@ -277,13 +299,24 @@ export interface SiteContent {
   hero: HeroCopy;
   partners: SectionCopy;
   whyVietnam: SectionCopy;
-  about: SectionCopy & { body: string[]; media: MediaAsset };
+  about: SectionCopy & {
+    body: string[];
+    media: MediaAsset;
+    /** Short proof pills under the copy — icon key plus its label. */
+    pills: { id: string; icon: IconName; label: string }[];
+    secondaryAction: string;
+  };
   whyUs: SectionCopy;
   journey: SectionCopy;
+  stats: SectionCopy;
   services: SectionCopy;
   experiences: SectionCopy;
   testimonials: SectionCopy;
+  faq: SectionCopy & { help: { title: string; body: string; action: string } };
   cta: CtaCopy;
+  /** Labels for the fixed section index; ids come from `SECTION_IDS`. */
+  sectionNav: { label: string; items: { id: string; label: string }[] };
+  floatingCta: string;
   footer: {
     tagline: string;
     columns: FooterColumn[];

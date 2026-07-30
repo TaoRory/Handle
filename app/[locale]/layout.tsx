@@ -1,11 +1,14 @@
 import { Be_Vietnam_Pro, Jost, Playfair_Display } from "next/font/google";
 import { notFound } from "next/navigation";
 
+import { FloatingContact } from "@/components/layout/FloatingContact";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import { ScrollProgress } from "@/components/layout/ScrollProgress";
+import { SectionNav } from "@/components/layout/SectionNav";
 import { SkipLink } from "@/components/layout/SkipLink";
 import { getContent, isLocale } from "@/content";
-import { siteConfig } from "@/lib/site-config";
+import { sectionStep, siteConfig } from "@/lib/site-config";
 
 import { LOCALES, type Locale } from "@/types";
 
@@ -144,6 +147,7 @@ export default async function LocaleLayout({
     >
       <body className="min-h-dvh antialiased">
         <SkipLink label={content.a11y.skipToContent} />
+        <ScrollProgress />
 
         <Navbar
           locale={locale as Locale}
@@ -156,9 +160,19 @@ export default async function LocaleLayout({
           localeLabel={content.nav.localeLabel}
         />
 
+        <SectionNav
+          label={content.sectionNav.label}
+          items={content.sectionNav.items.map((item) => ({
+            ...item,
+            step: sectionStep(item.id),
+          }))}
+        />
+
         <main id="main">{children}</main>
 
         <Footer content={content} />
+
+        <FloatingContact label={content.floatingCta} />
       </body>
     </html>
   );

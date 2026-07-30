@@ -95,6 +95,12 @@ export const en: SiteContent = {
       "You get a Personal Care Plan in your own language, one coordinator who owns the outcome, and a cost quoted in advance — no surprises, no guesswork.",
     ],
     action: "Learn about Handle",
+    secondaryAction: "See the journey",
+    pills: [
+      { id: "plan", icon: "clipboard-list", label: "Personal Care Plan" },
+      { id: "coordinator", icon: "user-round-check", label: "One coordinator" },
+      { id: "quote", icon: "receipt", label: "One itemised quote" },
+    ],
     media: {
       alt: "A Handle coordinator walking a patient's family through their Personal Care Plan",
       glyph: "notebook-pen",
@@ -118,6 +124,13 @@ export const en: SiteContent = {
     action: "See the full journey",
   },
 
+  stats: {
+    eyebrow: "By the numbers",
+    title: "What we have",
+    accent: "delivered.",
+    lead: "Aggregated across the cases Handle has coordinated, updated each quarter.",
+  },
+
   services: {
     eyebrow: "Specialties",
     title: "Medical services we coordinate",
@@ -136,6 +149,18 @@ export const en: SiteContent = {
     lead: "Excerpted from post-treatment surveys and published with permission.",
   },
 
+  faq: {
+    eyebrow: "Answers",
+    title: "Questions we are asked",
+    accent: "most.",
+    lead: "The six things people want settled before a journey begins.",
+    help: {
+      title: "Not the answer you were looking for?",
+      body: "Message the Handle team. We reply within one business day, in English or Vietnamese, and the first consultation costs nothing.",
+      action: "Ask us directly",
+    },
+  },
+
   cta: {
     title: "Ready to start your healthcare",
     accent: "journey?",
@@ -143,6 +168,22 @@ export const en: SiteContent = {
     whatsapp: "Chat on WhatsApp",
     consultation: "Free consultation",
   },
+
+  sectionNav: {
+    label: "Page contents",
+    items: [
+      { id: SECTION_IDS.whyVietnam, label: "Context" },
+      { id: SECTION_IDS.about, label: "About" },
+      { id: SECTION_IDS.whyUs, label: "Why Handle" },
+      { id: SECTION_IDS.journey, label: "Journey" },
+      { id: SECTION_IDS.stats, label: "Numbers" },
+      { id: SECTION_IDS.services, label: "Services" },
+      { id: SECTION_IDS.testimonials, label: "Stories" },
+      { id: SECTION_IDS.faq, label: "Answers" },
+    ],
+  },
+
+  floatingCta: "Chat on WhatsApp",
 
   footer: {
     tagline: "You heal. We handle the rest.",

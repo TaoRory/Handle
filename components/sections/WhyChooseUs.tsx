@@ -40,16 +40,18 @@ function AdvantageCard({ advantage, index }: { advantage: Advantage; index: numb
 
 interface WhyChooseUsProps {
   id: string;
+  step: string;
   copy: SectionCopy;
   advantages: Advantage[];
 }
 
-export function WhyChooseUs({ id, copy, advantages }: WhyChooseUsProps) {
+export function WhyChooseUs({ id, step, copy, advantages }: WhyChooseUsProps) {
   return (
     <Section id={id} labelledBy="why-us-title" tone="surface">
       <Container>
         <SectionHeading
           id="why-us-title"
+          step={step}
           eyebrow={copy.eyebrow}
           title={copy.title}
           accent={copy.accent}

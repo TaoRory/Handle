@@ -13,17 +13,19 @@ import type { JourneyStep, SectionCopy } from "@/types";
 
 interface JourneyTimelineProps {
   id: string;
+  step: string;
   copy: SectionCopy;
   steps: JourneyStep[];
 }
 
 /** The mechanism band — how the promise actually gets delivered. */
-export function JourneyTimeline({ id, copy, steps }: JourneyTimelineProps) {
+export function JourneyTimeline({ id, step, copy, steps }: JourneyTimelineProps) {
   return (
     <Section id={id} labelledBy="journey-title" tone="cream">
       <Container size="wide">
         <SectionHeading
           id="journey-title"
+          step={step}
           eyebrow={copy.eyebrow}
           title={copy.title}
           accent={copy.accent}

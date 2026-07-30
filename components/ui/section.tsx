@@ -2,11 +2,20 @@ import { cn } from "@/lib/utils";
 
 import type { ReactNode } from "react";
 
+/**
+ * Surface tones.
+ *
+ * The page alternates these deliberately so that scanning it reveals structure:
+ * `cream` and `surface` carry the reading sections, while `ink` and `gold` are
+ * the two loud accent bands. Budget: at most three accent bands per page, never
+ * two in a row — otherwise the emphasis cancels out.
+ */
 const tones = {
   cream: "bg-cream text-ink",
   surface: "bg-surface text-ink",
   cream300: "bg-cream-300 text-ink",
   ink: "bg-ink text-cream-100",
+  gold: "bg-gold text-ink",
 } as const;
 
 interface SectionProps {

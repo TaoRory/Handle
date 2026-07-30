@@ -75,8 +75,40 @@ Derived ramp (declared once in `app/globals.css` under Tailwind v4 `@theme`):
 ```
 
 **Gold discipline.** Gold is the scarcest resource on the page. Budget: at most one gold element
-per viewport-height of scroll, plus the primary CTA. Gold is never a background for body copy and
-never a large fill — only type, 1px rules, small icon strokes, and the primary button.
+per viewport-height of scroll, plus the primary CTA. Gold is never a background for body copy —
+only type, 1px rules, small icon strokes, the primary button, and the two sanctioned large fills
+below (the stats band and the single highlight card).
+
+### Surface rhythm
+
+The page is long, so tone is what tells a reader where one part ends and the next begins. Bands
+alternate on a fixed sequence, and exactly **three** of them are loud:
+
+```
+hero        cream gradient
+partners    floating white panel
+01 why      cream        + one gold highlight card
+02 about    INK          ← accent 1 — the narrative turn
+03 whyUs    white
+04 journey  cream
+05 stats    GOLD         ← accent 2 — the numbers
+06 services white
+07 stories  cream-300
+08 faq      white
+cta         INK          ← accent 3 — the ask
+```
+
+Two hard rules: **never two accent surfaces in a row**, and **never more than three per page**.
+Past three the emphasis cancels out and the page reads as noise — which is the failure mode this
+rhythm exists to prevent. Gold at panel scale only carries ink type on top, never cream.
+
+### Section numbering
+
+Every reading band is numbered `01`–`08` in its eyebrow chip, and the same ordinals drive the fixed
+section index on the right edge. `SECTION_ORDER` in `lib/site-config.ts` is the single source —
+the chip and the index can never disagree. The hero and the partner strip are excluded on purpose:
+they are the cover, not a chapter. Nothing else on the page may introduce a second numbering
+system within sight of a chip.
 
 **Contrast floors (verified):** ink on cream 17.4:1 · ink-600 on cream 7.4:1 · ink on gold 11.8:1 ·
 gold-600 on cream 3.6:1 (large text ≥24px only) · cream on ink 16.9:1.
@@ -262,39 +294,51 @@ redirects unprefixed paths.
 
 **`/ui` primitives**
 
-| Component                              | Responsibility                                                                                                                                              |
-| -------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `Button`                               | cva variants `primary` (gold) · `dark` (ink) · `outline` · `ghost` · `whatsapp`; sizes `sm/md/lg`; `asChild` via Radix Slot; built-in arrow slide on hover. |
-| `Container`                            | The single source of page gutter + max width.                                                                                                               |
-| `Section`                              | `<section>` + `aria-labelledby` + vertical rhythm + tone (`cream`/`surface`/`ink`).                                                                         |
-| `SectionHeading`                       | Eyebrow + title (with gold accent word) + optional lead + optional action.                                                                                  |
-| `Card`                                 | Surface, radius, border, hover elevation. Composable header/body/footer.                                                                                    |
-| `Reveal`                               | The one entrance-animation wrapper. Viewport, stagger index, reduced motion.                                                                                |
-| `Marquee`                              | Duplicated-track infinite scroller. Pause on hover/focus, reduced-motion safe.                                                                              |
-| `Media`                                | Renders `next/image` when a `src` exists, otherwise the generated brand plate. Locked aspect ratio, hover zoom, rounded mask.                               |
-| `MediaPlate`                           | The generated art: seeded warm gradient mesh + gold arcs + grain + subject glyph.                                                                           |
-| `Logo`                                 | Inline SVG `icon` / `wordmark` / `lockup` at three sizes.                                                                                                   |
-| `Eyebrow`, `IconTile`, `Stat`, `Badge` | Small repeated atoms.                                                                                                                                       |
+| Component                          | Responsibility                                                                                                                                              |
+| ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Button`                           | cva variants `primary` (gold) · `dark` (ink) · `outline` · `ghost` · `whatsapp`; sizes `sm/md/lg`; `asChild` via Radix Slot; built-in arrow slide on hover. |
+| `Container`                        | The single source of page gutter + max width.                                                                                                               |
+| `Section`                          | `<section>` + `aria-labelledby` + vertical rhythm + tone (`cream`/`cream300`/`surface`/`ink`/`gold`).                                                       |
+| `SectionHeading`                   | Numbered eyebrow chip + title (with gold accent word) + optional lead + optional action.                                                                    |
+| `Eyebrow`                          | The chip itself. `tone` names the _surface_ it sits on — `gold` (neutral), `cream` (ink), `onGold` (the gold band, where the chip inverts to ink).          |
+| `Card`                             | cva variants `surface` · `cream` · `quiet` · `gold` · `ink`, hover elevation. At most one `gold` per grid — it is the eye's landing point.                  |
+| `Accordion`                        | Radix wrapper. Roles, `aria-expanded` and roving focus come free; this supplies the skin and the plus→cross rotation only.                                  |
+| `Reveal`                           | The one entrance-animation wrapper. Viewport, stagger index, reduced motion.                                                                                |
+| `Marquee`                          | Duplicated-track infinite scroller. Pause on hover/focus, reduced-motion safe.                                                                              |
+| `Media`                            | Renders `next/image` when a `src` exists, otherwise the generated brand plate. Locked aspect ratio, hover zoom, rounded mask.                               |
+| `MediaPlate`                       | The generated art: seeded warm gradient mesh + gold arcs + grain + subject glyph.                                                                           |
+| `Logo`                             | Inline SVG `icon` / `wordmark` / `lockup` at three sizes.                                                                                                   |
+| `IconTile`, `Rating`, `SocialIcon` | Small repeated atoms.                                                                                                                                       |
+
+**Wayfinding layer** — three pieces whose only job is making a long page legible:
+`ScrollProgress` (2px gold rule, how far is left), `SectionNav` (fixed index down the right edge
+at `xl`, which part am I in, labels on hover/focus, `aria-current` for assistive tech) and
+`FloatingContact` (holds the conversion path open once the hero's CTA has scrolled away).
 
 **Component tree**
 
 ```
 <RootLayout>
  ├ SkipLink
+ ├ ScrollProgress ──────── gold rule, scroll-linked
  ├ Navbar ── Logo · NavLinks · LocaleSwitcher · Button · MobileNav(Dialog)
+ ├ SectionNav ─────────── 8 dots · hover labels · aria-current   (xl only)
  ├ main
  │  ├ Hero ─────────────── headline · lead · 2 CTAs · TrustStrip · Media · Stat cards · float decor
  │  ├ PartnerCarousel ──── Marquee × PartnerLogo
- │  ├ WhyVietnam ───────── SectionHeading · ReasonCard × 4
- │  ├ AboutHandle ──────── Media · copy · Button   (6/6 split)
- │  ├ WhyChooseUs ──────── SectionHeading · AdvantageCard × 6
- │  ├ JourneyTimeline ──── rail · TimelineStep × 9 · animated progress line · Button
- │  ├ ServicesAndLifestyle
+ │  ├ 01 WhyVietnam ────── SectionHeading · ReasonCard × 4 (one gold)
+ │  ├ 02 AboutHandle ───── INK panel · Media · copy · proof pills · Button
+ │  ├ 03 WhyChooseUs ───── SectionHeading · AdvantageCard × 6
+ │  ├ 04 JourneyTimeline ─ rail · TimelineStep × 9 · animated progress line · Button
+ │  ├ 05 StatsBand ─────── GOLD band · StatCounter × 4
+ │  ├ 06 ServicesAndLifestyle
  │  │    ├ MedicalServices ───── ServiceCard × 6
  │  │    └ LifestyleExperience ─ ExperienceCard × 6
- │  ├ Testimonials ─────── Embla · TestimonialCard × 6 · dots · arrows
- │  └ CtaBanner ────────── headline · WhatsApp · consultation
- └ Footer ── Logo · 4 link columns · contact · socials · legal
+ │  ├ 07 Testimonials ──── Embla · TestimonialCard × 6 · dots · arrows
+ │  ├ 08 Faq ──────────── Accordion × 6 · sticky ink help card
+ │  └ CtaBanner ────────── INK · headline · WhatsApp · consultation
+ ├ Footer ── Logo · 4 link columns · contact · socials · legal
+ └ FloatingContact ─────── WhatsApp, appears past 700px of scroll
 ```
 
 ## Pages

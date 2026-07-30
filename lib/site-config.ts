@@ -42,10 +42,36 @@ export const SECTION_IDS = {
   about: "gioi-thieu",
   whyUs: "vi-sao-handle",
   journey: "hanh-trinh",
+  stats: "con-so",
   services: "dich-vu",
   experiences: "trai-nghiem",
   testimonials: "cau-chuyen",
+  faq: "cau-hoi",
   cta: "lien-he",
 } as const;
 
 export type SectionId = (typeof SECTION_IDS)[keyof typeof SECTION_IDS];
+
+/**
+ * Reading order of the numbered bands.
+ *
+ * Single source of truth for the eyebrow chips ("03") and the fixed section
+ * index, so the two can never disagree. The hero and the partner strip are
+ * deliberately excluded — they are the cover, not a chapter.
+ */
+export const SECTION_ORDER = [
+  SECTION_IDS.whyVietnam,
+  SECTION_IDS.about,
+  SECTION_IDS.whyUs,
+  SECTION_IDS.journey,
+  SECTION_IDS.stats,
+  SECTION_IDS.services,
+  SECTION_IDS.testimonials,
+  SECTION_IDS.faq,
+] as const;
+
+/** `"gioi-thieu"` → `"02"`. Returns `""` for sections outside the sequence. */
+export function sectionStep(id: string): string {
+  const index = (SECTION_ORDER as readonly string[]).indexOf(id);
+  return index === -1 ? "" : String(index + 1).padStart(2, "0");
+}

@@ -4,29 +4,61 @@ import { IconTile } from "@/components/ui/icon";
 import { Reveal } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { cn } from "@/lib/utils";
 
 import type { Reason, SectionCopy } from "@/types";
 
-/** One pain-point card. Numbered, so the four read as an argument, not a list. */
-function ReasonCard({ reason, index }: { reason: Reason; index: number }) {
+/**
+ * One card in the tension band.
+ *
+ * Three of the four describe a problem and stay neutral; the one flagged as the
+ * answer is filled gold. That single accent is what turns a row of equal boxes
+ * into an argument with a conclusion — and it is the only gold fill above the
+ * stats band, so it reads as emphasis rather than decoration.
+ */
+function ReasonCard({
+  reason,
+  index,
+  isHighlighted,
+}: {
+  reason: Reason;
+  index: number;
+  isHighlighted: boolean;
+}) {
   return (
     <Reveal index={index} className="h-full">
-      <Card isInteractive padding="lg" className="h-full gap-5">
-        <div className="flex items-start justify-between gap-4">
-          <IconTile
-            name={reason.icon}
-            className="group-hover/card:bg-gold-100 group-hover/card:text-gold-600 group-hover/card:ring-gold/35"
-          />
-          <span className="font-brand group-hover/card:text-gold/60 text-2xl leading-none text-stone-300 transition-colors duration-300">
-            {String(index + 1).padStart(2, "0")}
-          </span>
-        </div>
+      <Card
+        variant={isHighlighted ? "gold" : "surface"}
+        isInteractive
+        padding="lg"
+        className={cn(
+          "h-full gap-5",
+          isHighlighted
+            ? "hover:border-ink/25 hover:shadow-lg"
+            : "hover:border-gold/45",
+        )}
+      >
+        {/* No per-card ordinal here: the section eyebrow already carries a
+            two-digit chip, and two numbering systems a few pixels apart read
+            as a mistake. Emphasis comes from the gold fill instead. */}
+        <IconTile
+          name={reason.icon}
+          className={cn(
+            isHighlighted
+              ? "bg-ink/10 text-ink ring-ink/15"
+              : "group-hover/card:bg-gold-100 group-hover/card:text-gold-600 group-hover/card:ring-gold/35",
+          )}
+        />
 
         <div className="flex flex-col gap-3">
-          <CardTitle className="text-[1.1875rem] leading-snug">
+          <CardTitle
+            className={cn("text-[1.1875rem] leading-snug", isHighlighted && "text-ink")}
+          >
             {reason.title}
           </CardTitle>
-          <CardBody>{reason.body}</CardBody>
+          <CardBody className={cn(isHighlighted && "text-ink/75")}>
+            {reason.body}
+          </CardBody>
         </div>
       </Card>
     </Reveal>
@@ -37,14 +69,18 @@ interface WhyVietnamProps {
   copy: SectionCopy;
   reasons: Reason[];
   id: string;
+  step: string;
+  /** `id` of the reason that carries the gold treatment. */
+  highlightId: string;
 }
 
-export function WhyVietnam({ copy, reasons, id }: WhyVietnamProps) {
+export function WhyVietnam({ copy, reasons, id, step, highlightId }: WhyVietnamProps) {
   return (
     <Section id={id} labelledBy="why-vietnam-title" tone="cream">
       <Container>
         <SectionHeading
           id="why-vietnam-title"
+          step={step}
           eyebrow={copy.eyebrow}
           title={copy.title}
           accent={copy.accent}
@@ -54,7 +90,11 @@ export function WhyVietnam({ copy, reasons, id }: WhyVietnamProps) {
         <ul className="mt-14 grid gap-[var(--gap-card)] sm:grid-cols-2 lg:mt-16 lg:grid-cols-4">
           {reasons.map((reason, index) => (
             <li key={reason.id} className="h-full">
-              <ReasonCard reason={reason} index={index} />
+              <ReasonCard
+                reason={reason}
+                index={index}
+                isHighlighted={reason.id === highlightId}
+              />
             </li>
           ))}
         </ul>

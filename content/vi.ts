@@ -86,6 +86,12 @@ export const vi: SiteContent = {
       "Bạn có một Personal Care Plan bằng ngôn ngữ của mình, một điều phối viên duy nhất chịu trách nhiệm, và một mức chi phí được báo trước — không phát sinh, không phỏng đoán.",
     ],
     action: "Tìm hiểu về Handle",
+    secondaryAction: "Xem hành trình",
+    pills: [
+      { id: "plan", icon: "clipboard-list", label: "Personal Care Plan" },
+      { id: "coordinator", icon: "user-round-check", label: "Một điều phối viên" },
+      { id: "quote", icon: "receipt", label: "Báo giá trọn gói" },
+    ],
     media: {
       alt: "Điều phối viên Handle trao đổi Personal Care Plan cùng gia đình bệnh nhân trong phòng tư vấn",
       glyph: "notebook-pen",
@@ -109,6 +115,13 @@ export const vi: SiteContent = {
     action: "Xem chi tiết hành trình",
   },
 
+  stats: {
+    eyebrow: "Con số",
+    title: "Những gì chúng tôi đã",
+    accent: "làm được.",
+    lead: "Số liệu tổng hợp từ các ca Handle đã điều phối, cập nhật quý gần nhất.",
+  },
+
   services: {
     eyebrow: "Chuyên khoa",
     title: "Dịch vụ y tế chúng tôi hỗ trợ",
@@ -127,6 +140,18 @@ export const vi: SiteContent = {
     lead: "Trích từ khảo sát sau điều trị, được đăng với sự đồng ý của khách hàng.",
   },
 
+  faq: {
+    eyebrow: "Giải đáp",
+    title: "Câu hỏi thường",
+    accent: "gặp.",
+    lead: "Sáu điều được hỏi nhiều nhất trước khi một hành trình bắt đầu.",
+    help: {
+      title: "Chưa thấy câu trả lời bạn cần?",
+      body: "Nhắn cho đội ngũ Handle. Chúng tôi trả lời trong vòng 24 giờ làm việc, bằng tiếng Việt hoặc tiếng Anh, và buổi tư vấn đầu tiên hoàn toàn miễn phí.",
+      action: "Hỏi trực tiếp",
+    },
+  },
+
   cta: {
     title: "Sẵn sàng bắt đầu hành trình chăm sóc sức khỏe",
     accent: "của bạn?",
@@ -134,6 +159,22 @@ export const vi: SiteContent = {
     whatsapp: "Chat trên WhatsApp",
     consultation: "Tư vấn miễn phí",
   },
+
+  sectionNav: {
+    label: "Mục lục trang",
+    items: [
+      { id: SECTION_IDS.whyVietnam, label: "Bối cảnh" },
+      { id: SECTION_IDS.about, label: "Về Handle" },
+      { id: SECTION_IDS.whyUs, label: "Vì sao chọn" },
+      { id: SECTION_IDS.journey, label: "Hành trình" },
+      { id: SECTION_IDS.stats, label: "Con số" },
+      { id: SECTION_IDS.services, label: "Dịch vụ" },
+      { id: SECTION_IDS.testimonials, label: "Khách hàng" },
+      { id: SECTION_IDS.faq, label: "Giải đáp" },
+    ],
+  },
+
+  floatingCta: "Chat trên WhatsApp",
 
   footer: {
     tagline: "You heal. We handle the rest.",

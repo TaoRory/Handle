@@ -1,19 +1,23 @@
 import { advantages } from "@/data/advantages";
 import { experiences } from "@/data/experiences";
+import { faqs } from "@/data/faqs";
 import { journeySteps } from "@/data/journey";
 import { partners } from "@/data/partners";
 import { reasons } from "@/data/reasons";
 import { services } from "@/data/services";
+import { stats } from "@/data/stats";
 import { testimonials } from "@/data/testimonials";
 
 import type {
   Advantage,
   Experience,
+  Faq,
   JourneyStep,
   Locale,
   Partner,
   Reason,
   Service,
+  Stat,
   Testimonial,
 } from "@/types";
 
@@ -31,6 +35,8 @@ export const getServices = (locale: Locale): Service[] => services[locale];
 export const getExperiences = (locale: Locale): Experience[] => experiences[locale];
 export const getPartners = (locale: Locale): Partner[] => partners[locale];
 export const getTestimonials = (locale: Locale): Testimonial[] => testimonials[locale];
+export const getStats = (locale: Locale): Stat[] => stats[locale];
+export const getFaqs = (locale: Locale): Faq[] => faqs[locale];
 
 /** Feeds the `AggregateRating` node in the JSON-LD. */
 export function getAggregateRating(locale: Locale) {
@@ -45,9 +51,11 @@ export function getAggregateRating(locale: Locale) {
 export {
   advantages,
   experiences,
+  faqs,
   journeySteps,
   partners,
   reasons,
   services,
+  stats,
   testimonials,
 };

@@ -18,8 +18,10 @@ const cardVariants = cva(
         /** Sits on a white section — inverts to cream so it still separates. */
         cream: "rounded-lg border border-line bg-cream-100 shadow-none",
         /** Editorial: no chrome, just a hairline. Used by the services grid. */
-        quiet: "rounded-lg border border-line/70 bg-surface/60",
-        ink: "rounded-lg border border-cream/12 bg-ink-800",
+        quiet: "border-line/70 bg-surface/60 rounded-lg border",
+        /** Accent. One per grid at most — it is the eye's landing point. */
+        gold: "rounded-lg border-gold-600/40 shadow-gold bg-gold border",
+        ink: "rounded-lg border-cream/12 bg-ink-800 border",
       },
       isInteractive: {
         true: "hover:-translate-y-1 hover:border-gold/45 hover:shadow-md",
