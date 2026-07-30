@@ -45,26 +45,6 @@ export const en: SiteContent = {
       { id: "journey", icon: "route", label: "One coordinator, end to end" },
       { id: "privacy", icon: "file-check", label: "Records kept confidential" },
     ],
-    stats: [
-      {
-        id: "patients",
-        value: "2,400",
-        suffix: "+",
-        label: "International patients guided",
-      },
-      {
-        id: "partners",
-        value: "35",
-        suffix: "+",
-        label: "Partner hospitals and clinics",
-      },
-      {
-        id: "saving",
-        value: "62",
-        suffix: "%",
-        label: "Average saving versus home care",
-      },
-    ],
     media: {
       alt: "A Handle coordinator welcoming an international patient in a hospital lobby, warm morning light",
       glyph: "hand-heart",
@@ -184,6 +164,11 @@ export const en: SiteContent = {
   },
 
   floatingCta: "Chat on WhatsApp",
+
+  intro: {
+    skip: "Skip",
+    loading: "Opening Handle",
+  },
 
   footer: {
     tagline: "You heal. We handle the rest.",

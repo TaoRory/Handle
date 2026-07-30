@@ -173,7 +173,12 @@ Container: `w-full max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-10`.
 
 Section column maps:
 
-- **Hero** — 6/6 split ≥`lg`, stacked below. Media bleeds to the right viewport edge ≥`xl`.
+- **Hero** — the media is **full-bleed**, not a column: an absolute layer covering the right 58%
+  and running off the viewport edge, with a cream scrim carrying the left third so the headline
+  keeps its contrast floor. Below `lg` it becomes a full-width band under the copy — a scrim strong
+  enough to make body copy legible on a phone would kill the photograph anyway. The partner panel
+  is pulled up (`-mt-24` at `lg`) so it straddles the bottom edge of that media; the hero reserves
+  the space with a spacer so nothing under it shifts.
 - **Reason cards** — 4 up ≥`lg`, 2 up ≥`sm`, 1 up mobile.
 - **Advantage cards** — 3 up ≥`lg`, 2 up ≥`sm`, 1 up mobile (6 cards total).
 - **Timeline** — horizontal snap rail ≥`lg`, vertical rail below.
@@ -194,8 +199,25 @@ Framer Motion only. Motion must read as _settling into place_, never as _perform
   on scroll-back — that reads as cheap.
 - **Hover** translate ≤4px, scale ≤1.03, shadow up one step. Images zoom to 1.06 over 0.7s.
 - **Parallax** decorative layers only, max 40px total travel, via `useScroll` + `useTransform`.
-- **Reduced motion** `useReducedMotion()` is respected everywhere; when true all transforms
-  collapse to a 0.2s opacity fade and marquees/autoplay stop. Hard requirement, not a nicety.
+
+### Reduced motion — how, and the trap
+
+The policy is set once, globally, by `MotionProvider` (`<MotionConfig reducedMotion="user">`). Motion
+then withholds transform and layout animations for anyone with the preference on, leaving opacity
+to cross-fade. Marquees and carousel autoplay stop via the CSS rule in `globals.css`.
+
+**Never branch render output on `useReducedMotion()`.** It is tempting to write
+`initial={prefersReducedMotion ? a : b}`, and it is a hydration bug every time: the server always
+assumes "no preference", the client knows the truth, and the two disagree for exactly the users the
+branch was meant to help. React then throws away the server HTML for that subtree. Declare the
+animation once and let the provider remove what would move.
+
+The two sanctioned exceptions are values bound to `style`, which `MotionConfig` does not govern:
+
+- `HeroDecor` guards its parallax explicitly — parallax is the canonical thing the preference
+  exists to suppress, and at scroll position 0 both branches render identically, so SSR is safe.
+- `ScrollProgress` and the `JourneyRail` fill are left running. They are scroll-linked indicators,
+  not self-playing animation; removing them would take away information rather than movement.
 
 ## Responsive Rules
 
@@ -315,17 +337,28 @@ redirects unprefixed paths.
 at `xl`, which part am I in, labels on hover/focus, `aria-current` for assistive tech) and
 `FloatingContact` (holds the conversion path open once the hero's CTA has scrolled away).
 
+**`IntroCurtain`** — the brand intro, and the one piece of theatre on the site. The guideline says
+the crossbar of the H is curved "để tạo cảm giác nâng đỡ"; the animation makes that literal. The
+stems draw, a hand rises from below carrying the crossbar, sets it, and withdraws. Rules it must
+keep: once per session (`sessionStorage`, read by an inline script before first paint so a
+returning visitor never catches a frame), skippable by any click or key, hidden entirely without
+JavaScript (`<noscript>` rule), and bypassable with `?intro=off` so screenshot and end-to-end
+runners capture the page rather than whichever frame they landed on. It covers content, it never
+gates it — the page is fully rendered underneath the whole time.
+
 **Component tree**
 
 ```
 <RootLayout>
+ ├ MotionProvider ──────── reducedMotion="user" for the whole tree
+ ├ IntroCurtain ───────── H draws · hand lifts the crossbar · curtain rises
  ├ SkipLink
  ├ ScrollProgress ──────── gold rule, scroll-linked
  ├ Navbar ── Logo · NavLinks · LocaleSwitcher · Button · MobileNav(Dialog)
  ├ SectionNav ─────────── 8 dots · hover labels · aria-current   (xl only)
  ├ main
- │  ├ Hero ─────────────── headline · lead · 2 CTAs · TrustStrip · Media · Stat cards · float decor
- │  ├ PartnerCarousel ──── Marquee × PartnerLogo
+ │  ├ Hero ─────────────── headline · lead · 2 CTAs · TrustStrip · full-bleed Media · float decor
+ │  ├ PartnerCarousel ──── Marquee × PartnerLogo   (overlaps the hero bottom)
  │  ├ 01 WhyVietnam ────── SectionHeading · ReasonCard × 4 (one gold)
  │  ├ 02 AboutHandle ───── INK panel · Media · copy · proof pills · Button
  │  ├ 03 WhyChooseUs ───── SectionHeading · AdvantageCard × 6

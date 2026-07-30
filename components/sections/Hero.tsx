@@ -14,10 +14,18 @@ import type { HeroCopy } from "@/types";
 /**
  * The first screen.
  *
- * A 6/6 split: the promise on the left, the arrival image on the right with two
- * statistics floating over its edge. Server-rendered apart from `HeroDecor`
- * (the parallax layer) and the `Reveal` wrappers, so the LCP text is in the
- * initial HTML rather than waiting on hydration.
+ * The media is full-bleed: it runs off the right edge of the viewport rather
+ * than sitting in a contained column, which is what makes the fold read as a
+ * scene the visitor has walked into instead of a two-column layout. A cream
+ * scrim gradient carries the left third so the headline keeps its contrast
+ * floor over whatever the image turns out to be.
+ *
+ * Below `lg` the media becomes a full-width band under the copy — still
+ * edge-to-edge, but never behind text, because a scrim strong enough to make
+ * body copy legible on a phone would kill the photograph anyway.
+ *
+ * Server-rendered apart from `HeroDecor` and the `Reveal` wrappers, so the LCP
+ * headline is in the initial HTML rather than waiting on hydration.
  */
 export function Hero({ copy }: { copy: HeroCopy }) {
   const [titleLine1, titleLine2] = copy.titleLead.split("\n");
@@ -26,103 +34,105 @@ export function Hero({ copy }: { copy: HeroCopy }) {
     <section
       id={SECTION_IDS.hero}
       aria-labelledby="hero-title"
-      className="relative isolate overflow-hidden pt-[calc(var(--header-h)+40px)] pb-16 sm:pb-20 lg:pt-[calc(var(--header-h)+72px)] lg:pb-28"
+      className="relative isolate pt-[calc(var(--header-h)+32px)] lg:pt-[calc(var(--header-h)+64px)]"
     >
       <HeroDecor />
 
+      {/* ---- Full-bleed media, desktop ---- */}
+      <div
+        aria-hidden={copy.media.src ? undefined : "true"}
+        className="absolute inset-y-0 right-0 -z-10 hidden w-[58%] lg:block xl:w-[56%]"
+      >
+        <Media
+          asset={copy.media}
+          seed="hero"
+          ratio="fill"
+          rounded="none"
+          priority
+          sizes="58vw"
+          className="size-full"
+        />
+
+        {/* Scrim: opaque under the copy, clear over the subject. */}
+        <span
+          aria-hidden="true"
+          className="from-cream via-cream/70 absolute inset-0 bg-gradient-to-r via-25% to-transparent"
+        />
+        <span
+          aria-hidden="true"
+          className="from-cream absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t to-transparent"
+        />
+      </div>
+
       <Container size="wide">
-        <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.92fr)] lg:gap-16 xl:gap-20">
-          {/* ---- Promise ---- */}
-          <div className="flex flex-col">
-            <Reveal>
-              <h1 id="hero-title" className="text-display text-ink max-w-[13ch]">
-                {titleLine1}
-                <br />
-                {titleLine2}
-                <br />
-                <span className="font-display text-gold italic">
-                  {copy.titleAccent}
-                </span>
-              </h1>
-            </Reveal>
+        <div className="lg:max-w-[52%] xl:max-w-[50%]">
+          <Reveal>
+            <h1 id="hero-title" className="text-display text-ink max-w-[13ch]">
+              {titleLine1}
+              <br />
+              {titleLine2}
+              <br />
+              <span className="font-display text-gold italic">{copy.titleAccent}</span>
+            </h1>
+          </Reveal>
 
-            <Reveal index={1}>
-              <p className="text-ink-600 text-lead mt-7 max-w-[54ch]">{copy.lead}</p>
-            </Reveal>
+          <Reveal index={1}>
+            <p className="text-ink-600 text-lead mt-7 max-w-[52ch]">{copy.lead}</p>
+          </Reveal>
 
-            <Reveal index={2}>
-              <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
-                <Button asChild size="lg">
-                  <Link href={contactLinks.whatsapp}>
-                    {copy.primaryCta}
-                    <ArrowTrail />
-                  </Link>
-                </Button>
+          <Reveal index={2}>
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <Button asChild size="lg">
+                <Link href={contactLinks.whatsapp}>
+                  {copy.primaryCta}
+                  <ArrowTrail />
+                </Link>
+              </Button>
 
-                <Button asChild variant="outline" size="lg">
-                  <Link href={`#${SECTION_IDS.about}`}>
-                    <span className="bg-gold/15 text-gold-600 rounded-pill -ml-2 inline-flex size-8 items-center justify-center">
-                      <Play
-                        className="size-3.5 translate-x-px fill-current"
-                        aria-hidden="true"
-                      />
-                    </span>
-                    {copy.secondaryCta}
-                  </Link>
-                </Button>
-              </div>
-            </Reveal>
-
-            <Reveal index={3}>
-              <ul className="mt-11 grid gap-x-6 gap-y-3.5 sm:grid-cols-2">
-                {copy.badges.map((badge) => (
-                  <li key={badge.id} className="flex items-center gap-2.5">
-                    <span className="ring-gold/30 bg-gold/10 text-gold-600 rounded-pill inline-flex size-7 items-center justify-center ring-1">
-                      <Icon name={badge.icon} className="size-3.5" strokeWidth={1.75} />
-                    </span>
-                    <span className="text-ink-600 text-sm">{badge.label}</span>
-                  </li>
-                ))}
-              </ul>
-            </Reveal>
-          </div>
-
-          {/* ---- Arrival image + floating statistics ---- */}
-          <Reveal direction="right" duration={0.7} className="relative">
-            <div className="relative">
-              <Media
-                asset={copy.media}
-                seed="hero"
-                ratio="hero"
-                rounded="xl"
-                priority
-                sizes="(max-width: 1024px) 100vw, 46vw"
-                className="shadow-lg"
-              />
-
-              {/* A thin gold frame offset behind the plate — depth without a drop shadow. */}
-              <span
-                aria-hidden="true"
-                className="border-gold/35 pointer-events-none absolute -right-3 -bottom-3 -z-10 h-full w-full rounded-xl border sm:-right-5 sm:-bottom-5"
-              />
-
-              <div className="glass border-line/70 absolute -bottom-6 left-4 flex gap-6 rounded-lg border px-5 py-4 shadow-md sm:left-6 sm:gap-8 sm:px-6 lg:-left-4 xl:-left-8">
-                {copy.stats.slice(0, 2).map((stat) => (
-                  <div key={stat.id} className="flex flex-col">
-                    <span className="font-brand text-ink text-2xl leading-none sm:text-[1.75rem]">
-                      {stat.value}
-                      <span className="text-gold">{stat.suffix}</span>
-                    </span>
-                    <span className="text-ink-400 mt-1.5 max-w-[16ch] text-xs leading-snug">
-                      {stat.label}
-                    </span>
-                  </div>
-                ))}
-              </div>
+              <Button asChild variant="outline" size="lg">
+                <Link href={`#${SECTION_IDS.about}`}>
+                  <span className="bg-gold/15 text-gold-600 rounded-pill -ml-2 inline-flex size-8 items-center justify-center">
+                    <Play
+                      className="size-3.5 translate-x-px fill-current"
+                      aria-hidden="true"
+                    />
+                  </span>
+                  {copy.secondaryCta}
+                </Link>
+              </Button>
             </div>
           </Reveal>
+
+          <Reveal index={3}>
+            <ul className="mt-11 grid gap-x-6 gap-y-3.5 sm:grid-cols-2">
+              {copy.badges.map((badge) => (
+                <li key={badge.id} className="flex items-center gap-2.5">
+                  <span className="ring-gold/30 bg-gold/10 text-gold-600 rounded-pill inline-flex size-7 items-center justify-center ring-1">
+                    <Icon name={badge.icon} className="size-3.5" strokeWidth={1.75} />
+                  </span>
+                  <span className="text-ink-600 text-sm">{badge.label}</span>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
         </div>
+
+        {/* Reserves the space the partner panel overlaps into. Below `lg` the
+            panel overlaps the media band instead, so no reserve is needed. */}
+        <div className="hidden h-28 lg:block" aria-hidden="true" />
       </Container>
+
+      {/* ---- Full-bleed media, mobile and tablet ---- */}
+      <Reveal className="lg:hidden">
+        <Media
+          asset={copy.media}
+          seed="hero"
+          ratio="wide"
+          rounded="none"
+          priority
+          sizes="100vw"
+        />
+      </Reveal>
     </section>
   );
 }

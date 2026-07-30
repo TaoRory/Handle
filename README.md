@@ -14,24 +14,45 @@ rendered, and built to the brand guideline in [`design-reference/`](design-refer
 The homepage is one narrative funnel rather than a stack of unrelated blocks. Each reading band is
 numbered, and its surface tone marks where one part ends and the next begins:
 
-| Band                        | Surface     | Job                                                             |
-| --------------------------- | ----------- | --------------------------------------------------------------- |
-| **Hero**                    | cream       | The promise, two CTAs, four trust chips, two headline figures.  |
-| **Partner carousel**        | white panel | Borrowed credibility. Infinite marquee, pauses on hover/focus.  |
-| **01 Why Vietnam**          | cream       | The tension — four reasons, with the answer filled gold.        |
-| **02 About Handle**         | **ink**     | The turn — what a coordinated journey actually looks like.      |
-| **03 Why choose us**        | white       | Six commitments, one per objection.                             |
-| **04 Journey timeline**     | cream       | The mechanism — nine steps, horizontal at `lg`, vertical below. |
-| **05 By the numbers**       | **gold**    | Four figures that count up as they scroll into view.            |
-| **06 Services + Lifestyle** | white       | Proof, clinical and non-clinical, side by side from `xl`.       |
-| **07 Testimonials**         | cream-300   | Social proof. Embla carousel, keyboard + screen-reader ready.   |
-| **08 Questions**            | white       | Accordion, plus a sticky ink card for anything it misses.       |
-| **CTA banner**              | **ink**     | The ask.                                                        |
+| Band                        | Surface     | Job                                                                                |
+| --------------------------- | ----------- | ---------------------------------------------------------------------------------- |
+| **Hero**                    | cream       | The promise, two CTAs, four trust chips. Media runs full-bleed off the right edge. |
+| **Partner carousel**        | white panel | Borrowed credibility, on a panel that straddles the hero's bottom edge.            |
+| **01 Why Vietnam**          | cream       | The tension — four reasons, with the answer filled gold.                           |
+| **02 About Handle**         | **ink**     | The turn — what a coordinated journey actually looks like.                         |
+| **03 Why choose us**        | white       | Six commitments, one per objection.                                                |
+| **04 Journey timeline**     | cream       | The mechanism — nine steps, horizontal at `lg`, vertical below.                    |
+| **05 By the numbers**       | **gold**    | Four figures that count up as they scroll into view.                               |
+| **06 Services + Lifestyle** | white       | Proof, clinical and non-clinical, side by side from `xl`.                          |
+| **07 Testimonials**         | cream-300   | Social proof. Embla carousel, keyboard + screen-reader ready.                      |
+| **08 Questions**            | white       | Accordion, plus a sticky ink card for anything it misses.                          |
+| **CTA banner**              | **ink**     | The ask.                                                                           |
 
 Three surfaces are loud — ink, gold, ink — spaced so that no two ever sit next to each other.
 Alongside them a wayfinding layer keeps the long scroll legible: a gold **scroll-progress rule**, a
 fixed **section index** down the right edge at `xl` (labels on hover, `aria-current` for assistive
 tech), and a **floating WhatsApp button** that appears once the hero's CTA has scrolled away.
+
+### The intro
+
+On the first visit of a session the site opens with a short brand animation: the two stems of the
+**H** draw in, a hand rises from below carrying the crossbar, sets it in place, and withdraws.
+It is a literal reading of the brand guideline's own note that the crossbar is curved
+_"để tạo cảm giác nâng đỡ"_ — to feel held up. Handle is the hand that hands it over.
+
+It is deliberately unobtrusive:
+
+- **Once per session** — the flag lives in `sessionStorage`, and an inline script reads it before
+  first paint, so a returning visitor never sees a frame of it.
+- **Always skippable** — any click, any key, or the skip button.
+- **Reduced motion** — no movement at all; the mark simply fades up.
+- **No JavaScript** — the curtain is removed outright by a `<noscript>` rule.
+- **`?intro=off`** — bypasses it, so screenshot and end-to-end runs capture the page rather than a
+  random frame of the animation.
+
+It covers the page, it never gates it: the content is fully rendered underneath the whole time, so
+crawlers are unaffected. The tradeoff is that it fronts the largest contentful paint by up to 2.6s
+on a first visit — a deliberate call for a brand site, and the reason it never repeats.
 
 Design intent, tokens, motion rules and conventions are specified in **[`CLAUDE.md`](CLAUDE.md)** —
 read that before changing anything visual. It is the source of truth; this file is the operator's
@@ -82,7 +103,8 @@ app/
   globals.css            Tailwind v4 @theme tokens + base layer
   sitemap.ts robots.ts   Generated SEO endpoints
 components/
-  layout/                Navbar, MobileNav, LocaleSwitcher, Footer, SkipLink
+  layout/                Navbar, MobileNav, LocaleSwitcher, Footer, SkipLink,
+                         IntroCurtain, MotionProvider, ScrollProgress, SectionNav
   sections/              One file per homepage band
   ui/                    Design-system primitives (no business logic)
 content/                 vi.ts · en.ts dictionaries + the SiteContent contract

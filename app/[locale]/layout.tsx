@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 
 import { FloatingContact } from "@/components/layout/FloatingContact";
 import { Footer } from "@/components/layout/Footer";
+import { INTRO_SESSION_KEY, IntroCurtain } from "@/components/layout/IntroCurtain";
+import { MotionProvider } from "@/components/layout/MotionProvider";
 import { Navbar } from "@/components/layout/Navbar";
 import { ScrollProgress } from "@/components/layout/ScrollProgress";
 import { SectionNav } from "@/components/layout/SectionNav";
@@ -146,33 +148,55 @@ export default async function LocaleLayout({
       suppressHydrationWarning
     >
       <body className="min-h-dvh antialiased">
-        <SkipLink label={content.a11y.skipToContent} />
-        <ScrollProgress />
-
-        <Navbar
-          locale={locale as Locale}
-          links={content.nav.links}
-          ctaLabel={content.nav.cta}
-          navLabel={content.nav.navLabel}
-          homeLabel={content.nav.homeLabel}
-          menuLabel={content.nav.menuLabel}
-          closeLabel={content.nav.closeLabel}
-          localeLabel={content.nav.localeLabel}
+        {/* Runs before first paint: if the intro already played this session,
+            flag the document so CSS hides the curtain and no frame of it can
+            flash while React hydrates. Paired with the `<noscript>` rule below
+            so a visitor without JavaScript never sees a curtain at all. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{if(sessionStorage.getItem(${JSON.stringify(
+              INTRO_SESSION_KEY,
+            )})==="1")document.documentElement.classList.add("intro-played")}catch(e){}`,
+          }}
         />
+        <noscript>
+          <style>{`#intro-curtain{display:none !important}`}</style>
+        </noscript>
 
-        <SectionNav
-          label={content.sectionNav.label}
-          items={content.sectionNav.items.map((item) => ({
-            ...item,
-            step: sectionStep(item.id),
-          }))}
-        />
+        <MotionProvider>
+          <IntroCurtain
+            skipLabel={content.intro.skip}
+            loadingLabel={content.intro.loading}
+          />
 
-        <main id="main">{children}</main>
+          <SkipLink label={content.a11y.skipToContent} />
+          <ScrollProgress />
 
-        <Footer content={content} />
+          <Navbar
+            locale={locale as Locale}
+            links={content.nav.links}
+            ctaLabel={content.nav.cta}
+            navLabel={content.nav.navLabel}
+            homeLabel={content.nav.homeLabel}
+            menuLabel={content.nav.menuLabel}
+            closeLabel={content.nav.closeLabel}
+            localeLabel={content.nav.localeLabel}
+          />
 
-        <FloatingContact label={content.floatingCta} />
+          <SectionNav
+            label={content.sectionNav.label}
+            items={content.sectionNav.items.map((item) => ({
+              ...item,
+              step: sectionStep(item.id),
+            }))}
+          />
+
+          <main id="main">{children}</main>
+
+          <Footer content={content} />
+
+          <FloatingContact label={content.floatingCta} />
+        </MotionProvider>
       </body>
     </html>
   );

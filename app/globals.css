@@ -270,6 +270,18 @@
 }
 
 /* ------------------------------------------------------------------ *
+ *  Intro curtain
+ *
+ *  The class is set by an inline script in the layout, before first paint, so
+ *  a visitor who has already seen the intro this session never catches a frame
+ *  of it while React hydrates and removes the element.
+ * ------------------------------------------------------------------ */
+
+:root.intro-played #intro-curtain {
+  display: none !important;
+}
+
+/* ------------------------------------------------------------------ *
  *  Reduced motion — a hard requirement, not a nicety.
  * ------------------------------------------------------------------ */
 

@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  motion,
-  useReducedMotion,
-  useScroll,
-  useSpring,
-  useTransform,
-} from "framer-motion";
+import { motion, useScroll, useSpring } from "framer-motion";
 import { useRef } from "react";
 
 import { Icon } from "@/components/ui/icon";
@@ -22,25 +16,24 @@ import type { JourneyStep } from "@/types";
  * the content is authored once. The connecting line fills in proportion to how
  * far the section has scrolled through the viewport, which makes the progress
  * feel earned rather than decorative.
+ *
+ * The fill is scroll-linked rather than self-animating, so it stays on under
+ * reduced motion: it only ever moves in response to the reader's own scrolling,
+ * which is not the kind of movement that setting is protecting against.
  */
 export function JourneyRail({ steps }: { steps: JourneyStep[] }) {
   const railRef = useRef<HTMLOListElement>(null);
-  const prefersReducedMotion = useReducedMotion();
 
   const { scrollYProgress } = useScroll({
     target: railRef,
     offset: ["start 78%", "end 55%"],
   });
 
-  const smoothed = useSpring(scrollYProgress, {
+  const progress = useSpring(scrollYProgress, {
     stiffness: 90,
     damping: 24,
     restDelta: 0.001,
   });
-
-  const progress = useTransform(smoothed, (value) =>
-    prefersReducedMotion ? 1 : value,
-  );
 
   return (
     <ol
@@ -78,7 +71,7 @@ export function JourneyRail({ steps }: { steps: JourneyStep[] }) {
       {steps.map((step, index) => (
         <motion.li
           key={step.id}
-          initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 14 }}
+          initial={{ opacity: 0, y: 14 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={VIEWPORT}
           transition={{

@@ -268,8 +268,9 @@ export interface HeroCopy {
   primaryCta: string;
   secondaryCta: string;
   badges: TrustBadge[];
-  stats: Stat[];
   media: MediaAsset;
+  // No `stats` here on purpose: the figures have their own gold band at
+  // section 05, and repeating them over the fold made the same claim twice.
 }
 
 export interface CtaCopy {
@@ -317,6 +318,7 @@ export interface SiteContent {
   /** Labels for the fixed section index; ids come from `SECTION_IDS`. */
   sectionNav: { label: string; items: { id: string; label: string }[] };
   floatingCta: string;
+  intro: { skip: string; loading: string };
   footer: {
     tagline: string;
     columns: FooterColumn[];

@@ -41,21 +41,6 @@ export const vi: SiteContent = {
       { id: "journey", icon: "route", label: "Đồng hành trọn hành trình" },
       { id: "privacy", icon: "file-check", label: "Bảo mật thông tin tuyệt đối" },
     ],
-    stats: [
-      {
-        id: "patients",
-        value: "2.400",
-        suffix: "+",
-        label: "Bệnh nhân quốc tế được đồng hành",
-      },
-      {
-        id: "partners",
-        value: "35",
-        suffix: "+",
-        label: "Bệnh viện & phòng khám đối tác",
-      },
-      { id: "saving", value: "62", suffix: "%", label: "Chi phí tiết kiệm trung bình" },
-    ],
     media: {
       alt: "Chuyên viên Handle đón khách hàng quốc tế tại sảnh bệnh viện, ánh sáng ấm buổi sáng",
       glyph: "hand-heart",
@@ -175,6 +160,11 @@ export const vi: SiteContent = {
   },
 
   floatingCta: "Chat trên WhatsApp",
+
+  intro: {
+    skip: "Bỏ qua",
+    loading: "Đang mở trang Handle",
+  },
 
   footer: {
     tagline: "You heal. We handle the rest.",

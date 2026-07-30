@@ -47,10 +47,13 @@ interface PartnerCarouselProps {
  */
 export function PartnerCarousel({ copy, partners }: PartnerCarouselProps) {
   return (
+    // Pulled up so the panel straddles the bottom edge of the hero media —
+    // the device that ties the fold together instead of leaving the logo wall
+    // floating in its own band of empty cream.
     <section
       id={SECTION_IDS.partners}
       aria-labelledby="partners-title"
-      className="relative scroll-mt-[calc(var(--header-h)+24px)] pb-8"
+      className="relative z-20 -mt-14 scroll-mt-[calc(var(--header-h)+24px)] pb-8 sm:-mt-16 lg:-mt-24"
     >
       <Container size="wide">
         <Reveal>

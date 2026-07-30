@@ -12,6 +12,12 @@ const ratios = {
   wide: "aspect-[16/10]",
   cinema: "aspect-[21/9]",
   hero: "aspect-[4/5] sm:aspect-[16/11] lg:aspect-[7/8] xl:aspect-[9/10]",
+  /**
+   * No intrinsic ratio — fills whatever box the parent gives it. Only for
+   * full-bleed placements where the parent already has a height; everywhere
+   * else a declared ratio is what keeps CLS at zero.
+   */
+  fill: "size-full",
 } as const;
 
 interface MediaProps {

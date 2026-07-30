@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 
 import { DURATION, EASE_EXPO, VIEWPORT } from "@/lib/motion";
 import { cn } from "@/lib/utils";
@@ -30,8 +30,11 @@ const offsets: Record<RevealDirection, { x?: number; y?: number }> = {
 /**
  * The single entrance-animation wrapper used across the site.
  *
- * Owns the viewport contract (`once: true`), the stagger cap and the
- * reduced-motion fallback, so no section has to re-implement any of it.
+ * Owns the viewport contract (`once: true`) and the stagger cap. It does **not**
+ * branch on `useReducedMotion()`: doing so would make the rendered `initial`
+ * prop differ between server and client and break hydration for exactly the
+ * users it was meant to help. `MotionProvider` withholds the transform instead,
+ * leaving a plain fade. See the note there.
  */
 export function Reveal({
   children,
@@ -42,24 +45,9 @@ export function Reveal({
   delay = 0,
   duration = DURATION.entrance,
 }: RevealProps) {
-  const prefersReducedMotion = useReducedMotion();
   const MotionTag = motion[as as keyof typeof motion] as unknown as typeof motion.div;
 
   const staggerDelay = Math.min(index, 5) * 0.07 + delay;
-
-  if (prefersReducedMotion) {
-    return (
-      <MotionTag
-        className={cn(className)}
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={VIEWPORT}
-        transition={{ duration: DURATION.micro, delay: 0 }}
-      >
-        {children}
-      </MotionTag>
-    );
-  }
 
   return (
     <MotionTag
