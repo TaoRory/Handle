@@ -212,6 +212,21 @@
     -webkit-text-size-adjust: 100%;
     scroll-behavior: smooth;
     scroll-padding-top: calc(var(--header-h) + 24px);
+
+    /*
+      Section anchoring. `proximity`, never `mandatory`: several bands here are
+      two to three viewports tall — the nine-step journey, the services pairing,
+      the FAQ — and mandatory snapping traps a reader inside them, unable to
+      reach the bottom of what they are reading. Proximity only pulls when the
+      scroll comes to rest near a boundary, so a long band scrolls normally and
+      a fast flick past six of them is never interrupted.
+
+      Which elements are stops is decided at each band with `snap-start`, not
+      by a selector here: the partner strip is deliberately not one, because it
+      is a panel overlapping the hero rather than a chapter — the same reason
+      `SectionNav` leaves it out.
+    */
+    scroll-snap-type: y proximity;
   }
 
   body {
@@ -348,6 +363,10 @@
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+    /* Snapping moves the page the reader did not ask it to move. With smooth
+       scrolling off it would also arrive as a jump rather than a glide, which
+       is the worst version of it for anyone this setting protects. */
+    scroll-snap-type: none;
   }
 
   *,

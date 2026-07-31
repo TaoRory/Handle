@@ -5,8 +5,12 @@ to show the layout with real media in it, not because they depict Handle, its
 partner hospitals, or its patients. Replace them with commissioned or licensed
 photography before launch.
 
-Every file is **CC0 / public domain**: no attribution is legally required and
-there is no share-alike obligation. This table exists so the provenance is
+`hero-lobby.jpg` is the exception to everything below: it was **supplied by the
+client**, not sourced here, and its rights are theirs to confirm. It is a render
+of a reception lobby and does not depict a Handle location either.
+
+Every other file is **CC0 / public domain**: no attribution is legally required
+and there is no share-alike obligation. That table exists so the provenance is
 recoverable, not because the licence demands it.
 
 Each was cropped to the aspect ratio its slot declares and given one shared warm
@@ -25,7 +29,6 @@ was a one-off.
 
 | File                         | Title                                     | Creator           | Source    | Licence | Page                                                                                        |
 | ---------------------------- | ----------------------------------------- | ----------------- | --------- | ------- | ------------------------------------------------------------------------------------------- |
-| `hero.jpg`                   | —                                         | —                 | rawpixel  | CC0     | https://www.rawpixel.com/image/5940529/free-public-domain-cc0-photo                         |
 | `about.jpg`                  | Health Care                               | Direct Media      | stocksnap | CC0     | https://stocksnap.io/photo/health-care-CYGGIXUCCF                                           |
 | `service-checkup.jpg`        | Stethoscope Medical                       | Negative Space    | stocksnap | CC0     | https://stocksnap.io/photo/stethoscope-medical-RAW1RLRTM7                                   |
 | `service-fertility.jpg`      | Baby Foot                                 | Matt Bango        | stocksnap | CC0     | https://stocksnap.io/photo/baby-foot-0LMXQSCJNY                                             |

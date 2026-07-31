@@ -1,7 +1,6 @@
 import { Be_Vietnam_Pro, Jost, Playfair_Display } from "next/font/google";
 import { notFound } from "next/navigation";
 
-import { ConsultationProvider } from "@/components/layout/ConsultationDialog";
 import { FloatingContact } from "@/components/layout/FloatingContact";
 import { Footer } from "@/components/layout/Footer";
 import { INTRO_SESSION_KEY, IntroCurtain } from "@/components/layout/IntroCurtain";
@@ -171,42 +170,33 @@ export default async function LocaleLayout({
             markLabel={content.intro.mark}
           />
 
-          {/* Wraps everything below it: the header, hero and mobile drawer all
-              open the same dialog, so it is mounted once here rather than per
-              trigger. */}
-          <ConsultationProvider
-            copy={content.cta}
+          <SkipLink label={content.a11y.skipToContent} />
+          <ScrollProgress />
+
+          <Navbar
             locale={locale as Locale}
+            links={content.nav.links}
+            ctaLabel={content.nav.cta}
+            navLabel={content.nav.navLabel}
+            homeLabel={content.nav.homeLabel}
+            menuLabel={content.nav.menuLabel}
             closeLabel={content.nav.closeLabel}
-          >
-            <SkipLink label={content.a11y.skipToContent} />
-            <ScrollProgress />
+            localeLabel={content.nav.localeLabel}
+          />
 
-            <Navbar
-              locale={locale as Locale}
-              links={content.nav.links}
-              ctaLabel={content.nav.cta}
-              navLabel={content.nav.navLabel}
-              homeLabel={content.nav.homeLabel}
-              menuLabel={content.nav.menuLabel}
-              closeLabel={content.nav.closeLabel}
-              localeLabel={content.nav.localeLabel}
-            />
+          <SectionNav
+            label={content.sectionNav.label}
+            items={content.sectionNav.items.map((item) => ({
+              ...item,
+              step: sectionStep(item.id),
+            }))}
+          />
 
-            <SectionNav
-              label={content.sectionNav.label}
-              items={content.sectionNav.items.map((item) => ({
-                ...item,
-                step: sectionStep(item.id),
-              }))}
-            />
+          <main id="main">{children}</main>
 
-            <main id="main">{children}</main>
+          <Footer content={content} />
 
-            <Footer content={content} />
-
-            <FloatingContact label={content.floatingCta} />
-          </ConsultationProvider>
+          <FloatingContact label={content.floatingCta} />
         </MotionProvider>
       </body>
     </html>

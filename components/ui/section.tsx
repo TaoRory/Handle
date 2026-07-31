@@ -54,7 +54,7 @@ export function Section({
       id={id}
       aria-labelledby={labelledBy}
       className={cn(
-        "relative scroll-mt-[calc(var(--header-h)+24px)] overflow-hidden",
+        "relative scroll-mt-[calc(var(--header-h)+24px)] snap-start overflow-hidden",
         tones[tone],
         sizes[size],
         className,

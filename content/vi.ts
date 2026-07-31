@@ -42,12 +42,12 @@ export const vi: SiteContent = {
       { id: "privacy", icon: "file-check", label: "Bảo mật thông tin tuyệt đối" },
     ],
     media: {
-      alt: "Quầy lễ tân bằng gỗ sáng trong sảnh cơ sở y tế",
-      src: "/images/photos/hero.jpg",
+      alt: "Sảnh đón tiếp với quầy lễ tân đá cẩm thạch, tường gỗ lam và cây xanh",
+      src: "/images/photos/hero-lobby.jpg",
       width: 1600,
       height: 2000,
       blurDataURL:
-        "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADQAQCdASoMAA8AA4BaJZACdAED4xtkAAD+6vNHCxvGZUePhyP7DUQZahQOSfYRcsb+mzJj9R1kIKewCUHy+dzUlsExvWfptymfgckKAAA=",
+        "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAAAQAgCdASoMAA8AA4BaJQBOgBuffLvYUj3AAP7nOxuqnaMm9Iso0urHz6E8eDIHlYFwK6AraXsT8Knm7ubrElSuAAA=",
       glyph: "hand-heart",
       tone: "sand",
       seed: "handle-hero-arrival",

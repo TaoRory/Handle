@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Play } from "lucide-react";
 
-import { ConsultationButton } from "@/components/layout/ConsultationDialog";
+import { ConsultationLink } from "@/components/layout/ConsultationLink";
 import { HeroDecor } from "@/components/sections/HeroDecor";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
@@ -38,7 +38,7 @@ export function Hero({ copy }: { copy: HeroCopy }) {
     <section
       id={SECTION_IDS.hero}
       aria-labelledby="hero-title"
-      className="relative isolate pt-[calc(var(--header-h)+32px)] lg:pt-[calc(var(--header-h)+64px)]"
+      className="relative isolate snap-start pt-[calc(var(--header-h)+32px)] lg:pt-[calc(var(--header-h)+64px)]"
     >
       <HeroDecor />
 
@@ -93,10 +93,10 @@ export function Hero({ copy }: { copy: HeroCopy }) {
 
           <Reveal index={2}>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <ConsultationButton size="lg" className="rounded-sm">
+              <ConsultationLink size="lg" className="rounded-sm">
                 {copy.primaryCta}
                 <ArrowTrail />
-              </ConsultationButton>
+              </ConsultationLink>
 
               <Button asChild variant="outline" size="lg" className="rounded-sm">
                 <Link href={`#${SECTION_IDS.about}`}>

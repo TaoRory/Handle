@@ -110,6 +110,21 @@ above a title; if the case for a kicker comes back, bring back a shared componen
 scattering them, because the failure this replaced was exactly that — some bands kept a label and
 others lost it.
 
+### Section anchoring
+
+Scrolling settles onto bands: `scroll-snap-type: y proximity` on `html`, with `snap-start` declared
+by each band that is a stop. **Proximity, never mandatory** — several bands here run two to three
+viewports tall, and mandatory snapping traps a reader inside one, unable to reach the bottom of what
+they are reading. Proximity only pulls when the scroll comes to rest near a boundary, so long bands
+scroll normally and a fast flick past six of them is never interrupted.
+
+Which elements are stops is decided at the band, not by a selector in `globals.css`: the partner
+strip is deliberately not one, because it is a panel overlapping the hero rather than a chapter —
+the same reason `SectionNav` leaves it out. Services and experiences share a single stop, since they
+sit side by side at `xl` and two stops for one screen would fight. Snapping is switched off entirely
+under `prefers-reduced-motion`: it moves the page the reader did not ask it to move, and with smooth
+scrolling off it would arrive as a jump rather than a glide.
+
 Reading position is still stated, once: the fixed `SectionNav` down the right edge at `xl`.
 `SECTION_ORDER` in `lib/site-config.ts` is its single source, and `sectionStep()` exists only to
 feed it. The hero and the partner strip are excluded on purpose — they are the cover, not a
@@ -336,23 +351,16 @@ redirects unprefixed paths.
 | `Logo`                             | Inline SVG `icon` / `wordmark` / `lockup` at three sizes.                                                                                                   |
 | `IconTile`, `Rating`, `SocialIcon` | Small repeated atoms.                                                                                                                                       |
 
-**`ConsultationProvider` + `ConsultationButton`** — every "free consultation" button (header, hero,
-mobile drawer) opens one shared dialog holding the same `ConsultationForm`. They used to hand the
-visitor to WhatsApp, which is a good path for someone who already wants to talk and a dead end for
-someone still deciding: it leaves the site, needs an app, and asks them to compose the first message.
+**`ConsultationLink`** — the "free consultation" buttons in the header, the hero and the mobile
+drawer. All three are real anchors to the closing band, so they survive without JavaScript,
+middle-click into a new tab and copy as links; the smooth scroll is the browser's and `scroll-mt`
+on the band keeps the heading clear of the sticky header. The one thing added on top is that focus
+lands in the first field, via `CONSULTATION_FIELD_ATTR`, so a visitor can type the moment the page
+settles instead of tabbing there from the top — `focus({ preventScroll: true })` is what makes that
+compatible with the scroll, since a plain `focus()` jumps instantly and cancels it.
 
-The dialog is mounted once in the layout and opened through context rather than a `Dialog.Trigger`
-per button, because the triggers sit in server components across the tree and a `Root` each would
-mean a copy of the form each. Radix supplies the focus trap, `Esc`, scroll lock and `aria-modal`;
-the mobile drawer closes itself on the way out, since two stacked modals is a focus trap fighting a
-focus trap.
-
-The closing band keeps its own inline form — that one is the destination at the end of the argument,
-this one is for the visitor convinced early. Two live instances is why `ConsultationForm` namespaces
-its field ids with `useId`: duplicate ids would silently point every label and every
-`aria-describedby` at the first copy. Its `isCompact` prop exists for the same reason the dialog
-needed it — `sm:`/`lg:` are viewport widths, so inside a 560px dialog on a desktop screen the wide
-arrangement still fires and squashes three fields into a third of the space each.
+There was briefly a dialog here instead. It is not coming back: the form is the end of the page's
+argument, and a modal that skips the argument also skips the reason to fill it in.
 
 **`ConsultationSent`** — the confirmation that replaces the form's fields inside the same card
 once a request is written. A gold hairline ring closes, an ink tick strokes inside it, one halo
@@ -410,11 +418,10 @@ They are two different logos in two different palettes; unify them before launch
  ├ IntroCurtain ───────── IntroMark (hand flies in) · type fades up · curtain rises
  ├ SkipLink
  ├ ScrollProgress ──────── gold rule, scroll-linked
- ├ ConsultationProvider ─ the dialog every "free consultation" button opens
- ├ Navbar ── Logo · NavLinks · LocaleSwitcher · ConsultationButton · MobileNav(Dialog)
+ ├ Navbar ── Logo · NavLinks · LocaleSwitcher · ConsultationLink · MobileNav(Dialog)
  ├ SectionNav ─────────── 8 dots · hover labels · aria-current   (xl only)
  ├ main
- │  ├ Hero ─────────────── headline · lead · ConsultationButton + anchor · TrustStrip · full-bleed Media
+ │  ├ Hero ─────────────── headline · lead · ConsultationLink + anchor · TrustStrip · full-bleed Media
  │  ├ PartnerCarousel ──── Marquee × PartnerLogo   (overlaps the hero bottom)
  │  ├ 01 WhyVietnam ────── SectionHeading · ReasonCard × 4 (one gold)
  │  ├ 02 AboutHandle ───── INK panel · Media · copy · proof pills · Button

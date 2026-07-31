@@ -5,7 +5,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
 
-import { ConsultationButton } from "@/components/layout/ConsultationDialog";
+import { ConsultationLink } from "@/components/layout/ConsultationLink";
 import { ArrowTrail } from "@/components/ui/icon";
 import { Logo } from "@/components/ui/logo";
 import { contactLinks, siteConfig } from "@/lib/site-config";
@@ -86,16 +86,16 @@ export function MobileNav({ links, ctaLabel, menuLabel, closeLabel }: MobileNavP
           </nav>
 
           <div className="border-line flex flex-col gap-3 border-t px-5 py-6">
-            {/* Closes the drawer on the way out — two stacked modals is a focus
-                trap fighting a focus trap. */}
-            <ConsultationButton
+            {/* Closes the drawer first, otherwise the page scrolls behind a
+                panel that is still covering it. */}
+            <ConsultationLink
               size="lg"
               className="w-full"
-              onOpen={() => setIsOpen(false)}
+              onNavigate={() => setIsOpen(false)}
             >
               {ctaLabel}
               <ArrowTrail />
-            </ConsultationButton>
+            </ConsultationLink>
             <a
               href={contactLinks.tel}
               className="text-ink-600 hover:text-ink text-center text-sm transition-colors duration-200"

@@ -29,7 +29,9 @@ export function ServicesAndLifestyle({
   experiences,
 }: ServicesAndLifestyleProps) {
   return (
-    <div className="bg-surface relative">
+    // The snap stop is the pairing, not each half: services and experiences sit
+    // side by side at `xl`, and two stops for one screen would fight.
+    <div className="bg-surface relative snap-start">
       <Container>
         <div className="section-y grid gap-16 xl:grid-cols-2 xl:gap-14">
           <div id={servicesId} className="scroll-mt-[calc(var(--header-h)+24px)]">

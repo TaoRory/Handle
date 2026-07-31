@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 
 import { LocaleSwitcher } from "@/components/layout/LocaleSwitcher";
 import { MobileNav } from "@/components/layout/MobileNav";
-import { ConsultationButton } from "@/components/layout/ConsultationDialog";
+import { ConsultationLink } from "@/components/layout/ConsultationLink";
 import { ArrowTrail } from "@/components/ui/icon";
 import { Logo } from "@/components/ui/logo";
 import { useScrollSpy } from "@/hooks/use-scroll-spy";
@@ -114,13 +114,13 @@ export function Navbar({
             className="hidden sm:block"
           />
 
-          <ConsultationButton
+          <ConsultationLink
             size="sm"
             className="hidden h-11 rounded-sm px-5 sm:inline-flex"
           >
             {ctaLabel}
             <ArrowTrail />
-          </ConsultationButton>
+          </ConsultationLink>
 
           <MobileNav
             links={links}

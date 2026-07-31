@@ -46,12 +46,12 @@ export const en: SiteContent = {
       { id: "privacy", icon: "file-check", label: "Records kept confidential" },
     ],
     media: {
-      alt: "A pale wood reception desk in a medical facility lobby",
-      src: "/images/photos/hero.jpg",
+      alt: "A reception lobby with a marble desk, fluted wood walls and planted ferns",
+      src: "/images/photos/hero-lobby.jpg",
       width: 1600,
       height: 2000,
       blurDataURL:
-        "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADQAQCdASoMAA8AA4BaJZACdAED4xtkAAD+6vNHCxvGZUePhyP7DUQZahQOSfYRcsb+mzJj9R1kIKewCUHy+dzUlsExvWfptymfgckKAAA=",
+        "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAAAQAgCdASoMAA8AA4BaJQBOgBuffLvYUj3AAP7nOxuqnaMm9Iso0urHz6E8eDIHlYFwK6AraXsT8Knm7ubrElSuAAA=",
       glyph: "hand-heart",
       tone: "sand",
       seed: "handle-hero-arrival",

@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Loader2, MessageCircle, ShieldCheck } from "lucide-react";
 
 import { submitConsultation } from "@/app/actions/consultation";
+import { CONSULTATION_FIELD_ATTR } from "@/components/layout/ConsultationLink";
 import { ConsultationSent } from "@/components/sections/ConsultationSent";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -19,12 +20,6 @@ import type { CtaCopy, Locale } from "@/types";
 interface ConsultationFormProps {
   copy: CtaCopy["form"];
   locale: Locale;
-  /**
-   * Column layout for the dialog. The wide arrangement keys off `sm`/`lg`,
-   * which are viewport widths — inside a 640px dialog on a desktop screen those
-   * still fire and squash three fields into a third of the space each.
-   */
-  isCompact?: boolean;
 }
 
 // 14px is the floor this project holds type to, so the fields get tighter by
@@ -51,15 +46,10 @@ const swap = {
  * A status line alone was too quiet an answer for the one moment on the page
  * where the visitor has actually committed to something.
  */
-export function ConsultationForm({
-  copy,
-  locale,
-  isCompact = false,
-}: ConsultationFormProps) {
-  // The form renders twice on the page — once in the closing band, once inside
-  // the dialog every "free consultation" button opens — and both are in the DOM
-  // at the same time. Without a per-instance prefix the duplicate ids would
-  // silently point every label and every aria-describedby at the first copy.
+export function ConsultationForm({ copy, locale }: ConsultationFormProps) {
+  // Namespaced rather than literal. There is one form on the page today, but a
+  // second copy anywhere would otherwise duplicate every id and silently point
+  // its labels and aria-describedby at the first one.
   const uid = useId();
   const fieldId = (name: string) => `${uid}-${name}`;
 
@@ -92,11 +82,7 @@ export function ConsultationForm({
       : "text-danger";
 
   return (
-    <Card
-      variant="surface"
-      padding={isCompact ? "none" : "md"}
-      className={cn("rounded-sm", isCompact ? "shadow-none" : "shadow-lg")}
-    >
+    <Card variant="surface" padding="md" className="rounded-sm shadow-lg">
       {/*
         A live region that outlives the swap. The confirmation panel mounts
         fresh, and a region that did not exist a moment ago is unreliably
@@ -126,25 +112,15 @@ export function ConsultationForm({
             {...swap}
             transition={{ duration: DURATION.micro, ease: EASE_EXPO }}
           >
-            {isCompact ? null : (
-              <p className="font-brand text-gold mb-5 text-xs tracking-[0.18em] uppercase">
-                {copy.eyebrow}
-              </p>
-            )}
+            <p className="font-brand text-gold mb-5 text-xs tracking-[0.18em] uppercase">
+              {copy.eyebrow}
+            </p>
 
             <form action={handleAction} className="space-y-4">
               <input type="hidden" name="locale" value={locale} />
 
-              {/* Three across in the band, two in the dialog — the name takes
-                  the top row there and the two short fields share the second,
-                  which is what keeps the panel from needing to scroll. */}
-              <div
-                className={cn(
-                  "grid gap-4",
-                  isCompact ? "sm:grid-cols-2" : "sm:grid-cols-3",
-                )}
-              >
-                <div className={cn("space-y-1.5", isCompact && "sm:col-span-2")}>
+              <div className="grid gap-4 sm:grid-cols-3">
+                <div className="space-y-1.5">
                   <label
                     htmlFor={fieldId("fullName")}
                     className="text-ink text-sm font-medium"
@@ -152,6 +128,9 @@ export function ConsultationForm({
                     {copy.nameLabel}
                   </label>
                   <input
+                    // What the "free consultation" links hand focus to once the
+                    // page has scrolled here.
+                    {...{ [CONSULTATION_FIELD_ATTR]: "" }}
                     id={fieldId("fullName")}
                     name="fullName"
                     type="text"
@@ -272,13 +251,7 @@ export function ConsultationForm({
               {/* Actions and reassurance share the last row: the buttons sit left,
                   the status line and chips fill the space that would otherwise be
                   empty beside them. */}
-              <div
-                className={cn(
-                  "border-line flex flex-col gap-4 border-t pt-4",
-                  !isCompact &&
-                    "lg:flex-row lg:items-start lg:justify-between lg:gap-10",
-                )}
-              >
+              <div className="border-line flex flex-col gap-4 border-t pt-4 lg:flex-row lg:items-start lg:justify-between lg:gap-10">
                 <div className="flex flex-col gap-2.5 sm:flex-row sm:items-center">
                   <Button
                     type="submit"
@@ -309,22 +282,12 @@ export function ConsultationForm({
                   </Button>
                 </div>
 
-                <div
-                  className={cn(
-                    "flex flex-col gap-2",
-                    !isCompact && "lg:items-end lg:text-right",
-                  )}
-                >
+                <div className="flex flex-col gap-2 lg:items-end lg:text-right">
                   <p className={cn("text-sm", statusTone)} aria-live="polite">
                     {status || copy.hint}
                   </p>
 
-                  <div
-                    className={cn(
-                      "flex flex-wrap gap-2",
-                      !isCompact && "lg:justify-end",
-                    )}
-                  >
+                  <div className="flex flex-wrap gap-2 lg:justify-end">
                     {copy.chips.map((chip) => (
                       <span
                         key={chip}
