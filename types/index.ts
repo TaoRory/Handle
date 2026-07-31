@@ -169,6 +169,7 @@ export interface Partner {
   monogram: string;
   kind: string;
   city: string;
+  logo?: string;
 }
 
 /** A patient story. */

@@ -12,7 +12,7 @@ export const reasons: Localized<Reason[]> = {
       id: "waiting",
       icon: "clock",
       title: "Thời gian chờ quá lâu",
-      body: "Ở nhiều hệ thống y tế công, một ca khám chuyên khoa hoặc phẫu thuật có thể kéo dài từ vài tuần đến vài tháng — trong khi bệnh không chờ.",
+      body: "Ở nhiều hệ thống y tế công, một ca khám chuyên khoa hoặc phẫu thuật có thể kéo dài từ vài tuần đến vài tháng.",
     },
     {
       id: "cost",

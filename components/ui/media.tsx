@@ -31,11 +31,12 @@ interface MediaProps {
   priority?: boolean;
   /** Adds the 1.06 zoom-on-hover used by service and experience cards. */
   hasHoverZoom?: boolean;
-  rounded?: "md" | "lg" | "xl" | "none";
+  rounded?: "sm" | "md" | "lg" | "xl" | "none";
 }
 
 const radii = {
   none: "",
+  sm: "rounded-sm",
   md: "rounded-md",
   lg: "rounded-lg",
   xl: "rounded-xl",
@@ -73,7 +74,7 @@ export function Media({
         className={cn(
           "absolute inset-0",
           hasHoverZoom &&
-            "transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/card:scale-[1.06]",
+          "transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/card:scale-[1.06]",
         )}
       >
         {asset.src ? (

@@ -16,15 +16,16 @@ import type { Advantage, SectionCopy } from "@/types";
 function AdvantageCard({ advantage, index }: { advantage: Advantage; index: number }) {
   return (
     <Reveal index={index} className="h-full">
-      <Card variant="cream" isInteractive padding="lg" className="h-full gap-5">
+      <Card variant="cream" isInteractive padding="lg" className="h-full gap-5 rounded-sm">
         <span
           aria-hidden="true"
           className="bg-gold absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/card:scale-x-100"
         />
 
         <IconTile
+          tone="transparent"
           name={advantage.icon}
-          className="group-hover/card:bg-gold-100 group-hover/card:text-gold-600 group-hover/card:ring-gold/35"
+          className="group-hover/card:text-gold-600 group-hover/card:ring-gold/35"
         />
 
         <div className="flex flex-col gap-3">

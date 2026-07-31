@@ -30,9 +30,9 @@ function ReasonCard({
       <Card
         variant={isHighlighted ? "gold" : "surface"}
         isInteractive
-        padding="lg"
+        padding="md"
         className={cn(
-          "h-full gap-5",
+          "rounded-sm h-full flex-row items-start gap-5",
           isHighlighted
             ? "hover:border-ink/25 hover:shadow-lg"
             : "hover:border-gold/45",
@@ -43,14 +43,16 @@ function ReasonCard({
             as a mistake. Emphasis comes from the gold fill instead. */}
         <IconTile
           name={reason.icon}
+          tone={isHighlighted ? "gold" : "transparent"}
           className={cn(
+            "shrink-0",
             isHighlighted
               ? "bg-ink/10 text-ink ring-ink/15"
-              : "group-hover/card:bg-gold-100 group-hover/card:text-gold-600 group-hover/card:ring-gold/35",
+              : "group-hover/card:text-gold-600",
           )}
         />
 
-        <div className="flex flex-col gap-3">
+        <div className="flex min-w-0 flex-1 flex-col gap-3">
           <CardTitle
             className={cn("text-[1.1875rem] leading-snug", isHighlighted && "text-ink")}
           >
@@ -77,7 +79,7 @@ interface WhyVietnamProps {
 export function WhyVietnam({ copy, reasons, id, step, highlightId }: WhyVietnamProps) {
   return (
     <Section id={id} labelledBy="why-vietnam-title" tone="cream">
-      <Container>
+      <Container className="max-w-[90%] xl:max-w-[90%]">
         <SectionHeading
           id="why-vietnam-title"
           step={step}
