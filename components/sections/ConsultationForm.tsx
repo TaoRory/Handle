@@ -150,14 +150,14 @@ export function ConsultationForm({ copy, locale }: ConsultationFormProps) {
                 </div>
 
                 <div className="grid gap-3 pt-2 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center">
-                    <Button type="submit" variant="primary" size="lg" className="w-full">
+                    <Button type="submit" variant="primary" size="lg" className="w-full rounded-sm">
                         {isPending ? (
                             <Loader2 className="size-4 animate-spin" aria-hidden="true" />
                         ) : null}
                         {copy.submit}
                     </Button>
 
-                    <Button asChild variant="outline" size="lg" className="w-full sm:w-auto">
+                    <Button asChild variant="outline" size="lg" className="w-full sm:w-auto rounded-sm">
                         <Link href={contactLinks.whatsapp} target="_blank" rel="noreferrer noopener">
                             <MessageCircle className="size-4.5" strokeWidth={1.75} aria-hidden="true" />
                             {copy.chatLabel}

@@ -285,6 +285,10 @@ export interface CtaCopy {
     title: string;
     lead: string;
     chatLabel: string;
+    qrEyebrow: string;
+    qrTitle: string;
+    qrLead: string;
+    qrAction: string;
     nameLabel: string;
     emailLabel: string;
     phoneLabel: string;
