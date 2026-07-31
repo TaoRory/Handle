@@ -308,6 +308,24 @@ export interface CtaCopy {
     hint: string;
     privacy: string;
     chips: string[];
+    /**
+     * The panel that replaces the fields once a request is written.
+     *
+     * Kept as copy rather than reusing `success`: that sentence is the server
+     * action's return value and has to stand alone in a status line, while this
+     * is a laid-out confirmation with its own heading and next steps. Anything
+     * promised here must be something Handle actually does — no reference codes
+     * for rows we do not read back.
+     */
+    sent: {
+      eyebrow: string;
+      title: string;
+      accent: string;
+      lead: string;
+      /** What happens after the form. Three, in order, icon paired with label. */
+      steps: { id: string; icon: IconName; label: string; body: string }[];
+      again: string;
+    };
   };
 }
 

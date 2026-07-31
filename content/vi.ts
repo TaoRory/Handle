@@ -154,6 +154,33 @@ export const vi: SiteContent = {
       privacy:
         "Thông tin của bạn chỉ được dùng để liên hệ tư vấn và sẽ không chia sẻ cho bên thứ ba.",
       chips: ["Hỗ trợ tiếng Việt & tiếng Anh", "Thông tin được giữ kín"],
+      sent: {
+        eyebrow: "Đã tiếp nhận",
+        title: "Thông tin của bạn đã",
+        accent: "đến nơi.",
+        lead: "Một chuyên viên điều phối sẽ đọc yêu cầu của bạn và liên hệ qua email hoặc số điện thoại bạn vừa để lại.",
+        steps: [
+          {
+            id: "received",
+            icon: "file-check",
+            label: "Tiếp nhận",
+            body: "Yêu cầu của bạn đã được ghi nhận an toàn.",
+          },
+          {
+            id: "review",
+            icon: "user-round-check",
+            label: "Chuyên viên xem xét",
+            body: "Chúng tôi đối chiếu nhu cầu với bệnh viện và bác sĩ phù hợp.",
+          },
+          {
+            id: "reply",
+            icon: "message-circle",
+            label: "Phản hồi trong 24 giờ",
+            body: "Bạn nhận được tư vấn đầu tiên, miễn phí và không ràng buộc.",
+          },
+        ],
+        again: "Gửi yêu cầu khác",
+      },
     },
   },
 

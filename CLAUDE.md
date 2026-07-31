@@ -336,6 +336,22 @@ redirects unprefixed paths.
 | `Logo`                             | Inline SVG `icon` / `wordmark` / `lockup` at three sizes.                                                                                                   |
 | `IconTile`, `Rating`, `SocialIcon` | Small repeated atoms.                                                                                                                                       |
 
+**`ConsultationSent`** — the confirmation that replaces the form's fields inside the same card
+once a request is written. A gold hairline ring closes, an ink tick strokes inside it, one halo
+breathes outward and is gone; then the copy and a three-step "what happens next" settle in. The
+mark is a seal on a signed record, not a notification badge — the second the check turns into a
+green circle the whole page drops a tier.
+
+Two things it must keep. **The draw is CSS, not Motion** (`--animate-seal-*` in `globals.css`):
+`MotionConfig reducedMotion="user"` withholds a Motion animation's target, which for a stroke-dash
+draw leaves an empty ring and no tick for exactly the users the preference protects, whereas a CSS
+animation with `forwards` collapses to its drawn final frame under the reduce block. Same trap as
+the intro's type reveal. And **it may only promise what Handle actually does** — no reference code
+for a row the insert never reads back.
+
+The ring's dash length is its circumference (r=43 → 271); change `r` and the keyframe in
+`globals.css` changes with it.
+
 **Wayfinding layer** — three pieces whose only job is making a long page legible:
 `ScrollProgress` (2px gold rule, how far is left), `SectionNav` (fixed index down the right edge
 at `xl`, which part am I in, labels on hover/focus, `aria-current` for assistive tech) and
@@ -391,7 +407,7 @@ They are two different logos in two different palettes; unify them before launch
  │  │    └ LifestyleExperience ─ ExperienceCard × 6
  │  ├ 07 Testimonials ──── Embla · TestimonialCard × 6 · dots · arrows
  │  ├ 08 Faq ──────────── Accordion × 6 · sticky ink help card
- │  └ CtaBanner ────────── INK · headline · WhatsApp · consultation
+ │  └ CtaBanner ────────── INK · headline · ConsultationForm ⇄ ConsultationSent (seal)
  ├ Footer ── Logo · 4 link columns · contact · socials · legal
  └ FloatingContact ─────── WhatsApp, appears past 700px of scroll
 ```

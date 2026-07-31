@@ -158,6 +158,33 @@ export const en: SiteContent = {
       privacy:
         "Your details are used only to contact you about your consultation and are never shared with third parties.",
       chips: ["English & Vietnamese support", "Information kept private"],
+      sent: {
+        eyebrow: "Received",
+        title: "Your details have",
+        accent: "reached us.",
+        lead: "A care coordinator will read your request and reply on the email or phone number you just gave us.",
+        steps: [
+          {
+            id: "received",
+            icon: "file-check",
+            label: "Received",
+            body: "Your request has been recorded securely.",
+          },
+          {
+            id: "review",
+            icon: "user-round-check",
+            label: "A coordinator reviews it",
+            body: "We match your needs to the right hospital and surgeon.",
+          },
+          {
+            id: "reply",
+            icon: "message-circle",
+            label: "A reply within 24 hours",
+            body: "Your first consultation, free and with no obligation.",
+          },
+        ],
+        again: "Send another request",
+      },
     },
   },
 
