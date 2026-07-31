@@ -42,7 +42,12 @@ export const vi: SiteContent = {
       { id: "privacy", icon: "file-check", label: "Bảo mật thông tin tuyệt đối" },
     ],
     media: {
-      alt: "Chuyên viên Handle đón khách hàng quốc tế tại sảnh bệnh viện, ánh sáng ấm buổi sáng",
+      alt: "Quầy lễ tân bằng gỗ sáng trong sảnh cơ sở y tế",
+      src: "/images/photos/hero.jpg",
+      width: 1600,
+      height: 2000,
+      blurDataURL:
+        "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADQAQCdASoMAA8AA4BaJZACdAED4xtkAAD+6vNHCxvGZUePhyP7DUQZahQOSfYRcsb+mzJj9R1kIKewCUHy+dzUlsExvWfptymfgckKAAA=",
       glyph: "hand-heart",
       tone: "sand",
       seed: "handle-hero-arrival",
@@ -76,7 +81,12 @@ export const vi: SiteContent = {
       { id: "quote", icon: "receipt", label: "Báo giá trọn gói" },
     ],
     media: {
-      alt: "Điều phối viên Handle trao đổi Personal Care Plan cùng gia đình bệnh nhân trong phòng tư vấn",
+      alt: "Nhóm bác sĩ cùng xem hồ sơ bên cửa sổ phòng hội chẩn",
+      src: "/images/photos/about.jpg",
+      width: 1440,
+      height: 900,
+      blurDataURL:
+        "data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAADQAQCdASoMAAcAA4BaJZwAAl2+hWhggAD+6zYcCrD8aiK7IuywZ9j7ZWNbq/7F6UI6RfkigAA=",
       glyph: "notebook-pen",
       tone: "linen",
       seed: "handle-about-consult",

@@ -46,7 +46,12 @@ export const en: SiteContent = {
       { id: "privacy", icon: "file-check", label: "Records kept confidential" },
     ],
     media: {
-      alt: "A Handle coordinator welcoming an international patient in a hospital lobby, warm morning light",
+      alt: "A pale wood reception desk in a medical facility lobby",
+      src: "/images/photos/hero.jpg",
+      width: 1600,
+      height: 2000,
+      blurDataURL:
+        "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADQAQCdASoMAA8AA4BaJZACdAED4xtkAAD+6vNHCxvGZUePhyP7DUQZahQOSfYRcsb+mzJj9R1kIKewCUHy+dzUlsExvWfptymfgckKAAA=",
       glyph: "hand-heart",
       tone: "sand",
       seed: "handle-hero-arrival",
@@ -80,7 +85,12 @@ export const en: SiteContent = {
       { id: "quote", icon: "receipt", label: "One itemised quote" },
     ],
     media: {
-      alt: "A Handle coordinator walking a patient's family through their Personal Care Plan",
+      alt: "Clinicians reviewing a chart together by a consulting-room window",
+      src: "/images/photos/about.jpg",
+      width: 1440,
+      height: 900,
+      blurDataURL:
+        "data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAADQAQCdASoMAAcAA4BaJZwAAl2+hWhggAD+6zYcCrD8aiK7IuywZ9j7ZWNbq/7F6UI6RfkigAA=",
       glyph: "notebook-pen",
       tone: "linen",
       seed: "handle-about-consult",

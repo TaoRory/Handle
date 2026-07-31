@@ -463,11 +463,21 @@ Budget: **LCP < 2.0s**, **CLS < 0.02**, **INP < 150ms**, first-load JS **< 130KB
   layout actually uses. Note Next 16 defaults: `qualities: [75]` and `minimumCacheTTL: 4h` — both
   set explicitly here so the intent is visible.
 - Every media box has a locked `aspect-ratio` and a warm cream placeholder → zero CLS.
-- **Today the site ships without licensed photography.** `Media` renders `MediaPlate` — a seeded,
-  brand-palette SVG composition (gradient mesh, gold arc, fine grain, subject glyph) at the exact
-  aspect ratio the photograph will occupy. The moment a `src` is added to a record in `/data`,
-  `Media` switches to `next/image` and the layout does not move by a single pixel. The art-direction
-  brief for each slot lives beside the record as its `alt` string.
+- **The photographs are placeholders, not licensed brand photography.** Fourteen CC0 images sit in
+  `public/images/photos/`, cropped to the ratio their slot declares and given one shared warm grade
+  so unrelated sources read as a set. `PHOTO-CREDITS.md` records where each came from. Replace them
+  with commissioned work before launch — they show the layout with real media in it, they do not
+  depict Handle.
+- **Everything else still falls back to `MediaPlate`** — a seeded, brand-palette SVG composition at
+  the exact aspect ratio the photograph will occupy. Drop `src` from a record and `Media` returns to
+  the plate without the layout moving a pixel; add one and it switches to `next/image` the same way.
+- **`alt` describes the photograph, not the brief.** While a slot was empty its `alt` doubled as the
+  art direction for the shot that would fill it. Once a real `src` lands, that has to become a
+  description of what is actually in the frame — a screen reader reads the file that shipped, not
+  the one that was planned.
+- **Testimonial media stays abstract on purpose.** A real, identifiable face beside an invented
+  quote presents that person as having said something they did not. Plates until there are consenting
+  patients.
 - Remote hosts must be allow-listed in `next.config.ts` `images.remotePatterns` before use.
 
 ## Future CMS Integration

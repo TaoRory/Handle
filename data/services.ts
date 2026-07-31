@@ -15,7 +15,12 @@ export const services: Localized<Service[]> = {
       title: "Kiểm tra sức khỏe tổng quát",
       body: "Gói tầm soát chuyên sâu hoàn tất trong 1–2 ngày, có kết quả song ngữ.",
       media: {
-        alt: "Bác sĩ trao đổi kết quả tầm soát với khách hàng trong phòng khám sáng, tông kem ấm",
+        alt: "Ống nghe và điện thoại đặt trên bàn khám sáng màu",
+        src: "/images/photos/service-checkup.jpg",
+        width: 1080,
+        height: 810,
+        blurDataURL:
+          "data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAACwAQCdASoMAAkAA4BaJaQAAvaf8KLAAP72JG+7MBYCNronVvjcrOS11cVzr8bfd0yFHXZYAAA=",
         glyph: "clipboard-list",
         tone: "linen",
       },
@@ -28,7 +33,12 @@ export const services: Localized<Service[]> = {
       title: "Hỗ trợ sinh sản (IVF)",
       body: "Đồng hành trọn chu kỳ IVF, từ đánh giá ban đầu đến theo dõi thai kỳ sớm.",
       media: {
-        alt: "Bàn tay cha mẹ nâng niu bàn chân trẻ sơ sinh, ánh sáng dịu, nền vải lanh",
+        alt: "Bàn chân trẻ sơ sinh trên tấm chăn vải mềm",
+        src: "/images/photos/service-fertility.jpg",
+        width: 1080,
+        height: 810,
+        blurDataURL:
+          "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAADQAQCdASoMAAkAA4BaJQBOgCBvgeMeAAD+lKOO5DNgBS08G7cry035MHXpeK+Vt63Kcqb0z0onocqKvzh6HSFAAAA=",
         glyph: "baby",
         tone: "sand",
       },
@@ -40,7 +50,12 @@ export const services: Localized<Service[]> = {
       title: "Điều trị mắt",
       body: "Phẫu thuật khúc xạ, đục thủy tinh thể và điều trị võng mạc với thiết bị thế hệ mới.",
       media: {
-        alt: "Cận cảnh thiết bị đo khúc xạ trong phòng khám mắt, ánh sáng xanh dịu",
+        alt: "Cặp kính đặt trên mặt gỗ ấm dưới nắng chiều",
+        src: "/images/photos/service-eye.jpg",
+        width: 1080,
+        height: 810,
+        blurDataURL:
+          "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAADwAQCdASoMAAkAA4BaJYgCdAEAI7ul6SAA/pT917zqA+VLEtKLGAEDH6Wicprn3lQzvZJIHNyl2SRtKYvZElei5b0mvSNAsngUQAAA",
         glyph: "eye",
         tone: "dusk",
       },
@@ -52,7 +67,12 @@ export const services: Localized<Service[]> = {
       title: "Nha khoa",
       body: "Cấy ghép implant, chỉnh nha trong suốt và phục hình thẩm mỹ toàn hàm.",
       media: {
-        alt: "Ghế nha khoa hiện đại trong phòng điều trị tối giản, tông trắng kem",
+        alt: "Ghế nha khoa và khay dụng cụ trong phòng điều trị sáng",
+        src: "/images/photos/service-dental.jpg",
+        width: 1080,
+        height: 810,
+        blurDataURL:
+          "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADwAQCdASoMAAkAA4BaJaQAAuyRpFpGEgAA/sRrRLC5E9Z+J+NNaD3YJG6EBkEe0GWqp0SJI/LO2RUX/IlfBUV5RsAAAA==",
         glyph: "smile",
         tone: "sage",
       },
@@ -64,7 +84,12 @@ export const services: Localized<Service[]> = {
       title: "Thẩm mỹ",
       body: "Phẫu thuật thẩm mỹ và trẻ hóa da, thực hiện bởi bác sĩ được cấp chứng chỉ hành nghề.",
       media: {
-        alt: "Không gian phòng khám thẩm mỹ tối giản với ánh sáng khuếch tán và chất liệu đá ấm",
+        alt: "Khách hàng nhỏ tinh chất dưỡng da trên nền màu cát",
+        src: "/images/photos/service-aesthetic.jpg",
+        width: 1080,
+        height: 810,
+        blurDataURL:
+          "data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAADwAQCdASoMAAkAA4BaJQBOgCPqVgJFxAAA/uBy+9wamv5cya9PMhLJ2skHy6YR2MJj+qrSV+AAAA==",
         glyph: "sparkles",
         tone: "gold",
       },
@@ -76,7 +101,12 @@ export const services: Localized<Service[]> = {
       title: "Tim mạch",
       body: "Can thiệp mạch vành, điện sinh lý và chương trình phục hồi chức năng tim.",
       media: {
-        alt: "Màn hình theo dõi nhịp tim trong phòng can thiệp, tông xanh trầm",
+        alt: "Màn hình siêu âm trong phòng chẩn đoán hình ảnh",
+        src: "/images/photos/service-cardio.jpg",
+        width: 1080,
+        height: 810,
+        blurDataURL:
+          "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADwAQCdASoMAAkAA4BaJZQCw7D2OC7TBAAA/uftQx5Na1JRtqN81vxkWd7VdeZd63SmaZ9UqxejcHNEAGFNtQkm7c4AAA==",
         glyph: "heart-pulse",
         tone: "clay",
       },
@@ -90,7 +120,12 @@ export const services: Localized<Service[]> = {
       title: "Executive health screening",
       body: "A deep diagnostic package completed in one to two days, reported in both languages.",
       media: {
-        alt: "A doctor talking a patient through screening results in a bright, cream-toned clinic",
+        alt: "A stethoscope and a phone on a bright clinic desk",
+        src: "/images/photos/service-checkup.jpg",
+        width: 1080,
+        height: 810,
+        blurDataURL:
+          "data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAACwAQCdASoMAAkAA4BaJaQAAvaf8KLAAP72JG+7MBYCNronVvjcrOS11cVzr8bfd0yFHXZYAAA=",
         glyph: "clipboard-list",
         tone: "linen",
       },
@@ -103,7 +138,12 @@ export const services: Localized<Service[]> = {
       title: "Fertility & IVF",
       body: "Support across the full IVF cycle, from first assessment to early pregnancy monitoring.",
       media: {
-        alt: "Parents' hands cradling a newborn's feet, soft light on a linen background",
+        alt: "A newborn's feet resting on a soft woven blanket",
+        src: "/images/photos/service-fertility.jpg",
+        width: 1080,
+        height: 810,
+        blurDataURL:
+          "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAADQAQCdASoMAAkAA4BaJQBOgCBvgeMeAAD+lKOO5DNgBS08G7cry035MHXpeK+Vt63Kcqb0z0onocqKvzh6HSFAAAA=",
         glyph: "baby",
         tone: "sand",
       },
@@ -115,7 +155,12 @@ export const services: Localized<Service[]> = {
       title: "Ophthalmology",
       body: "Refractive surgery, cataract procedures and retinal care on current-generation equipment.",
       media: {
-        alt: "Close-up of refraction equipment in an eye clinic under soft blue light",
+        alt: "A pair of glasses on a warm wooden surface in late light",
+        src: "/images/photos/service-eye.jpg",
+        width: 1080,
+        height: 810,
+        blurDataURL:
+          "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAADwAQCdASoMAAkAA4BaJYgCdAEAI7ul6SAA/pT917zqA+VLEtKLGAEDH6Wicprn3lQzvZJIHNyl2SRtKYvZElei5b0mvSNAsngUQAAA",
         glyph: "eye",
         tone: "dusk",
       },
@@ -127,7 +172,12 @@ export const services: Localized<Service[]> = {
       title: "Dental care",
       body: "Implants, clear aligners and full-arch aesthetic restoration.",
       media: {
-        alt: "A modern dental chair in a minimal treatment room, white and cream tones",
+        alt: "A dental chair and instrument tray in a bright treatment room",
+        src: "/images/photos/service-dental.jpg",
+        width: 1080,
+        height: 810,
+        blurDataURL:
+          "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADwAQCdASoMAAkAA4BaJaQAAuyRpFpGEgAA/sRrRLC5E9Z+J+NNaD3YJG6EBkEe0GWqp0SJI/LO2RUX/IlfBUV5RsAAAA==",
         glyph: "smile",
         tone: "sage",
       },
@@ -139,7 +189,12 @@ export const services: Localized<Service[]> = {
       title: "Aesthetics",
       body: "Cosmetic surgery and skin rejuvenation, performed only by board-certified surgeons.",
       media: {
-        alt: "A minimal aesthetic clinic interior with diffused light and warm stone surfaces",
+        alt: "A client applying a skincare serum against a sand-toned backdrop",
+        src: "/images/photos/service-aesthetic.jpg",
+        width: 1080,
+        height: 810,
+        blurDataURL:
+          "data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAADwAQCdASoMAAkAA4BaJQBOgCPqVgJFxAAA/uBy+9wamv5cya9PMhLJ2skHy6YR2MJj+qrSV+AAAA==",
         glyph: "sparkles",
         tone: "gold",
       },
@@ -151,7 +206,12 @@ export const services: Localized<Service[]> = {
       title: "Cardiology",
       body: "Coronary intervention, electrophysiology and structured cardiac rehabilitation.",
       media: {
-        alt: "Cardiac monitoring displays in an intervention suite, deep blue tones",
+        alt: "An ultrasound monitor in a diagnostic imaging room",
+        src: "/images/photos/service-cardio.jpg",
+        width: 1080,
+        height: 810,
+        blurDataURL:
+          "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADwAQCdASoMAAkAA4BaJZQCw7D2OC7TBAAA/uftQx5Na1JRtqN81vxkWd7VdeZd63SmaZ9UqxejcHNEAGFNtQkm7c4AAA==",
         glyph: "heart-pulse",
         tone: "clay",
       },

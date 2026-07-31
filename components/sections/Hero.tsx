@@ -11,6 +11,9 @@ import { SECTION_IDS, contactLinks } from "@/lib/site-config";
 
 import type { HeroCopy } from "@/types";
 
+/** Shared by both hero placements so they resolve to one download. */
+const HERO_SIZES = "(max-width: 1023px) 100vw, 58vw";
+
 /**
  * The first screen.
  *
@@ -40,16 +43,23 @@ export function Hero({ copy }: { copy: HeroCopy }) {
 
       {/* ---- Full-bleed media, desktop ---- */}
       <div
-        aria-hidden={copy.media.src ? undefined : "true"}
+        aria-hidden="true"
         className="absolute inset-y-0 right-0 -z-10 hidden w-[58%] lg:block xl:w-[56%]"
       >
+        {/*
+          This layer and the band below are the same photograph at two
+          placements, and `display: none` does not stop a browser fetching an
+          image. They therefore declare an identical `sizes` so both resolve to
+          the same srcset candidate and the second is a cache hit rather than a
+          second download of the LCP image. Only the band carries the alt.
+        */}
         <Media
           asset={copy.media}
           seed="hero"
           ratio="fill"
           rounded="none"
           priority
-          sizes="58vw"
+          sizes={HERO_SIZES}
           className="size-full"
         />
 
@@ -130,7 +140,7 @@ export function Hero({ copy }: { copy: HeroCopy }) {
           ratio="wide"
           rounded="none"
           priority
-          sizes="100vw"
+          sizes={HERO_SIZES}
         />
       </Reveal>
     </section>

@@ -10,7 +10,12 @@ export const experiences: Localized<Experience[]> = {
       title: "Ẩm thực tinh tế",
       body: "Thực đơn phù hợp với chỉ định của bác sĩ, từ quán vỉa hè đến nhà hàng fine dining.",
       media: {
-        alt: "Mâm món Việt bày trên bàn gỗ mộc, ánh sáng tự nhiên buổi trưa",
+        alt: "Tô phở bò nóng với hành và rau thơm",
+        src: "/images/photos/experience-cuisine.jpg",
+        width: 810,
+        height: 1080,
+        blurDataURL:
+          "data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAACQAgCdASoMABAAA4BaJaACdAYwTypzvJNRl1w2AAD+tfBeFx86Cc4N3XxsqSmhm0cdIMrDelElW70kdUQVFyNxJJeyjH4jEf0ixIJPyzN+eYo+0T++dejzE1v7x3+p1FCBZqBSVdZWNxgAAAA=",
         glyph: "utensils",
         tone: "clay",
       },
@@ -22,7 +27,12 @@ export const experiences: Localized<Experience[]> = {
       title: "Tham quan & khám phá",
       body: "Lịch trình nhẹ nhàng quanh thành phố, sắp xếp theo thể trạng từng ngày của bạn.",
       media: {
-        alt: "Phố cổ với đèn lồng giấy lúc hoàng hôn, tông vàng ấm",
+        alt: "Người bán hàng đội nón lá giữa chợ Đông Ba, Huế",
+        src: "/images/photos/experience-sightseeing.jpg",
+        width: 810,
+        height: 1080,
+        blurDataURL:
+          "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAADwAQCdASoMABAAA4BaJQBdgBwjrIPL1KIAzjj/Swe2T1n6tZGT9N8dOYj+fvJCTGCRWlJKfio+MhX8tPlaIKN5VQ9EB9k0RIePIwWyEQ4Sb1Zw5TyFwAAA",
         glyph: "landmark",
         tone: "gold",
       },
@@ -34,7 +44,12 @@ export const experiences: Localized<Experience[]> = {
       title: "Mua sắm cao cấp",
       body: "Đưa đón tới các trung tâm thương mại và tiệm may đo truyền thống.",
       media: {
-        alt: "Không gian cửa hiệu cao cấp với ánh sáng ấm và chất liệu gỗ sáng",
+        alt: "Trung tâm thương mại nhìn từ tầng trên",
+        src: "/images/photos/experience-shopping.jpg",
+        width: 810,
+        height: 1080,
+        blurDataURL:
+          "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAABQAgCdASoMABAAA4BaJZwAD5IPNkY164a1aAAA/uryD/gFKhBZ+e8V2SjKy7ou/wmoM4iqqjbIN2n7ExIgEGGNxP4UPzsLFwRzXwHC0wYRdn4GrcMWgvRQAAA=",
         glyph: "shopping-bag",
         tone: "linen",
       },
@@ -46,7 +61,12 @@ export const experiences: Localized<Experience[]> = {
       title: "Cà phê & văn hóa",
       body: "Những buổi sáng chậm rãi trong các quán cà phê đặc trưng của người Việt.",
       media: {
-        alt: "Ly cà phê phin đặt cạnh cửa sổ nắng, bàn gỗ tối",
+        alt: "Phin cà phê Việt Nam nhỏ giọt bên đĩa bánh mì",
+        src: "/images/photos/experience-coffee.jpg",
+        width: 810,
+        height: 1080,
+        blurDataURL:
+          "data:image/webp;base64,UklGRnQAAABXRUJQVlA4IGgAAACQAgCdASoMABAAA4BaJQBOgYoCAuLcQLpq1mufcAD+1zyS+Ocg5uX5AbzmVyEc/gJJtMPsES5GBNbV6IoiVoHDOVSM5K67wKnkIMTwY7TV7Y09C91M3Rgrzj0LJCdYElbckaCAoJsAAA==",
         glyph: "coffee",
         tone: "dusk",
       },
@@ -58,7 +78,12 @@ export const experiences: Localized<Experience[]> = {
       title: "Thư giãn & chăm sóc",
       body: "Spa và trị liệu phục hồi được chọn lọc, phù hợp với giai đoạn hậu phẫu.",
       media: {
-        alt: "Góc spa yên tĩnh với đá ấm, khăn cuộn và cây xanh",
+        alt: "Những lọ tinh dầu trên quầy spa trong ánh sáng ấm",
+        src: "/images/photos/experience-wellness.jpg",
+        width: 810,
+        height: 1080,
+        blurDataURL:
+          "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADwAQCdASoMABAAA4BaJQBOgBtwSUKczMAA/vCbVFwlYUNSybYUtgME8n7uI4JZbHNFH8EXdezbqP9r+NEe7BGvQ6zCH34XYmO6DvL4AAA=",
         glyph: "waves",
         tone: "sage",
       },
@@ -70,7 +95,12 @@ export const experiences: Localized<Experience[]> = {
       title: "Mẹo du lịch hữu ích",
       body: "Cẩm nang ngắn về visa, tiền tệ, SIM và di chuyển — gửi trước khi bạn khởi hành.",
       media: {
-        alt: "Sổ tay du lịch, hộ chiếu và bản đồ giấy trên nền vải lanh",
+        alt: "Hộ chiếu đặt trên tấm bản đồ thế giới",
+        src: "/images/photos/experience-tips.jpg",
+        width: 810,
+        height: 1080,
+        blurDataURL:
+          "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAAAwAgCdASoMABAAA4BaJbACdAEWPLiqvdOvAAD+AXOxuWuq0IEv3t8Bgd5rt7K5HGmN6qwtPhj2XHpfjaYvpEjDZnq4hPvuG3VmFn+HpcBm9mEYVzeQ6HgAAAA=",
         glyph: "compass",
         tone: "sand",
       },
@@ -84,7 +114,12 @@ export const experiences: Localized<Experience[]> = {
       title: "Considered cuisine",
       body: "Menus that respect your doctor's instructions, from street stalls to fine dining.",
       media: {
-        alt: "A spread of Vietnamese dishes on a raw wood table in natural midday light",
+        alt: "A bowl of beef phở with spring onion and herbs",
+        src: "/images/photos/experience-cuisine.jpg",
+        width: 810,
+        height: 1080,
+        blurDataURL:
+          "data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAACQAgCdASoMABAAA4BaJaACdAYwTypzvJNRl1w2AAD+tfBeFx86Cc4N3XxsqSmhm0cdIMrDelElW70kdUQVFyNxJJeyjH4jEf0ixIJPyzN+eYo+0T++dejzE1v7x3+p1FCBZqBSVdZWNxgAAAA=",
         glyph: "utensils",
         tone: "clay",
       },
@@ -96,7 +131,12 @@ export const experiences: Localized<Experience[]> = {
       title: "Sightseeing & discovery",
       body: "Gentle itineraries around the city, paced against how you feel that day.",
       media: {
-        alt: "An old-quarter street of paper lanterns at dusk in warm amber light",
+        alt: "A vendor in a conical hat at Đông Ba market in Huế",
+        src: "/images/photos/experience-sightseeing.jpg",
+        width: 810,
+        height: 1080,
+        blurDataURL:
+          "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAADwAQCdASoMABAAA4BaJQBdgBwjrIPL1KIAzjj/Swe2T1n6tZGT9N8dOYj+fvJCTGCRWlJKfio+MhX8tPlaIKN5VQ9EB9k0RIePIwWyEQ4Sb1Zw5TyFwAAA",
         glyph: "landmark",
         tone: "gold",
       },
@@ -108,7 +148,12 @@ export const experiences: Localized<Experience[]> = {
       title: "Considered shopping",
       body: "Transfers to the city's design districts and to traditional bespoke tailors.",
       media: {
-        alt: "A refined boutique interior with warm lighting and pale timber fittings",
+        alt: "A shopping centre seen from the floor above",
+        src: "/images/photos/experience-shopping.jpg",
+        width: 810,
+        height: 1080,
+        blurDataURL:
+          "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAABQAgCdASoMABAAA4BaJZwAD5IPNkY164a1aAAA/uryD/gFKhBZ+e8V2SjKy7ou/wmoM4iqqjbIN2n7ExIgEGGNxP4UPzsLFwRzXwHC0wYRdn4GrcMWgvRQAAA=",
         glyph: "shopping-bag",
         tone: "linen",
       },
@@ -120,7 +165,12 @@ export const experiences: Localized<Experience[]> = {
       title: "Coffee & culture",
       body: "Slow mornings in the cafés that define how this country actually lives.",
       media: {
-        alt: "A phin coffee set beside a sunlit window on a dark wooden table",
+        alt: "A Vietnamese phin dripping coffee beside a plate of bánh mì",
+        src: "/images/photos/experience-coffee.jpg",
+        width: 810,
+        height: 1080,
+        blurDataURL:
+          "data:image/webp;base64,UklGRnQAAABXRUJQVlA4IGgAAACQAgCdASoMABAAA4BaJQBOgYoCAuLcQLpq1mufcAD+1zyS+Ocg5uX5AbzmVyEc/gJJtMPsES5GBNbV6IoiVoHDOVSM5K67wKnkIMTwY7TV7Y09C91M3Rgrzj0LJCdYElbckaCAoJsAAA==",
         glyph: "coffee",
         tone: "dusk",
       },
@@ -132,7 +182,12 @@ export const experiences: Localized<Experience[]> = {
       title: "Rest & recovery",
       body: "Vetted spa and recovery therapies appropriate to your post-operative stage.",
       media: {
-        alt: "A quiet spa corner with warm stones, rolled towels and green foliage",
+        alt: "Bottles of massage oil on a spa counter in warm light",
+        src: "/images/photos/experience-wellness.jpg",
+        width: 810,
+        height: 1080,
+        blurDataURL:
+          "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADwAQCdASoMABAAA4BaJQBOgBtwSUKczMAA/vCbVFwlYUNSybYUtgME8n7uI4JZbHNFH8EXdezbqP9r+NEe7BGvQ6zCH34XYmO6DvL4AAA=",
         glyph: "waves",
         tone: "sage",
       },
@@ -144,7 +199,12 @@ export const experiences: Localized<Experience[]> = {
       title: "Practical travel notes",
       body: "A short brief on visas, currency, SIM cards and transport — sent before you fly.",
       media: {
-        alt: "A travel notebook, passport and paper map laid out on linen",
+        alt: "A passport lying on a world map",
+        src: "/images/photos/experience-tips.jpg",
+        width: 810,
+        height: 1080,
+        blurDataURL:
+          "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAAAwAgCdASoMABAAA4BaJbACdAEWPLiqvdOvAAD+AXOxuWuq0IEv3t8Bgd5rt7K5HGmN6qwtPhj2XHpfjaYvpEjDZnq4hPvuG3VmFn+HpcBm9mEYVzeQ6HgAAAA=",
         glyph: "compass",
         tone: "sand",
       },
