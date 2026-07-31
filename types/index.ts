@@ -280,6 +280,26 @@ export interface CtaCopy {
   lead: string;
   whatsapp: string;
   consultation: string;
+  form: {
+    eyebrow: string;
+    title: string;
+    lead: string;
+    chatLabel: string;
+    nameLabel: string;
+    emailLabel: string;
+    phoneLabel: string;
+    messageLabel: string;
+    namePlaceholder: string;
+    emailPlaceholder: string;
+    phonePlaceholder: string;
+    messagePlaceholder: string;
+    submit: string;
+    success: string;
+    error: string;
+    hint: string;
+    privacy: string;
+    chips: string[];
+  };
 }
 
 /** Everything the homepage renders, in one language. */

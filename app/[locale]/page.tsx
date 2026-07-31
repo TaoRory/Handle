@@ -148,7 +148,7 @@ export default async function HomePage({
         help={content.faq.help}
       />
 
-      <CtaBanner id={SECTION_IDS.cta} copy={content.cta} />
+      <CtaBanner id={SECTION_IDS.cta} copy={content.cta} locale={locale} />
     </>
   );
 }

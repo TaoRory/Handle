@@ -1,13 +1,8 @@
-import Link from "next/link";
-import { MessageCircle } from "lucide-react";
-
-import { Button } from "@/components/ui/button";
+import { ConsultationForm } from "@/components/sections/ConsultationForm";
 import { Container } from "@/components/ui/container";
-import { ArrowTrail } from "@/components/ui/icon";
 import { Reveal } from "@/components/ui/reveal";
-import { contactLinks } from "@/lib/site-config";
 
-import type { CtaCopy } from "@/types";
+import type { CtaCopy, Locale } from "@/types";
 
 /**
  * The closing ask.
@@ -16,7 +11,15 @@ import type { CtaCopy } from "@/types";
  * visitor sees carries the most contrast. Two paths out: an immediate chat, or
  * a scheduled consultation for the more deliberate reader.
  */
-export function CtaBanner({ id, copy }: { id: string; copy: CtaCopy }) {
+export function CtaBanner({
+  id,
+  copy,
+  locale,
+}: {
+  id: string;
+  copy: CtaCopy;
+  locale: Locale;
+}) {
   return (
     <section
       id={id}
@@ -24,7 +27,7 @@ export function CtaBanner({ id, copy }: { id: string; copy: CtaCopy }) {
       className="relative scroll-mt-[calc(var(--header-h)+24px)] pb-16 lg:pb-24"
     >
       <Container>
-        <div className="bg-ink relative isolate overflow-hidden rounded-xl px-6 py-14 sm:px-10 lg:px-14 lg:py-20">
+        <div className="bg-ink relative isolate overflow-hidden rounded-sm mt-14 px-6 py-14 sm:px-10 lg:px-14 lg:py-20">
           {/* Warm bloom behind the copy, and a gold hairline along the top. */}
           <span
             aria-hidden="true"
@@ -35,8 +38,8 @@ export function CtaBanner({ id, copy }: { id: string; copy: CtaCopy }) {
             className="via-gold/70 absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent to-transparent"
           />
 
-          <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-16">
-            <div className="flex flex-col gap-5">
+          <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:gap-16">
+            <div className="flex flex-col gap-5 lg:pt-2">
               <Reveal>
                 <h2 id="cta-title" className="text-h2 text-cream-100 max-w-[20ch]">
                   {copy.title}{" "}
@@ -49,30 +52,8 @@ export function CtaBanner({ id, copy }: { id: string; copy: CtaCopy }) {
               </Reveal>
             </div>
 
-            <Reveal index={2}>
-              <div className="flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
-                <Button asChild variant="whatsapp" size="lg">
-                  <Link
-                    href={contactLinks.whatsapp}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
-                    <MessageCircle
-                      className="size-4.5"
-                      strokeWidth={1.75}
-                      aria-hidden="true"
-                    />
-                    {copy.whatsapp}
-                  </Link>
-                </Button>
-
-                <Button asChild variant="onDark" size="lg">
-                  <Link href={contactLinks.mail}>
-                    {copy.consultation}
-                    <ArrowTrail />
-                  </Link>
-                </Button>
-              </div>
+            <Reveal index={2} >
+              <ConsultationForm copy={copy.form} locale={locale} />
             </Reveal>
           </div>
         </div>
