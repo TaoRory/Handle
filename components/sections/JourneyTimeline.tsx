@@ -35,7 +35,7 @@ export function JourneyTimeline({ id, step, copy, steps }: JourneyTimelineProps)
         <JourneyRail steps={steps} />
 
         <Reveal index={2} className="mt-14 flex justify-center lg:mt-16">
-          <Button asChild variant="outline" size="lg">
+          <Button asChild variant="outline" size="lg" >
             <Link href={contactLinks.whatsapp}>
               {copy.action}
               <ArrowTrail />

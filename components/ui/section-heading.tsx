@@ -13,10 +13,8 @@ interface EyebrowProps {
    */
   tone?: "gold" | "cream" | "onGold";
   /**
-   * Two-digit section ordinal, e.g. "03". Rendered as a filled gold chip.
-   * This is the page's wayfinding device: it makes every band visibly *a
-   * numbered part* rather than more scrolling, which is what a long single-page
-   * site otherwise degenerates into.
+   * Optional section ordinal. Kept for API compatibility, but no longer
+   * rendered because the user requested text-only section labels.
    */
   step?: string;
 }
@@ -49,19 +47,7 @@ export function Eyebrow({ children, className, tone = "gold", step }: EyebrowPro
         className,
       )}
     >
-      {step ? (
-        <span
-          aria-hidden="true"
-          className={cn(
-            "grid size-7 place-items-center rounded-md text-[0.6875rem] tracking-normal tabular-nums",
-            chip,
-          )}
-        >
-          {step}
-        </span>
-      ) : null}
-
-      <span aria-hidden="true" className={cn("h-px", step ? "w-6" : "w-8", rule)} />
+      <span aria-hidden="true" className={cn("h-px w-8", rule)} />
       {children}
     </span>
   );
@@ -85,12 +71,10 @@ interface SectionHeadingProps {
 }
 
 /**
- * Eyebrow + title + lead, with the project's one-accent-word rule baked in.
+ * Title + lead, with the project's one-accent-word rule baked in.
  */
 export function SectionHeading({
   id,
-  eyebrow,
-  step,
   title,
   accent,
   lead,
@@ -112,14 +96,6 @@ export function SectionHeading({
       )}
     >
       <div className={cn("flex flex-col gap-4", isCentered && "items-center")}>
-        {eyebrow ? (
-          <Reveal>
-            <Eyebrow step={step} tone={tone === "cream" ? "cream" : "gold"}>
-              {eyebrow}
-            </Eyebrow>
-          </Reveal>
-        ) : null}
-
         <Reveal index={1}>
           <Tag
             id={id}

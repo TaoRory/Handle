@@ -33,11 +33,11 @@ export function AboutHandle({ id, step, copy }: AboutHandleProps) {
       className="relative scroll-mt-[calc(var(--header-h)+24px)] overflow-hidden py-4"
     >
       <Container>
-        <div className="bg-ink relative isolate overflow-hidden rounded-xl">
+        <div className="bg-ink relative isolate overflow-hidden rounded-sm">
           {/* Warm bloom behind the copy column, and a gold rule along the top. */}
           <span
             aria-hidden="true"
-            className="rounded-pill absolute -top-40 -right-24 -z-10 size-[560px] bg-[radial-gradient(circle,rgba(201,168,106,0.26)_0%,transparent_66%)] blur-2xl"
+            className="rounded-sm absolute -top-40 -right-24 -z-10 size-[560px] bg-[radial-gradient(circle,rgba(201,168,106,0.26)_0%,transparent_66%)] blur-2xl"
           />
           <span
             aria-hidden="true"
@@ -50,7 +50,7 @@ export function AboutHandle({ id, step, copy }: AboutHandleProps) {
                 asset={copy.media}
                 seed="about"
                 ratio="wide"
-                rounded="lg"
+                rounded="sm"
                 sizes="(max-width: 1024px) 92vw, 46vw"
                 className="shadow-lg"
               />
@@ -83,7 +83,7 @@ export function AboutHandle({ id, step, copy }: AboutHandleProps) {
                   {copy.pills.map((pill) => (
                     <li
                       key={pill.id}
-                      className="border-cream/15 text-cream/80 rounded-pill inline-flex items-center gap-2 border px-3.5 py-2 text-[0.8125rem]"
+                      className="border-cream/15 text-cream/80 rounded-sm inline-flex items-center gap-2 border px-3.5 py-2 text-[0.8125rem]"
                     >
                       <Icon
                         name={pill.icon}
@@ -98,7 +98,7 @@ export function AboutHandle({ id, step, copy }: AboutHandleProps) {
 
               <Reveal index={5}>
                 <div className="mt-1 flex flex-wrap items-center gap-3">
-                  <Button asChild size="lg">
+                  <Button asChild size="lg" className="rounded-sm">
                     <Link href={contactLinks.whatsapp}>
                       {copy.action}
                       <ArrowTrail />

@@ -82,14 +82,14 @@ export function Hero({ copy }: { copy: HeroCopy }) {
 
           <Reveal index={2}>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <Button asChild size="lg">
+              <Button asChild size="lg" className="rounded-sm">
                 <Link href={contactLinks.whatsapp}>
                   {copy.primaryCta}
                   <ArrowTrail />
                 </Link>
               </Button>
 
-              <Button asChild variant="outline" size="lg">
+              <Button asChild variant="outline" size="lg" className="rounded-sm">
                 <Link href={`#${SECTION_IDS.about}`}>
                   <span className="bg-gold/15 text-gold-600 rounded-pill -ml-2 inline-flex size-8 items-center justify-center">
                     <Play

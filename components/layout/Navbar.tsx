@@ -115,7 +115,7 @@ export function Navbar({
             className="hidden sm:block"
           />
 
-          <Button asChild size="sm" className="hidden h-11 px-5 sm:inline-flex">
+          <Button asChild size="sm" className="rounded-sm hidden h-11 px-5 sm:inline-flex">
             <Link href={contactLinks.whatsapp}>
               {ctaLabel}
               <ArrowTrail />

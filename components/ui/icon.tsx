@@ -53,25 +53,26 @@ export function IconTile({
   className,
 }: {
   name: IconName;
-  tone?: "cream" | "gold" | "ink";
+  tone?: "cream" | "gold" | "ink" | "transparent";
   className?: string;
 }) {
   const tones = {
     cream: "bg-cream-300 text-ink-600 ring-line",
     gold: "bg-gold-100 text-gold-600 ring-gold/35",
     ink: "bg-ink text-gold ring-ink",
+    transparent: "bg-transparent text-ink-600",
   } as const;
 
   return (
     <span
       className={cn(
-        "inline-flex size-12 items-center justify-center rounded-md ring-1 ring-inset",
+        "inline-flex size-12 items-center justify-center",
         "transition-colors duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]",
         tones[tone],
         className,
       )}
     >
-      <Icon name={name} className="size-[22px]" />
+      <Icon name={name} className="size-[48px]" />
     </span>
   );
 }

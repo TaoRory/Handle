@@ -92,7 +92,7 @@ export default async function HomePage({
         copy={content.whyVietnam}
         reasons={getReasons(locale)}
         // The one positive among four problems — it gets the gold fill.
-        highlightId="value"
+        highlightId="temp"
       />
 
       <AboutHandle
