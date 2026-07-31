@@ -141,7 +141,8 @@ export const vi: SiteContent = {
       chatLabel: "Chat trên WhatsApp",
       qrEyebrow: "Quét mã nhanh",
       qrTitle: "Hoặc liên hệ ngay",
-      qrLead: "Nếu muốn nhắn ngay, dùng điện thoại quét mã để mở cuộc trò chuyện với đội ngũ Handle.",
+      qrLead:
+        "Nếu muốn nhắn ngay, dùng điện thoại quét mã để mở cuộc trò chuyện với đội ngũ Handle.",
       qrAction: "Mở WhatsApp ngay",
       nameLabel: "Họ và tên",
       emailLabel: "Email",
@@ -150,12 +151,15 @@ export const vi: SiteContent = {
       namePlaceholder: "Nguyễn Văn A",
       emailPlaceholder: "ten@domain.com",
       phonePlaceholder: "+84...",
-      messagePlaceholder: "Mô tả nhu cầu, chuyên khoa hoặc thời gian bạn muốn được tư vấn.",
+      messagePlaceholder:
+        "Mô tả nhu cầu, chuyên khoa hoặc thời gian bạn muốn được tư vấn.",
       submit: "Gửi thông tin",
-      success: "Cảm ơn bạn. Chúng tôi đã nhận thông tin và sẽ phản hồi sớm nhất có thể.",
+      success:
+        "Cảm ơn bạn. Chúng tôi đã nhận thông tin và sẽ phản hồi sớm nhất có thể.",
       error: "Đã có lỗi xảy ra. Vui lòng thử lại.",
       hint: "Phản hồi trong vòng 24 giờ làm việc.",
-      privacy: "Thông tin của bạn chỉ được dùng để liên hệ tư vấn và sẽ không chia sẻ cho bên thứ ba.",
+      privacy:
+        "Thông tin của bạn chỉ được dùng để liên hệ tư vấn và sẽ không chia sẻ cho bên thứ ba.",
       chips: ["Hỗ trợ tiếng Việt & tiếng Anh", "Thông tin được giữ kín"],
     },
   },

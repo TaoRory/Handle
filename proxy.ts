@@ -5,11 +5,11 @@ import { DEFAULT_LOCALE } from "@/content";
 import { LOCALES } from "@/types";
 
 /**
- * Locale routing and Supabase Session Handling.
+ * Locale routing, plus Supabase session refresh when Supabase is configured.
  *
  * Every page lives under `/[locale]`, so a request without a prefix is
  * redirected to the visitor's best match from `Accept-Language`, falling back
- * to Vietnamese.
+ * to Vietnamese. Renamed from `middleware` per the Next 16 convention.
  */
 function resolveLocale(request: NextRequest) {
   const header = request.headers.get("accept-language") ?? "";
@@ -29,6 +29,46 @@ function resolveLocale(request: NextRequest) {
   return match?.tag ?? DEFAULT_LOCALE;
 }
 
+/**
+ * Refresh the Supabase auth cookie, if there is a Supabase to talk to.
+ *
+ * The guard is not defensive tidiness — without it the whole site 500s. This
+ * runs on every matched request, and `createServerClient` throws when the URL
+ * or key is missing, so an unset environment variable took down every page
+ * rather than just the consultation form. A build passes either way, which is
+ * what makes it easy to miss.
+ *
+ * Worth revisiting: the site has no sign-in of any kind, so this round-trip to
+ * Supabase currently buys nothing and costs latency on every page view. Keep it
+ * only if accounts are actually coming.
+ */
+async function refreshSession(request: NextRequest, response: NextResponse) {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  if (!url || !anonKey) return;
+
+  const supabase = createServerClient(url, anonKey, {
+    cookies: {
+      getAll() {
+        return request.cookies.getAll();
+      },
+      setAll(cookiesToSet) {
+        // Write to the incoming request too, so Server Components rendered
+        // after this see the refreshed cookie immediately.
+        cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value));
+
+        // And onto the outgoing response, which is safe for both next() and
+        // redirect().
+        cookiesToSet.forEach(({ name, value, options }) =>
+          response.cookies.set(name, value, options),
+        );
+      },
+    },
+  });
+
+  await supabase.auth.getUser();
+}
+
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   let response: NextResponse;
@@ -45,28 +85,7 @@ export async function proxy(request: NextRequest) {
     response = NextResponse.redirect(url);
   }
 
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        getAll() {
-          return request.cookies.getAll();
-        },
-        setAll(cookiesToSet) {
-          // Cập nhật cookies vào request hiện tại để Server Components phía sau đọc được ngay lập tức
-          cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value));
-
-          // Đính kèm cookies cập nhật vào response trả về cho trình duyệt (áp dụng an toàn cho cả next() và redirect())
-          cookiesToSet.forEach(({ name, value, options }) =>
-            response.cookies.set(name, value, options)
-          );
-        },
-      },
-    }
-  );
-
-  await supabase.auth.getUser();
+  await refreshSession(request, response);
 
   return response;
 }

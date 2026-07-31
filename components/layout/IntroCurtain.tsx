@@ -16,28 +16,28 @@ export const INTRO_SESSION_KEY = "handle:intro-played";
  *   0.00  the H settles in                       (0.70s)
  *   0.45  the hand flies in from the left        (1.05s, lands at 1.50)
  *   0.90  the skip control fades up
- *   1.55  HANDLE fades up                        (0.40s, ends 1.95)
- *   1.85  the tagline fades up                   (0.35s, ends 2.20)
- *   2.20  ── one full second of stillness, so the lockup can be read ──
- *   3.20  the curtain lifts                      (0.65s)
+ *   1.55  HANDLE and the tagline fade up together (0.40s, ends 1.95)
+ *   1.95  ── one full second of stillness, so the lockup can be read ──
+ *   2.95  the curtain lifts                      (0.65s)
  *
- * The type deliberately runs quicker than the mark: the hand is the thing to
- * watch, the words only need to arrive.
+ * The two lines share one delay on purpose: they are one lockup, and staggering
+ * them made the tagline read as an afterthought rather than part of the mark.
+ * The type still runs quicker than the hand — that is the thing to watch.
  */
 const TIMING = {
   mark: { duration: 0.7 },
   hand: { delay: 0.45, duration: 1.05 },
   skip: { delay: 0.9 },
-  wordmark: { delay: 1.55, duration: 0.4 },
-  tagline: { delay: 1.85, duration: 0.35 },
+  /** Shared by both lines of type. Keep them equal. */
+  type: { delay: 1.55, duration: 0.4 },
   exit: { duration: 0.65 },
 } as const;
 
 /**
  * How long the curtain holds before it starts lifting.
- * Set to the tagline landing (2.20s) plus the one second of reading time.
+ * Set to the type landing (1.95s) plus the one second of reading time.
  */
-const INTRO_DURATION_MS = 3200;
+const INTRO_DURATION_MS = 2950;
 
 interface IntroCurtainProps {
   skipLabel: string;
@@ -84,8 +84,8 @@ function FadeIn({
  *
  * The H stands, then the hand flies in from the left and completes it — the
  * mark assembling itself around the gesture the brand is named for. The
- * wordmark and tagline then fade up beneath it, quicker than the mark: the
- * hand is the thing to watch, the words only need to arrive.
+ * wordmark and tagline then fade up together beneath it, quicker than the mark:
+ * the hand is the thing to watch, the words only need to arrive.
  *
  * Constraints this respects:
  * - **Once per session.** An intro you cannot get past is a toll booth. The
@@ -199,16 +199,16 @@ export function IntroCurtain({
                 the word runs about 2.5x the H's width. `leading-[0.74]` crops
                 the line box to the caps so the gaps below match too. */}
             <FadeIn
-              delay={TIMING.wordmark.delay}
-              duration={TIMING.wordmark.duration}
+              delay={TIMING.type.delay}
+              duration={TIMING.type.duration}
               className="font-brand mt-[30px] text-[clamp(2.25rem,12vw,4.25rem)] leading-[0.74] font-medium tracking-[0.12em] text-[#9F8772] sm:mt-[38px] sm:text-[5.4rem]"
             >
               HANDLE
             </FadeIn>
 
             <FadeIn
-              delay={TIMING.tagline.delay}
-              duration={TIMING.tagline.duration}
+              delay={TIMING.type.delay}
+              duration={TIMING.type.duration}
               className="font-brand mt-[11px] text-[clamp(0.6rem,3.1vw,0.95rem)] leading-[0.74] tracking-[0.15em] text-[#C4B2A0] uppercase sm:mt-[14px] sm:text-[1.2rem]"
             >
               You heal. We handle the rest.

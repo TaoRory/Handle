@@ -67,11 +67,12 @@ It is deliberately unobtrusive:
 
 The whole timeline lives in one `TIMING` object in `IntroCurtain`, including a full second of
 stillness after the tagline lands so the lockup can actually be read before the curtain lifts.
-End to end it runs about 3.85s.
+The two lines of type share one delay — they are one lockup, and staggering them made the tagline
+read as an afterthought. End to end the intro runs about 3.6s.
 
 It covers the page, it never gates it: the content is fully rendered underneath the whole time, so
 crawlers are unaffected. The tradeoff is real, though — on a first visit the visitor waits those
-3.85s before they see the page, and the largest contentful paint lands on the intro wordmark rather
+3.6s before they see the page, and the largest contentful paint lands on the intro wordmark rather
 than the hero. That is a deliberate call for a brand site, and the reason it never repeats within
 a session. Shorten `INTRO_DURATION_MS` if that trade stops being worth it.
 
@@ -189,12 +190,24 @@ secret — the site is static apart from the locale redirect and the 404 catch-a
 
 ## Environment Variables
 
-| Variable               | Required | Default             | Used by                                                                      |
-| ---------------------- | -------- | ------------------- | ---------------------------------------------------------------------------- |
-| `NEXT_PUBLIC_SITE_URL` | No       | `https://handle.vn` | `metadataBase`, canonical + `hreflang`, `sitemap.xml`, `robots.txt`, JSON-LD |
+| Variable                        | Required | Default             | Used by                                                                      |
+| ------------------------------- | -------- | ------------------- | ---------------------------------------------------------------------------- |
+| `NEXT_PUBLIC_SITE_URL`          | No       | `https://handle.vn` | `metadataBase`, canonical + `hreflang`, `sitemap.xml`, `robots.txt`, JSON-LD |
+| `NEXT_PUBLIC_SUPABASE_URL`      | No       | —                   | Consultation form writes, Supabase session refresh in `proxy.ts`             |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | No       | —                   | As above                                                                     |
 
-Copy `.env.example` to `.env.local` for local overrides. Nothing here is secret — the value is
+Copy `.env.example` to `.env.local` for local overrides. Nothing here is secret — every value is
 public by design, hence the `NEXT_PUBLIC_` prefix.
+
+The Supabase pair is optional: leave both unset and the site runs normally, with the consultation
+form reporting a failure instead of writing a row. Set **both or neither** — half-configured is the
+one state that is not handled.
+
+> **Before pointing this at a real project:** the anon key ships in the browser bundle, so what
+> actually protects submitted data is the Row Level Security policy on `consultation_requests`.
+> Confirm anon is granted `INSERT` and nothing else. Without that, anyone holding the public key can
+> read every consultation request — which here means names, phone numbers and free-text descriptions
+> of people's medical needs.
 
 ---
 
@@ -225,9 +238,10 @@ public by design, hence the `NEXT_PUBLIC_` prefix.
 3. **Phase-2 routes.** `/gioi-thieu`, `/dich-vu/[slug]`, `/hanh-trinh`, `/faq`, `/lien-he`. The nav
    already uses stable Vietnamese slugs; `SECTION_IDS` in `lib/site-config.ts` is the single place
    to repoint anchors at real URLs.
-4. **A working consultation form.** Server Action with validation and spam protection, replacing
-   the current `mailto:` / WhatsApp deep links. This is health data — treat the transport
-   accordingly.
+4. **Harden the consultation form.** The Server Action and per-field validation are in; what is
+   still missing is spam protection — the form is public and writes straight to the database with
+   no rate limit, captcha or honeypot. Add one before launch, along with the RLS check described
+   under Environment Variables. This is health data; treat the transport and the table accordingly.
 5. **Analytics and Core Web Vitals** via `useReportWebVitals`, plus a Lighthouse CI budget gate
    matching the targets in `CLAUDE.md` (LCP < 2.0s, CLS < 0.02, INP < 150ms).
 6. **A third locale.** Add `content/<locale>.ts`, one key per collection in `/data`, and one entry

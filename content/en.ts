@@ -145,7 +145,8 @@ export const en: SiteContent = {
       chatLabel: "Chat on WhatsApp",
       qrEyebrow: "Quick scan",
       qrTitle: "Or contact now",
-      qrLead: "If you want to message us now, scan the code on your phone to open a conversation with the Handle team.",
+      qrLead:
+        "If you want to message us now, scan the code on your phone to open a conversation with the Handle team.",
       qrAction: "Open WhatsApp now",
       nameLabel: "Full name",
       emailLabel: "Email",
@@ -154,12 +155,15 @@ export const en: SiteContent = {
       namePlaceholder: "Alex Nguyen",
       emailPlaceholder: "name@domain.com",
       phonePlaceholder: "+84...",
-      messagePlaceholder: "Tell us about the specialty, timing or support you are looking for.",
+      messagePlaceholder:
+        "Tell us about the specialty, timing or support you are looking for.",
       submit: "Send details",
-      success: "Thank you. We received your details and will reply as soon as possible.",
+      success:
+        "Thank you. We received your details and will reply as soon as possible.",
       error: "Something went wrong. Please try again.",
       hint: "We reply within one business day.",
-      privacy: "Your details are used only to contact you about your consultation and are never shared with third parties.",
+      privacy:
+        "Your details are used only to contact you about your consultation and are never shared with third parties.",
       chips: ["English & Vietnamese support", "Information kept private"],
     },
   },
