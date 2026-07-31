@@ -29,6 +29,11 @@
   --color-line: #e6e0d6;
   --color-surface: #ffffff;
   --color-success: #4f7a63;
+  /* Form validation. A warm brick rather than a stock red, and dark enough to
+     clear 4.5:1 on both white and cream — the Tailwind rose scale the form
+     first used sat around 1.3:1, which is not a colour choice, it is invisible
+     text. */
+  --color-danger: #a8332a;
 
   /* -- Typography -------------------------------------------------- */
   --font-sans: var(--font-be-vietnam), ui-sans-serif, system-ui, sans-serif;

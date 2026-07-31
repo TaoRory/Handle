@@ -38,6 +38,11 @@ yarn-error.log*
 # vercel
 .vercel
 
+# supabase cli local state — records which developer's project the working
+# copy is linked to. Machine-specific, and not something main should pin.
+supabase/.temp/
+supabase/.branches/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

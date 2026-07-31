@@ -134,6 +134,27 @@ export const vi: SiteContent = {
     lead: "Đặt lịch tư vấn miễn phí với đội ngũ Handle ngay hôm nay. Phản hồi trong vòng 24 giờ làm việc.",
     whatsapp: "Chat trên WhatsApp",
     consultation: "Tư vấn miễn phí",
+    form: {
+      eyebrow: "Biểu mẫu tư vấn",
+      chatLabel: "Chat trên WhatsApp",
+      nameLabel: "Họ và tên",
+      emailLabel: "Email",
+      phoneLabel: "Số điện thoại",
+      messageLabel: "Bạn đang quan tâm điều gì?",
+      namePlaceholder: "Nguyễn Văn A",
+      emailPlaceholder: "ten@domain.com",
+      phonePlaceholder: "+84...",
+      messagePlaceholder:
+        "Mô tả nhu cầu, chuyên khoa hoặc thời gian bạn muốn được tư vấn.",
+      submit: "Gửi thông tin",
+      success:
+        "Cảm ơn bạn. Chúng tôi đã nhận thông tin và sẽ phản hồi sớm nhất có thể.",
+      error: "Đã có lỗi xảy ra. Vui lòng thử lại.",
+      hint: "Phản hồi trong vòng 24 giờ làm việc.",
+      privacy:
+        "Thông tin của bạn chỉ được dùng để liên hệ tư vấn và sẽ không chia sẻ cho bên thứ ba.",
+      chips: ["Hỗ trợ tiếng Việt & tiếng Anh", "Thông tin được giữ kín"],
+    },
   },
 
   sectionNav: {

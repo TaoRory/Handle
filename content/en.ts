@@ -138,6 +138,27 @@ export const en: SiteContent = {
     lead: "Book a free consultation with the Handle team today. We reply within one business day.",
     whatsapp: "Chat on WhatsApp",
     consultation: "Free consultation",
+    form: {
+      eyebrow: "Consultation form",
+      chatLabel: "Chat on WhatsApp",
+      nameLabel: "Full name",
+      emailLabel: "Email",
+      phoneLabel: "Phone number",
+      messageLabel: "What do you need help with?",
+      namePlaceholder: "Alex Nguyen",
+      emailPlaceholder: "name@domain.com",
+      phonePlaceholder: "+84...",
+      messagePlaceholder:
+        "Tell us about the specialty, timing or support you are looking for.",
+      submit: "Send details",
+      success:
+        "Thank you. We received your details and will reply as soon as possible.",
+      error: "Something went wrong. Please try again.",
+      hint: "We reply within one business day.",
+      privacy:
+        "Your details are used only to contact you about your consultation and are never shared with third parties.",
+      chips: ["English & Vietnamese support", "Information kept private"],
+    },
   },
 
   sectionNav: {

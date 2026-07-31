@@ -285,6 +285,28 @@ export interface CtaCopy {
   lead: string;
   whatsapp: string;
   consultation: string;
+  form: {
+    /**
+     * Short kicker on the form card. The band's own `title`/`lead` above it
+     * carry the heading, so the card does not repeat them.
+     */
+    eyebrow: string;
+    chatLabel: string;
+    nameLabel: string;
+    emailLabel: string;
+    phoneLabel: string;
+    messageLabel: string;
+    namePlaceholder: string;
+    emailPlaceholder: string;
+    phonePlaceholder: string;
+    messagePlaceholder: string;
+    submit: string;
+    success: string;
+    error: string;
+    hint: string;
+    privacy: string;
+    chips: string[];
+  };
 }
 
 /** Everything the homepage renders, in one language. */
