@@ -20,7 +20,7 @@ import {
   getTestimonials,
 } from "@/data";
 import { buildJsonLd } from "@/lib/seo";
-import { SECTION_IDS, sectionStep } from "@/lib/site-config";
+import { SECTION_IDS } from "@/lib/site-config";
 
 import type { Locale } from "@/types";
 
@@ -88,44 +88,31 @@ export default async function HomePage({
 
       <WhyVietnam
         id={SECTION_IDS.whyVietnam}
-        step={sectionStep(SECTION_IDS.whyVietnam)}
         copy={content.whyVietnam}
         reasons={getReasons(locale)}
         // The one positive among four problems — it gets the gold fill.
-        highlightId="temp"
+        highlightId="value"
       />
 
-      <AboutHandle
-        id={SECTION_IDS.about}
-        step={sectionStep(SECTION_IDS.about)}
-        copy={content.about}
-      />
+      <AboutHandle id={SECTION_IDS.about} copy={content.about} />
 
       <WhyChooseUs
         id={SECTION_IDS.whyUs}
-        step={sectionStep(SECTION_IDS.whyUs)}
         copy={content.whyUs}
         advantages={getAdvantages(locale)}
       />
 
       <JourneyTimeline
         id={SECTION_IDS.journey}
-        step={sectionStep(SECTION_IDS.journey)}
         copy={content.journey}
         steps={getJourneySteps(locale)}
       />
 
-      <StatsBand
-        id={SECTION_IDS.stats}
-        step={sectionStep(SECTION_IDS.stats)}
-        copy={content.stats}
-        stats={getStats(locale)}
-      />
+      <StatsBand id={SECTION_IDS.stats} copy={content.stats} stats={getStats(locale)} />
 
       <ServicesAndLifestyle
         servicesId={SECTION_IDS.services}
         experiencesId={SECTION_IDS.experiences}
-        step={sectionStep(SECTION_IDS.services)}
         servicesCopy={content.services}
         experiencesCopy={content.experiences}
         services={getServices(locale)}
@@ -134,7 +121,6 @@ export default async function HomePage({
 
       <Testimonials
         id={SECTION_IDS.testimonials}
-        step={sectionStep(SECTION_IDS.testimonials)}
         copy={content.testimonials}
         testimonials={getTestimonials(locale)}
         labels={content.a11y}
@@ -142,7 +128,6 @@ export default async function HomePage({
 
       <Faq
         id={SECTION_IDS.faq}
-        step={sectionStep(SECTION_IDS.faq)}
         copy={content.faq}
         faqs={getFaqs(locale)}
         help={content.faq.help}

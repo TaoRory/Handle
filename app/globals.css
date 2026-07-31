@@ -131,7 +131,6 @@
 }
 
 @keyframes drift {
-
   0%,
   100% {
     transform: translate3d(0, 0, 0) scale(1);
@@ -147,7 +146,6 @@
  * ------------------------------------------------------------------ */
 
 @layer base {
-
   *,
   ::before,
   ::after {
@@ -205,31 +203,36 @@
 }
 
 @layer utilities {
-
   /* A single hairline rule in gold — used as a section marker. */
   .rule-gold {
-    background-image: linear-gradient(90deg,
-        var(--color-gold) 0%,
-        var(--color-gold) 32px,
-        var(--color-line) 32px,
-        var(--color-line) 100%);
+    background-image: linear-gradient(
+      90deg,
+      var(--color-gold) 0%,
+      var(--color-gold) 32px,
+      var(--color-line) 32px,
+      var(--color-line) 100%
+    );
   }
 
   /* Fades the edges of a horizontal rail so items dissolve, not clip. */
   .mask-edges {
-    mask-image: linear-gradient(90deg,
-        transparent 0,
-        #000 7%,
-        #000 93%,
-        transparent 100%);
+    mask-image: linear-gradient(
+      90deg,
+      transparent 0,
+      #000 7%,
+      #000 93%,
+      transparent 100%
+    );
   }
 
   .mask-edges-sm {
-    mask-image: linear-gradient(90deg,
-        transparent 0,
-        #000 3%,
-        #000 97%,
-        transparent 100%);
+    mask-image: linear-gradient(
+      90deg,
+      transparent 0,
+      #000 3%,
+      #000 97%,
+      transparent 100%
+    );
   }
 
   /* Frosted panel. Used sparingly — header and floating stat cards only. */

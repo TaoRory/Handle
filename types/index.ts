@@ -248,6 +248,11 @@ export interface SocialLink {
  * `accent` is the single word rendered in the display serif + gold.
  */
 export interface SectionCopy {
+  /**
+   * Only the partner band still uses this — `PartnerCarousel` renders it as the
+   * panel's own `<h2>`. The kicker above section headings was removed site-wide,
+   * so no other section should set it.
+   */
   eyebrow?: string;
   title: string;
   accent?: string;

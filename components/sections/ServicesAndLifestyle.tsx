@@ -7,7 +7,6 @@ import type { Experience, SectionCopy, Service } from "@/types";
 interface ServicesAndLifestyleProps {
   servicesId: string;
   experiencesId: string;
-  step: string;
   servicesCopy: SectionCopy;
   experiencesCopy: SectionCopy;
   services: Service[];
@@ -24,7 +23,6 @@ interface ServicesAndLifestyleProps {
 export function ServicesAndLifestyle({
   servicesId,
   experiencesId,
-  step,
   servicesCopy,
   experiencesCopy,
   services,
@@ -35,7 +33,7 @@ export function ServicesAndLifestyle({
       <Container>
         <div className="section-y grid gap-16 xl:grid-cols-2 xl:gap-14">
           <div id={servicesId} className="scroll-mt-[calc(var(--header-h)+24px)]">
-            <MedicalServices copy={servicesCopy} step={step} services={services} />
+            <MedicalServices copy={servicesCopy} services={services} />
           </div>
 
           <div

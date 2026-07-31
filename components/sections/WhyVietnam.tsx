@@ -32,15 +32,15 @@ function ReasonCard({
         isInteractive
         padding="md"
         className={cn(
-          "rounded-sm h-full flex-row items-start gap-5",
+          "h-full flex-row items-start gap-5 rounded-sm",
           isHighlighted
             ? "hover:border-ink/25 hover:shadow-lg"
             : "hover:border-gold/45",
         )}
       >
-        {/* No per-card ordinal here: the section eyebrow already carries a
-            two-digit chip, and two numbering systems a few pixels apart read
-            as a mistake. Emphasis comes from the gold fill instead. */}
+        {/* No per-card ordinal: numbering the cards would compete with the
+            section index down the right edge. Emphasis comes from the gold
+            fill on the single positive card instead. */}
         <IconTile
           name={reason.icon}
           tone={isHighlighted ? "gold" : "transparent"}
@@ -71,19 +71,16 @@ interface WhyVietnamProps {
   copy: SectionCopy;
   reasons: Reason[];
   id: string;
-  step: string;
   /** `id` of the reason that carries the gold treatment. */
   highlightId: string;
 }
 
-export function WhyVietnam({ copy, reasons, id, step, highlightId }: WhyVietnamProps) {
+export function WhyVietnam({ copy, reasons, id, highlightId }: WhyVietnamProps) {
   return (
     <Section id={id} labelledBy="why-vietnam-title" tone="cream">
       <Container className="max-w-[90%] xl:max-w-[90%]">
         <SectionHeading
           id="why-vietnam-title"
-          step={step}
-          eyebrow={copy.eyebrow}
           title={copy.title}
           accent={copy.accent}
           lead={copy.lead}

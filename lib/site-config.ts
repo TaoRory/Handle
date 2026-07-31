@@ -55,9 +55,10 @@ export type SectionId = (typeof SECTION_IDS)[keyof typeof SECTION_IDS];
 /**
  * Reading order of the numbered bands.
  *
- * Single source of truth for the eyebrow chips ("03") and the fixed section
- * index, so the two can never disagree. The hero and the partner strip are
- * deliberately excluded — they are the cover, not a chapter.
+ * Since the eyebrow chips were removed, the only consumer is the fixed
+ * `SectionNav` down the right edge — position in the page is now stated once,
+ * in one place. The hero and the partner strip are deliberately excluded:
+ * they are the cover, not a chapter.
  */
 export const SECTION_ORDER = [
   SECTION_IDS.whyVietnam,

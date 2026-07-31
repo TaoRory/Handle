@@ -20,11 +20,7 @@ function PartnerLogo({ partner }: { partner: Partner }) {
     <div className="group/partner flex shrink-0 items-center gap-3.5 px-7 py-2 sm:px-9">
       <span className="text-stone group-hover/partner:text-gold-600 font-brand flex size-11 items-center justify-center rounded-md text-sm tracking-[0.08em] transition-colors duration-300">
         {partner.logo ? (
-          <img
-            src={partner.logo}
-            alt={`${partner.name} logo`}
-            className="h-6 w-auto"
-          />
+          <img src={partner.logo} alt={`${partner.name} logo`} className="h-6 w-auto" />
         ) : (
           partner.monogram
         )}
@@ -65,11 +61,11 @@ export function PartnerCarousel({ copy, partners }: PartnerCarouselProps) {
     >
       <Container size="wide">
         <Reveal>
-          <div className="mt-12 border-line bg-surface overflow-hidden rounded-sm border shadow-md">
+          <div className="border-line bg-surface mt-12 overflow-hidden rounded-sm border shadow-md">
             <div className="border-line/70 flex flex-col items-center justify-between gap-2 px-6 py-4 sm:flex-row sm:px-8">
               <h2
                 id="partners-title"
-                className="font-medium text-ink-400 text-eyebrow uppercase"
+                className="text-ink-400 text-eyebrow font-medium uppercase"
               >
                 {copy.eyebrow}
               </h2>

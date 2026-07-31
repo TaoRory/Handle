@@ -7,19 +7,12 @@ import type { SectionCopy, SiteContent, Testimonial } from "@/types";
 
 interface TestimonialsProps {
   id: string;
-  step: string;
   copy: SectionCopy;
   testimonials: Testimonial[];
   labels: SiteContent["a11y"];
 }
 
-export function Testimonials({
-  id,
-  step,
-  copy,
-  testimonials,
-  labels,
-}: TestimonialsProps) {
+export function Testimonials({ id, copy, testimonials, labels }: TestimonialsProps) {
   return (
     // A deeper cream than the neighbouring bands: enough separation to read as
     // its own chapter without spending one of the three accent surfaces.
@@ -27,8 +20,6 @@ export function Testimonials({
       <Container>
         <SectionHeading
           id="testimonials-title"
-          step={step}
-          eyebrow={copy.eyebrow}
           title={copy.title}
           accent={copy.accent}
           lead={copy.lead}

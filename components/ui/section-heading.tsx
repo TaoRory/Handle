@@ -3,61 +3,21 @@ import { cn } from "@/lib/utils";
 
 import type { ReactNode } from "react";
 
-interface EyebrowProps {
-  children: ReactNode;
-  className?: string;
-  /**
-   * Surface the eyebrow sits on, not the colour it paints.
-   * `gold` = light neutral surface · `cream` = ink surface · `onGold` = the
-   * gold accent band, where a gold chip would of course disappear.
-   */
-  tone?: "gold" | "cream" | "onGold";
-  /**
-   * Optional section ordinal. Kept for API compatibility, but no longer
-   * rendered because the user requested text-only section labels.
-   */
-  step?: string;
-}
-
-/** The small letterspaced label above a section title. */
-export function Eyebrow({ children, className, tone = "gold", step }: EyebrowProps) {
-  const label = {
-    gold: "text-gold-600",
-    cream: "text-cream/75",
-    onGold: "text-ink/65",
-  }[tone];
-
-  const chip = {
-    gold: "bg-gold text-ink",
-    cream: "bg-gold text-ink",
-    onGold: "bg-ink text-gold",
-  }[tone];
-
-  const rule = {
-    gold: "bg-gold",
-    cream: "bg-cream/40",
-    onGold: "bg-ink/30",
-  }[tone];
-
-  return (
-    <span
-      className={cn(
-        "font-brand text-eyebrow inline-flex items-center gap-3 uppercase",
-        label,
-        className,
-      )}
-    >
-      <span aria-hidden="true" className={cn("h-px w-8", rule)} />
-      {children}
-    </span>
-  );
-}
+/**
+ * There is deliberately no `Eyebrow` here any more.
+ *
+ * The numbered chip and its uppercase label were removed from the whole site:
+ * a band now opens straight on its heading. Anything that wants a kicker above
+ * a title should make the case for bringing the component back rather than
+ * re-inventing a one-off — the previous half-state, where some sections kept a
+ * label and others did not, is exactly what this avoids.
+ *
+ * Position in the page is still communicated, just once and in one place: the
+ * fixed `SectionNav` down the right edge.
+ */
 
 interface SectionHeadingProps {
   id: string;
-  eyebrow?: string;
-  /** Section ordinal shown in the eyebrow chip. */
-  step?: string;
   title: string;
   /** The single word set in the display serif and gold. */
   accent?: string;

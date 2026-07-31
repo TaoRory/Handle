@@ -5,14 +5,12 @@ import { Container } from "@/components/ui/container";
 import { ArrowTrail, Icon } from "@/components/ui/icon";
 import { Media } from "@/components/ui/media";
 import { Reveal } from "@/components/ui/reveal";
-import { Eyebrow } from "@/components/ui/section-heading";
 import { SECTION_IDS, contactLinks } from "@/lib/site-config";
 
 import type { SiteContent } from "@/types";
 
 interface AboutHandleProps {
   id: string;
-  step: string;
   copy: SiteContent["about"];
 }
 
@@ -25,7 +23,7 @@ interface AboutHandleProps {
  * land after four neutral bands. The second ink surface is the closing CTA;
  * nothing between them competes.
  */
-export function AboutHandle({ id, step, copy }: AboutHandleProps) {
+export function AboutHandle({ id, copy }: AboutHandleProps) {
   return (
     <section
       id={id}
@@ -37,7 +35,7 @@ export function AboutHandle({ id, step, copy }: AboutHandleProps) {
           {/* Warm bloom behind the copy column, and a gold rule along the top. */}
           <span
             aria-hidden="true"
-            className="rounded-sm absolute -top-40 -right-24 -z-10 size-[560px] bg-[radial-gradient(circle,rgba(201,168,106,0.26)_0%,transparent_66%)] blur-2xl"
+            className="absolute -top-40 -right-24 -z-10 size-[560px] rounded-sm bg-[radial-gradient(circle,rgba(201,168,106,0.26)_0%,transparent_66%)] blur-2xl"
           />
           <span
             aria-hidden="true"
@@ -57,12 +55,6 @@ export function AboutHandle({ id, step, copy }: AboutHandleProps) {
             </Reveal>
 
             <div className="flex flex-col gap-6">
-              <Reveal>
-                <Eyebrow step={step} tone="cream">
-                  {copy.eyebrow}
-                </Eyebrow>
-              </Reveal>
-
               <Reveal index={1}>
                 <h2 id="about-title" className="text-h2 text-cream-100 max-w-[18ch]">
                   {copy.title}{" "}
@@ -83,7 +75,7 @@ export function AboutHandle({ id, step, copy }: AboutHandleProps) {
                   {copy.pills.map((pill) => (
                     <li
                       key={pill.id}
-                      className="border-cream/15 text-cream/80 rounded-sm inline-flex items-center gap-2 border px-3.5 py-2 text-[0.8125rem]"
+                      className="border-cream/15 text-cream/80 inline-flex items-center gap-2 rounded-sm border px-3.5 py-2 text-[0.8125rem]"
                     >
                       <Icon
                         name={pill.icon}

@@ -60,14 +60,12 @@ export const en: SiteContent = {
   },
 
   whyVietnam: {
-    eyebrow: "Context",
     title: "Why are more patients choosing treatment in",
     accent: "Vietnam?",
     lead: "Not because they want to travel. Because they want to be treated sooner, and at a price that makes sense.",
   },
 
   about: {
-    eyebrow: "About Handle",
     title: "That is why Handle",
     accent: "exists.",
     body: [
@@ -90,14 +88,12 @@ export const en: SiteContent = {
   },
 
   whyUs: {
-    eyebrow: "Why Handle",
     title: "One point of contact for the whole",
     accent: "journey.",
     lead: "Six commitments that shape how we work with every patient.",
   },
 
   journey: {
-    eyebrow: "How it works",
     title: "Your journey with",
     accent: "Handle",
     lead: "We stay with you at every step — from the first email to the follow-up long after you are home.",
@@ -105,32 +101,27 @@ export const en: SiteContent = {
   },
 
   stats: {
-    eyebrow: "By the numbers",
     title: "What we have",
     accent: "delivered.",
     lead: "Aggregated across the cases Handle has coordinated, updated each quarter.",
   },
 
   services: {
-    eyebrow: "Specialties",
     title: "Medical services we coordinate",
     action: "See all services",
   },
 
   experiences: {
-    eyebrow: "Beyond the clinic",
     title: "Experiencing Vietnam",
     action: "See all experiences",
   },
 
   testimonials: {
-    eyebrow: "Patient stories",
     title: "The people who travelled with us",
     lead: "Excerpted from post-treatment surveys and published with permission.",
   },
 
   faq: {
-    eyebrow: "Answers",
     title: "Questions we are asked",
     accent: "most.",
     lead: "The six things people want settled before a journey begins.",

@@ -58,7 +58,7 @@ Taken directly from the brand guideline (section 7 of the logo sheet).
 | ------- | --------- | --------------------------------------------------------- |
 | `ink`   | `#0D0D0D` | Primary. Headlines, wordmark, dark CTA surfaces.          |
 | `cream` | `#F6F3EE` | Premium. The default page canvas — never pure white.      |
-| `gold`  | `#C9A86A` | Accent. Reserved: CTAs, eyebrows, rules, one word per H1. |
+| `gold`  | `#C9A86A` | Accent. Reserved: CTAs, rules, one word per H1.           |
 | `stone` | `#A8A29C` | Neutral. Meta text, borders, disabled states.             |
 
 Derived ramp (declared once in `app/globals.css` under Tailwind v4 `@theme`):
@@ -102,13 +102,18 @@ Two hard rules: **never two accent surfaces in a row**, and **never more than th
 Past three the emphasis cancels out and the page reads as noise — which is the failure mode this
 rhythm exists to prevent. Gold at panel scale only carries ink type on top, never cream.
 
-### Section numbering
+### Section numbering — one place only
 
-Every reading band is numbered `01`–`08` in its eyebrow chip, and the same ordinals drive the fixed
-section index on the right edge. `SECTION_ORDER` in `lib/site-config.ts` is the single source —
-the chip and the index can never disagree. The hero and the partner strip are excluded on purpose:
-they are the cover, not a chapter. Nothing else on the page may introduce a second numbering
-system within sight of a chip.
+**There is no eyebrow.** The kicker above section headings, and the `01`–`08` chip it carried, were
+removed site-wide: a band now opens straight on its heading. Do not reintroduce a one-off label
+above a title; if the case for a kicker comes back, bring back a shared component rather than
+scattering them, because the failure this replaced was exactly that — some bands kept a label and
+others lost it.
+
+Reading position is still stated, once: the fixed `SectionNav` down the right edge at `xl`.
+`SECTION_ORDER` in `lib/site-config.ts` is its single source, and `sectionStep()` exists only to
+feed it. The hero and the partner strip are excluded on purpose — they are the cover, not a
+chapter. Nothing else on the page may introduce a second numbering system.
 
 **Contrast floors (verified):** ink on cream 17.4:1 · ink-600 on cream 7.4:1 · ink on gold 11.8:1 ·
 gold-600 on cream 3.6:1 (large text ≥24px only) · cream on ink 16.9:1.
@@ -121,7 +126,7 @@ Three families, loaded through `next/font/google` with `display: "swap"` and Vie
 | ---------------- | ---------------- | --------------- | --------------------------------------------------------------------------------------- |
 | `--font-sans`    | Be Vietnam Pro   | 300/400/500/600 | Body, UI, nav, buttons. Flawless Vietnamese diacritics.                                 |
 | `--font-display` | Playfair Display | 400/500 italic  | The one gold accent word per headline. Editorial lift.                                  |
-| `--font-brand`   | Jost             | 300/400/500     | Wordmark, eyebrows, stat numerals. Geometric, Futura-adjacent — matches the logo's DNA. |
+| `--font-brand`   | Jost             | 300/400/500     | Wordmark, small caps labels, stat numerals. Geometric, Futura-adjacent — matches the logo's DNA. |
 
 Type scale (fluid `clamp()`; ratio 1.25 at mobile widening to 1.333 at desktop):
 
@@ -321,8 +326,7 @@ redirects unprefixed paths.
 | `Button`                           | cva variants `primary` (gold) · `dark` (ink) · `outline` · `ghost` · `whatsapp`; sizes `sm/md/lg`; `asChild` via Radix Slot; built-in arrow slide on hover. |
 | `Container`                        | The single source of page gutter + max width.                                                                                                               |
 | `Section`                          | `<section>` + `aria-labelledby` + vertical rhythm + tone (`cream`/`cream300`/`surface`/`ink`/`gold`).                                                       |
-| `SectionHeading`                   | Numbered eyebrow chip + title (with gold accent word) + optional lead + optional action.                                                                    |
-| `Eyebrow`                          | The chip itself. `tone` names the _surface_ it sits on — `gold` (neutral), `cream` (ink), `onGold` (the gold band, where the chip inverts to ink).          |
+| `SectionHeading`                   | Title (with gold accent word) + optional lead + optional action. No kicker — see "Section numbering".                                                       |
 | `Card`                             | cva variants `surface` · `cream` · `quiet` · `gold` · `ink`, hover elevation. At most one `gold` per grid — it is the eye's landing point.                  |
 | `Accordion`                        | Radix wrapper. Roles, `aria-expanded` and roving focus come free; this supplies the skin and the plus→cross rotation only.                                  |
 | `Reveal`                           | The one entrance-animation wrapper. Viewport, stagger index, reduced motion.                                                                                |
