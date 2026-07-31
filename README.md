@@ -37,7 +37,8 @@ tech), and a **floating WhatsApp button** that appears once the hero's CTA has s
 
 On the first visit of a session the site opens with a short brand animation: the two slabs of the
 **H** settle in, the open hand flies in from the left and lands across them — completing the mark —
-and then `HANDLE` and the tagline wipe in from left to right, in reading order.
+and then `HANDLE` and the tagline fade up beneath it. The type runs quicker than the mark on
+purpose: the hand is the thing to watch, the words only need to arrive.
 
 The mark is rebuilt from `Intro/logo intro.png`. That file is a flat raster, so nothing in it can
 move on its own: the two bars are redrawn as vector paths measured off the original (76 units wide,
@@ -49,6 +50,10 @@ there the wordmark's cap height is 0.32 of the H's, and the word runs about 2.5�
 Because that knockout ring is baked into the PNG as flat cream, the curtain behind the mark has to
 stay a flat field. Anything that tints it — a bloom, a gradient — turns the ring into a visible
 outline instead of letting it disappear into the page.
+
+The two lines of type reveal with opacity and nothing else. A sliding cover, a clip-path wipe or a
+translate would all be withheld by `MotionProvider` under reduced motion, leaving the words hidden
+for exactly the users that setting protects; a fade is the one reveal that cannot fail that way.
 
 It is deliberately unobtrusive:
 
@@ -62,11 +67,11 @@ It is deliberately unobtrusive:
 
 The whole timeline lives in one `TIMING` object in `IntroCurtain`, including a full second of
 stillness after the tagline lands so the lockup can actually be read before the curtain lifts.
-End to end it runs about 4.4s.
+End to end it runs about 3.85s.
 
 It covers the page, it never gates it: the content is fully rendered underneath the whole time, so
 crawlers are unaffected. The tradeoff is real, though — on a first visit the visitor waits those
-4.4s before they see the page, and the largest contentful paint lands on the intro wordmark rather
+3.85s before they see the page, and the largest contentful paint lands on the intro wordmark rather
 than the hero. That is a deliberate call for a brand site, and the reason it never repeats within
 a session. Shorten `INTRO_DURATION_MS` if that trade stops being worth it.
 

@@ -54,12 +54,12 @@ substantiate. "We book it, we translate it, we follow up." Not "The best care in
 
 Taken directly from the brand guideline (section 7 of the logo sheet).
 
-| Token   | Hex       | Role                                                      |
-| ------- | --------- | --------------------------------------------------------- |
-| `ink`   | `#0D0D0D` | Primary. Headlines, wordmark, dark CTA surfaces.          |
-| `cream` | `#F6F3EE` | Premium. The default page canvas — never pure white.      |
-| `gold`  | `#C9A86A` | Accent. Reserved: CTAs, rules, one word per H1.           |
-| `stone` | `#A8A29C` | Neutral. Meta text, borders, disabled states.             |
+| Token   | Hex       | Role                                                 |
+| ------- | --------- | ---------------------------------------------------- |
+| `ink`   | `#0D0D0D` | Primary. Headlines, wordmark, dark CTA surfaces.     |
+| `cream` | `#F6F3EE` | Premium. The default page canvas — never pure white. |
+| `gold`  | `#C9A86A` | Accent. Reserved: CTAs, rules, one word per H1.      |
+| `stone` | `#A8A29C` | Neutral. Meta text, borders, disabled states.        |
 
 Derived ramp (declared once in `app/globals.css` under Tailwind v4 `@theme`):
 
@@ -122,10 +122,10 @@ gold-600 on cream 3.6:1 (large text ≥24px only) · cream on ink 16.9:1.
 
 Three families, loaded through `next/font/google` with `display: "swap"` and Vietnamese subsets.
 
-| Role             | Family           | Weights         | Usage                                                                                   |
-| ---------------- | ---------------- | --------------- | --------------------------------------------------------------------------------------- |
-| `--font-sans`    | Be Vietnam Pro   | 300/400/500/600 | Body, UI, nav, buttons. Flawless Vietnamese diacritics.                                 |
-| `--font-display` | Playfair Display | 400/500 italic  | The one gold accent word per headline. Editorial lift.                                  |
+| Role             | Family           | Weights         | Usage                                                                                            |
+| ---------------- | ---------------- | --------------- | ------------------------------------------------------------------------------------------------ |
+| `--font-sans`    | Be Vietnam Pro   | 300/400/500/600 | Body, UI, nav, buttons. Flawless Vietnamese diacritics.                                          |
+| `--font-display` | Playfair Display | 400/500 italic  | The one gold accent word per headline. Editorial lift.                                           |
 | `--font-brand`   | Jost             | 300/400/500     | Wordmark, small caps labels, stat numerals. Geometric, Futura-adjacent — matches the logo's DNA. |
 
 Type scale (fluid `clamp()`; ratio 1.25 at mobile widening to 1.333 at desktop):
@@ -343,16 +343,20 @@ at `xl`, which part am I in, labels on hover/focus, `aria-current` for assistive
 
 **`IntroCurtain` + `IntroMark`** — the brand intro, and the one piece of theatre on the site. The
 H settles in, the open hand flies in from the left and completes the mark, then the wordmark and
-tagline wipe in left to right.
+tagline fade up quickly beneath it. The whole timeline lives in one `TIMING` object; edit the steps
+together, because nudging a single delay in isolation is how an intro ends up ragged.
 
 `IntroMark` rebuilds the supplied artwork (`Intro/logo intro.png`) so its parts can move: the bars
 are vector paths measured off the original (76 × 361 units, outer corners `r=30`, inner square),
 the hand is a transparent cut-out at `public/intro/hand.png` carrying the logo's cream knockout
-ring, and the type is sized from the artwork's own ratios. Two constraints follow from that ring
-being flat cream: the curtain background must stay a flat field (any tint turns the ring into a
-visible outline), and the reveal must use `clipPath`, never a sliding cover — a cover is a
-transform, and `MotionProvider` withholds transforms under reduced motion, which would leave the
-type permanently hidden for exactly those users.
+ring, and the type is sized from the artwork's own ratios. Two constraints follow:
+
+- **The curtain background stays a flat field.** The knockout ring is baked into the PNG as flat
+  cream, so any tint behind the mark — a bloom, a gradient — turns it into a visible outline.
+- **The type reveals with opacity and nothing else.** A sliding cover, a clip-path wipe, a
+  translate: all of them are withheld by `MotionProvider` under reduced motion, which would leave
+  the words hidden for exactly the users that setting protects. A fade is the one reveal that
+  cannot fail that way.
 
 Rules the curtain must keep: once per session (`sessionStorage`, read by an inline script before
 first paint so a returning visitor never catches a frame), skippable by any click or key, hidden
@@ -369,7 +373,7 @@ They are two different logos in two different palettes; unify them before launch
 ```
 <RootLayout>
  ├ MotionProvider ──────── reducedMotion="user" for the whole tree
- ├ IntroCurtain ───────── IntroMark (hand flies in) · type wipes L→R · curtain rises
+ ├ IntroCurtain ───────── IntroMark (hand flies in) · type fades up · curtain rises
  ├ SkipLink
  ├ ScrollProgress ──────── gold rule, scroll-linked
  ├ Navbar ── Logo · NavLinks · LocaleSwitcher · Button · MobileNav(Dialog)

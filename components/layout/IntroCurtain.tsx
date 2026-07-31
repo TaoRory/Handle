@@ -16,22 +16,28 @@ export const INTRO_SESSION_KEY = "handle:intro-played";
  *   0.00  the H settles in                       (0.70s)
  *   0.45  the hand flies in from the left        (1.05s, lands at 1.50)
  *   0.90  the skip control fades up
- *   1.55  HANDLE wipes left to right             (0.75s, ends 2.30)
- *   2.05  the tagline wipes left to right        (0.65s, ends 2.70)
- *   2.70  ── one full second of stillness, so the lockup can be read ──
- *   3.70  the curtain lifts                      (0.65s)
+ *   1.55  HANDLE fades up                        (0.40s, ends 1.95)
+ *   1.85  the tagline fades up                   (0.35s, ends 2.20)
+ *   2.20  ── one full second of stillness, so the lockup can be read ──
+ *   3.20  the curtain lifts                      (0.65s)
+ *
+ * The type deliberately runs quicker than the mark: the hand is the thing to
+ * watch, the words only need to arrive.
  */
 const TIMING = {
   mark: { duration: 0.7 },
   hand: { delay: 0.45, duration: 1.05 },
   skip: { delay: 0.9 },
-  wordmark: { delay: 1.55, duration: 0.75 },
-  tagline: { delay: 2.05, duration: 0.65 },
+  wordmark: { delay: 1.55, duration: 0.4 },
+  tagline: { delay: 1.85, duration: 0.35 },
   exit: { duration: 0.65 },
 } as const;
 
-/** How long the curtain holds before it starts lifting. */
-const INTRO_DURATION_MS = 3700;
+/**
+ * How long the curtain holds before it starts lifting.
+ * Set to the tagline landing (2.20s) plus the one second of reading time.
+ */
+const INTRO_DURATION_MS = 3200;
 
 interface IntroCurtainProps {
   skipLabel: string;
@@ -42,19 +48,18 @@ interface IntroCurtainProps {
 }
 
 /**
- * Wipe that uncovers its content from the left edge to the right.
+ * Plain opacity fade for the two lines of type.
  *
- * `clipPath` rather than a sliding cover: a cover would have to be a transform,
- * and `MotionProvider` withholds transforms under reduced motion — which would
- * leave the text permanently hidden for exactly those users. Clip paths are not
- * transforms, so the reveal still completes. Opacity rides along as a second
- * belt: if the clip path ever failed to interpolate, the text would still end
- * up visible rather than blank.
+ * Opacity only, and that is the point: it is not a transform, so
+ * `MotionProvider` does not withhold it under reduced motion. Anything that
+ * moved the text into place — a sliding cover, a clip-path wipe, a translate —
+ * would be withheld there and leave the words hidden for exactly the users the
+ * setting is meant to help. A fade is the one reveal that cannot fail that way.
  */
-function WipeIn({
+function FadeIn({
   children,
   delay,
-  duration = 0.6,
+  duration = 0.4,
   className,
 }: {
   children: React.ReactNode;
@@ -65,8 +70,8 @@ function WipeIn({
   return (
     <motion.span
       className={className}
-      initial={{ opacity: 0, clipPath: "inset(0 100% 0 0)" }}
-      animate={{ opacity: 1, clipPath: "inset(0 0% 0 0)" }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
       transition={{ duration, ease: EASE_EXPO, delay }}
     >
       {children}
@@ -79,7 +84,8 @@ function WipeIn({
  *
  * The H stands, then the hand flies in from the left and completes it — the
  * mark assembling itself around the gesture the brand is named for. The
- * wordmark and tagline then wipe in from left to right, in reading order.
+ * wordmark and tagline then fade up beneath it, quicker than the mark: the
+ * hand is the thing to watch, the words only need to arrive.
  *
  * Constraints this respects:
  * - **Once per session.** An intro you cannot get past is a toll booth. The
@@ -87,8 +93,8 @@ function WipeIn({
  *   before first paint, so a returning visitor never sees a frame of curtain.
  * - **Always skippable.** Any click, any key, or the skip button ends it.
  * - **Reduced motion.** Handled by `MotionProvider`, not by branching here:
- *   the transforms are simply withheld, so the mark and the type fade and wipe
- *   in place. Branching on the preference in render would change the SSR output
+ *   the transforms are simply withheld, so the mark and the type fade up in
+ *   place. Branching on the preference in render would change the SSR output
  *   and break hydration for those users.
  * - **Never gates content.** The page renders underneath the whole time; this
  *   is a cover, not a gate, so crawlers are unaffected and the `<noscript>`
@@ -192,21 +198,21 @@ export function IntroCurtain({
                 picked: there the wordmark's cap height is 0.32 of the H's, and
                 the word runs about 2.5x the H's width. `leading-[0.74]` crops
                 the line box to the caps so the gaps below match too. */}
-            <WipeIn
+            <FadeIn
               delay={TIMING.wordmark.delay}
               duration={TIMING.wordmark.duration}
               className="font-brand mt-[30px] text-[clamp(2.25rem,12vw,4.25rem)] leading-[0.74] font-medium tracking-[0.12em] text-[#9F8772] sm:mt-[38px] sm:text-[5.4rem]"
             >
               HANDLE
-            </WipeIn>
+            </FadeIn>
 
-            <WipeIn
+            <FadeIn
               delay={TIMING.tagline.delay}
               duration={TIMING.tagline.duration}
               className="font-brand mt-[11px] text-[clamp(0.6rem,3.1vw,0.95rem)] leading-[0.74] tracking-[0.15em] text-[#C4B2A0] uppercase sm:mt-[14px] sm:text-[1.2rem]"
             >
               You heal. We handle the rest.
-            </WipeIn>
+            </FadeIn>
           </div>
 
           <motion.button
