@@ -20,8 +20,10 @@ interface ConsultationFormProps {
   locale: Locale;
 }
 
+// 14px is the floor this project holds type to, so the fields get tighter by
+// losing padding rather than by shrinking the text.
 const fieldBase =
-  "border-line bg-cream-100 text-ink placeholder:text-ink-400 focus-visible:border-gold focus-visible:ring-gold/20 w-full rounded-sm border px-4 py-3.5 text-[0.9375rem] transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2";
+  "border-line bg-cream-100 text-ink placeholder:text-ink-400 focus-visible:border-gold focus-visible:ring-gold/20 w-full rounded-sm border px-3.5 py-2.5 text-sm transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2";
 
 /**
  * The consultation form.
@@ -54,12 +56,12 @@ export function ConsultationForm({ copy, locale }: ConsultationFormProps) {
       : "text-danger";
 
   return (
-    <Card variant="surface" padding="lg" className="rounded-sm shadow-lg">
-      <p className="font-brand text-gold mb-6 text-xs tracking-[0.18em] uppercase">
+    <Card variant="surface" padding="md" className="rounded-sm shadow-lg">
+      <p className="font-brand text-gold mb-5 text-xs tracking-[0.18em] uppercase">
         {copy.eyebrow}
       </p>
 
-      <form ref={formRef} action={formAction} className="space-y-5">
+      <form ref={formRef} action={formAction} className="space-y-4">
         <input type="hidden" name="locale" value={locale} />
 
         <div className="grid gap-4 sm:grid-cols-3">
@@ -165,23 +167,23 @@ export function ConsultationForm({ copy, locale }: ConsultationFormProps) {
         {/* Actions and reassurance share the last row: the buttons sit left,
             the status line and chips fill the space that would otherwise be
             empty beside them. */}
-        <div className="border-line flex flex-col gap-5 border-t pt-5 lg:flex-row lg:items-start lg:justify-between lg:gap-10">
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-            <Button type="submit" variant="primary" size="lg" className="rounded-sm">
+        <div className="border-line flex flex-col gap-4 border-t pt-4 lg:flex-row lg:items-start lg:justify-between lg:gap-10">
+          <div className="flex flex-col gap-2.5 sm:flex-row sm:items-center">
+            <Button type="submit" variant="primary" size="md" className="rounded-sm">
               {isPending ? (
                 <Loader2 className="size-4 animate-spin" aria-hidden="true" />
               ) : null}
               {copy.submit}
             </Button>
 
-            <Button asChild variant="outline" size="lg" className="rounded-sm">
+            <Button asChild variant="outline" size="md" className="rounded-sm">
               <Link
                 href={contactLinks.whatsapp}
                 target="_blank"
                 rel="noreferrer noopener"
               >
                 <MessageCircle
-                  className="size-4.5"
+                  className="size-4"
                   strokeWidth={1.75}
                   aria-hidden="true"
                 />
@@ -190,7 +192,7 @@ export function ConsultationForm({ copy, locale }: ConsultationFormProps) {
             </Button>
           </div>
 
-          <div className="flex flex-col gap-2.5 lg:items-end lg:text-right">
+          <div className="flex flex-col gap-2 lg:items-end lg:text-right">
             <p className={cn("text-sm", statusTone)} aria-live="polite">
               {state.message || copy.hint}
             </p>
@@ -199,10 +201,10 @@ export function ConsultationForm({ copy, locale }: ConsultationFormProps) {
               {copy.chips.map((chip) => (
                 <span
                   key={chip}
-                  className="border-line text-ink-600 bg-cream-100 inline-flex items-center gap-2 rounded-sm border px-3 py-1.5 text-xs"
+                  className="border-line text-ink-600 bg-cream-100 inline-flex items-center gap-1.5 rounded-sm border px-2.5 py-1 text-xs"
                 >
                   <ShieldCheck
-                    className="text-gold size-3.5"
+                    className="text-gold size-3"
                     strokeWidth={2}
                     aria-hidden="true"
                   />
@@ -211,7 +213,7 @@ export function ConsultationForm({ copy, locale }: ConsultationFormProps) {
               ))}
             </div>
 
-            <p className="text-ink-400 max-w-[52ch] text-xs leading-6">
+            <p className="text-ink-400 max-w-[52ch] text-xs leading-5">
               {copy.privacy}
             </p>
           </div>
