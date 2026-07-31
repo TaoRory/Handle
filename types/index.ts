@@ -318,7 +318,7 @@ export interface SiteContent {
   /** Labels for the fixed section index; ids come from `SECTION_IDS`. */
   sectionNav: { label: string; items: { id: string; label: string }[] };
   floatingCta: string;
-  intro: { skip: string; loading: string };
+  intro: { skip: string; loading: string; mark: string };
   footer: {
     tagline: string;
     columns: FooterColumn[];

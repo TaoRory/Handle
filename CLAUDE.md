@@ -337,21 +337,35 @@ redirects unprefixed paths.
 at `xl`, which part am I in, labels on hover/focus, `aria-current` for assistive tech) and
 `FloatingContact` (holds the conversion path open once the hero's CTA has scrolled away).
 
-**`IntroCurtain`** — the brand intro, and the one piece of theatre on the site. The guideline says
-the crossbar of the H is curved "để tạo cảm giác nâng đỡ"; the animation makes that literal. The
-stems draw, a hand rises from below carrying the crossbar, sets it, and withdraws. Rules it must
-keep: once per session (`sessionStorage`, read by an inline script before first paint so a
-returning visitor never catches a frame), skippable by any click or key, hidden entirely without
-JavaScript (`<noscript>` rule), and bypassable with `?intro=off` so screenshot and end-to-end
-runners capture the page rather than whichever frame they landed on. It covers content, it never
-gates it — the page is fully rendered underneath the whole time.
+**`IntroCurtain` + `IntroMark`** — the brand intro, and the one piece of theatre on the site. The
+H settles in, the open hand flies in from the left and completes the mark, then the wordmark and
+tagline wipe in left to right.
+
+`IntroMark` rebuilds the supplied artwork (`Intro/logo intro.png`) so its parts can move: the bars
+are vector paths measured off the original (76 × 361 units, outer corners `r=30`, inner square),
+the hand is a transparent cut-out at `public/intro/hand.png` carrying the logo's cream knockout
+ring, and the type is sized from the artwork's own ratios. Two constraints follow from that ring
+being flat cream: the curtain background must stay a flat field (any tint turns the ring into a
+visible outline), and the reveal must use `clipPath`, never a sliding cover — a cover is a
+transform, and `MotionProvider` withholds transforms under reduced motion, which would leave the
+type permanently hidden for exactly those users.
+
+Rules the curtain must keep: once per session (`sessionStorage`, read by an inline script before
+first paint so a returning visitor never catches a frame), skippable by any click or key, hidden
+entirely without JavaScript (`<noscript>` rule), and bypassable with `?intro=off` so screenshot and
+end-to-end runners capture the page rather than whichever frame they landed on. It covers content,
+it never gates it — the page is fully rendered underneath the whole time.
+
+Note the mark here is **not** the same drawing as `ui/logo.tsx`, which the header and footer use:
+that one is the thin-stroke H from the brand sheet, this one is the solid-slab H with the hand.
+They are two different logos in two different palettes; unify them before launch.
 
 **Component tree**
 
 ```
 <RootLayout>
  ├ MotionProvider ──────── reducedMotion="user" for the whole tree
- ├ IntroCurtain ───────── H draws · hand lifts the crossbar · curtain rises
+ ├ IntroCurtain ───────── IntroMark (hand flies in) · type wipes L→R · curtain rises
  ├ SkipLink
  ├ ScrollProgress ──────── gold rule, scroll-linked
  ├ Navbar ── Logo · NavLinks · LocaleSwitcher · Button · MobileNav(Dialog)

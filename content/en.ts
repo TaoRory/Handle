@@ -168,6 +168,7 @@ export const en: SiteContent = {
   intro: {
     skip: "Skip",
     loading: "Opening Handle",
+    mark: "An open hand forming the crossbar of the H in the Handle logo",
   },
 
   footer: {

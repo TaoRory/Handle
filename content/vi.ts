@@ -164,6 +164,7 @@ export const vi: SiteContent = {
   intro: {
     skip: "Bỏ qua",
     loading: "Đang mở trang Handle",
+    mark: "Bàn tay nâng đỡ tạo thành thanh ngang của chữ H trong logo Handle",
   },
 
   footer: {
