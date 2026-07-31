@@ -3,25 +3,83 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useState } from "react";
 
+import { IntroMark } from "@/components/layout/IntroMark";
 import { EASE_EXPO } from "@/lib/motion";
 
 export const INTRO_SESSION_KEY = "handle:intro-played";
-const INTRO_DURATION_MS = 2600;
+
+/**
+ * Intro timeline, in seconds. Kept in one place because the steps have to stay
+ * in step with each other — nudging any single delay in isolation is how an
+ * intro ends up feeling ragged.
+ *
+ *   0.00  the H settles in                       (0.70s)
+ *   0.45  the hand flies in from the left        (1.05s, lands at 1.50)
+ *   0.90  the skip control fades up
+ *   1.55  HANDLE wipes left to right             (0.75s, ends 2.30)
+ *   2.05  the tagline wipes left to right        (0.65s, ends 2.70)
+ *   2.70  ── one full second of stillness, so the lockup can be read ──
+ *   3.70  the curtain lifts                      (0.65s)
+ */
+const TIMING = {
+  mark: { duration: 0.7 },
+  hand: { delay: 0.45, duration: 1.05 },
+  skip: { delay: 0.9 },
+  wordmark: { delay: 1.55, duration: 0.75 },
+  tagline: { delay: 2.05, duration: 0.65 },
+  exit: { duration: 0.65 },
+} as const;
+
+/** How long the curtain holds before it starts lifting. */
+const INTRO_DURATION_MS = 3700;
 
 interface IntroCurtainProps {
   skipLabel: string;
   /** Announced to screen readers while the curtain holds the viewport. */
   loadingLabel: string;
+  /** Alt text for the hand mark. */
+  markLabel: string;
+}
+
+/**
+ * Wipe that uncovers its content from the left edge to the right.
+ *
+ * `clipPath` rather than a sliding cover: a cover would have to be a transform,
+ * and `MotionProvider` withholds transforms under reduced motion — which would
+ * leave the text permanently hidden for exactly those users. Clip paths are not
+ * transforms, so the reveal still completes. Opacity rides along as a second
+ * belt: if the clip path ever failed to interpolate, the text would still end
+ * up visible rather than blank.
+ */
+function WipeIn({
+  children,
+  delay,
+  duration = 0.6,
+  className,
+}: {
+  children: React.ReactNode;
+  delay: number;
+  duration?: number;
+  className?: string;
+}) {
+  return (
+    <motion.span
+      className={className}
+      initial={{ opacity: 0, clipPath: "inset(0 100% 0 0)" }}
+      animate={{ opacity: 1, clipPath: "inset(0 0% 0 0)" }}
+      transition={{ duration, ease: EASE_EXPO, delay }}
+    >
+      {children}
+    </motion.span>
+  );
 }
 
 /**
  * Brand intro.
  *
- * The idea comes straight out of the guideline's own note on the mark: the
- * crossbar of the H is curved "để tạo cảm giác nâng đỡ" — so that it feels like
- * it is being held up. The animation shows exactly that. The two stems draw in,
- * a hand rises from below carrying the crossbar, sets it in place, and
- * withdraws. Handle is the hand that hands it over.
+ * The H stands, then the hand flies in from the left and completes it — the
+ * mark assembling itself around the gesture the brand is named for. The
+ * wordmark and tagline then wipe in from left to right, in reading order.
  *
  * Constraints this respects:
  * - **Once per session.** An intro you cannot get past is a toll booth. The
@@ -29,14 +87,18 @@ interface IntroCurtainProps {
  *   before first paint, so a returning visitor never sees a frame of curtain.
  * - **Always skippable.** Any click, any key, or the skip button ends it.
  * - **Reduced motion.** Handled by `MotionProvider`, not by branching here:
- *   every transform below is simply withheld, leaving the mark to fade up in
- *   place. Branching on the preference in render would change the SSR output
+ *   the transforms are simply withheld, so the mark and the type fade and wipe
+ *   in place. Branching on the preference in render would change the SSR output
  *   and break hydration for those users.
  * - **Never gates content.** The page renders underneath the whole time; this
  *   is a cover, not a gate, so crawlers are unaffected and the `<noscript>`
  *   rule in globals.css removes it entirely without JavaScript.
  */
-export function IntroCurtain({ skipLabel, loadingLabel }: IntroCurtainProps) {
+export function IntroCurtain({
+  skipLabel,
+  loadingLabel,
+  markLabel,
+}: IntroCurtainProps) {
   const [isPlaying, setIsPlaying] = useState(true);
 
   const dismiss = useCallback(() => {
@@ -101,8 +163,6 @@ export function IntroCurtain({ skipLabel, loadingLabel }: IntroCurtainProps) {
     };
   }, [isPlaying]);
 
-  const stemTransition = { duration: 0.5, ease: EASE_EXPO } as const;
-
   return (
     <AnimatePresence>
       {isPlaying ? (
@@ -114,136 +174,39 @@ export function IntroCurtain({ skipLabel, loadingLabel }: IntroCurtainProps) {
           className="bg-cream fixed inset-0 z-[200] flex flex-col items-center justify-center"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0, y: "-4%" }}
-          transition={{ duration: 0.6, ease: EASE_EXPO }}
+          transition={{ duration: TIMING.exit.duration, ease: EASE_EXPO }}
         >
-          {/* Warm bloom so the cream field is not flat while we wait. */}
-          <span
-            aria-hidden="true"
-            className="rounded-pill absolute size-[560px] bg-[radial-gradient(circle,rgba(201,168,106,0.16)_0%,transparent_68%)] blur-2xl"
-          />
-
+          {/* Deliberately a flat field. The hand cut-out carries the logo's
+              cream knockout ring baked into the PNG, so anything that tints the
+              background behind the mark — a bloom, a gradient — makes that ring
+              read as a visible outline instead of disappearing into the page. */}
           <div className="relative flex flex-col items-center">
-            <div className="relative h-[132px] w-[122px] sm:h-[156px] sm:w-[144px]">
-              {/* Stems draw top-to-bottom. */}
-              <svg
-                viewBox="0 0 48 52"
-                fill="none"
-                className="text-ink absolute inset-0 size-full"
-                aria-hidden="true"
-              >
-                <motion.path
-                  d="M6 4v44"
-                  stroke="currentColor"
-                  strokeWidth="5"
-                  strokeLinecap="round"
-                  initial={{ pathLength: 0 }}
-                  animate={{ pathLength: 1 }}
-                  transition={{ ...stemTransition, delay: 0.1 }}
-                />
-                <motion.path
-                  d="M42 4v44"
-                  stroke="currentColor"
-                  strokeWidth="5"
-                  strokeLinecap="round"
-                  initial={{ pathLength: 0 }}
-                  animate={{ pathLength: 1 }}
-                  transition={{ ...stemTransition, delay: 0.22 }}
-                />
-              </svg>
+            <IntroMark
+              altText={markLabel}
+              markDuration={TIMING.mark.duration}
+              handDelay={TIMING.hand.delay}
+              handDuration={TIMING.hand.duration}
+            />
 
-              {/* The crossbar rides up on the hand and stays behind. */}
-              <motion.svg
-                viewBox="0 0 48 52"
-                fill="none"
-                className="text-ink absolute inset-0 size-full"
-                aria-hidden="true"
-                initial={{ opacity: 0, y: "22%", scale: 0.94 }}
-                animate={{ opacity: 1, y: "0%", scale: 1 }}
-                transition={{ duration: 0.7, ease: EASE_EXPO, delay: 0.45 }}
-              >
-                <path
-                  d="M11.5 27C17 24.5 31 24.5 36.5 27"
-                  stroke="currentColor"
-                  strokeWidth="5"
-                  strokeLinecap="round"
-                />
-              </motion.svg>
-
-              {/* The hand: rises carrying the bar, then withdraws. */}
-              <motion.svg
-                viewBox="0 0 48 52"
-                fill="none"
-                className="text-gold absolute inset-0 size-full"
-                aria-hidden="true"
-                initial={{ opacity: 0, y: "34%" }}
-                animate={{
-                  opacity: [0, 1, 1, 0],
-                  y: ["34%", "16%", "16%", "24%"],
-                }}
-                transition={{
-                  duration: 1.3,
-                  times: [0, 0.34, 0.66, 1],
-                  ease: EASE_EXPO,
-                  delay: 0.42,
-                }}
-              >
-                {/* Palm-up hand, offering. Sits just under the crossbar. */}
-                <path
-                  d="M15.5 35.5c-1.4-1.9-2.1-3.3-2.1-4.4 0-1 .8-1.7 1.7-1.7.7 0 1.3.4 1.7 1l1.3 2"
-                  stroke="currentColor"
-                  strokeWidth="1.7"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M18.1 32.4v-4.6c0-.9.8-1.7 1.7-1.7s1.7.8 1.7 1.7v4"
-                  stroke="currentColor"
-                  strokeWidth="1.7"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M21.5 31.8v-4.9c0-.9.8-1.7 1.7-1.7s1.7.8 1.7 1.7v4.9"
-                  stroke="currentColor"
-                  strokeWidth="1.7"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M24.9 31.8v-4c0-.9.8-1.7 1.7-1.7s1.7.8 1.7 1.7v6.1c0 3.4-2.6 5.6-6 5.6-2.8 0-4.9-1-6.8-3.5"
-                  stroke="currentColor"
-                  strokeWidth="1.7"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                {/* Two short rising strokes: the gesture of handing over. */}
-                <path
-                  d="M31.5 30.5l2.4-2.4M34.5 33.2l3-3"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  opacity="0.55"
-                />
-              </motion.svg>
-            </div>
-
-            <motion.span
-              className="font-brand text-ink mt-7 text-[1.5rem] leading-none sm:text-[1.75rem]"
-              initial={{ opacity: 0, letterSpacing: "0.62em" }}
-              animate={{ opacity: 1, letterSpacing: "0.30em" }}
-              transition={{ duration: 0.8, ease: EASE_EXPO, delay: 1 }}
+            {/* Type sizes are derived from the supplied artwork rather than
+                picked: there the wordmark's cap height is 0.32 of the H's, and
+                the word runs about 2.5x the H's width. `leading-[0.74]` crops
+                the line box to the caps so the gaps below match too. */}
+            <WipeIn
+              delay={TIMING.wordmark.delay}
+              duration={TIMING.wordmark.duration}
+              className="font-brand mt-[30px] text-[clamp(2.25rem,12vw,4.25rem)] leading-[0.74] font-medium tracking-[0.12em] text-[#9F8772] sm:mt-[38px] sm:text-[5.4rem]"
             >
               HANDLE
-            </motion.span>
+            </WipeIn>
 
-            <motion.span
-              className="font-brand text-ink-400 mt-4 text-[0.625rem] tracking-[0.20em] uppercase sm:text-[0.6875rem]"
-              initial={{ opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease: EASE_EXPO, delay: 1.45 }}
+            <WipeIn
+              delay={TIMING.tagline.delay}
+              duration={TIMING.tagline.duration}
+              className="font-brand mt-[11px] text-[clamp(0.6rem,3.1vw,0.95rem)] leading-[0.74] tracking-[0.15em] text-[#C4B2A0] uppercase sm:mt-[14px] sm:text-[1.2rem]"
             >
               You heal. We handle the rest.
-            </motion.span>
+            </WipeIn>
           </div>
 
           <motion.button
@@ -252,7 +215,7 @@ export function IntroCurtain({ skipLabel, loadingLabel }: IntroCurtainProps) {
             className="text-ink-400 hover:text-ink focus-visible:outline-gold-600 absolute bottom-8 text-xs underline underline-offset-4 transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.3, delay: 0.8 }}
+            transition={{ duration: 0.3, delay: TIMING.skip.delay }}
           >
             {skipLabel}
           </motion.button>

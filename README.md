@@ -35,10 +35,20 @@ tech), and a **floating WhatsApp button** that appears once the hero's CTA has s
 
 ### The intro
 
-On the first visit of a session the site opens with a short brand animation: the two stems of the
-**H** draw in, a hand rises from below carrying the crossbar, sets it in place, and withdraws.
-It is a literal reading of the brand guideline's own note that the crossbar is curved
-_"để tạo cảm giác nâng đỡ"_ — to feel held up. Handle is the hand that hands it over.
+On the first visit of a session the site opens with a short brand animation: the two slabs of the
+**H** settle in, the open hand flies in from the left and lands across them — completing the mark —
+and then `HANDLE` and the tagline wipe in from left to right, in reading order.
+
+The mark is rebuilt from `Intro/logo intro.png`. That file is a flat raster, so nothing in it can
+move on its own: the two bars are redrawn as vector paths measured off the original (76 units wide,
+361 tall, outer corners `r=30`, inner corners square), and the hand is extracted from the PNG as a
+transparent cut-out — including the cream knockout ring the logo puts between the hand and the
+bars — into `public/intro/hand.png`. Type sizes are derived from the artwork rather than picked:
+there the wordmark's cap height is 0.32 of the H's, and the word runs about 2.5× the H's width.
+
+Because that knockout ring is baked into the PNG as flat cream, the curtain behind the mark has to
+stay a flat field. Anything that tints it — a bloom, a gradient — turns the ring into a visible
+outline instead of letting it disappear into the page.
 
 It is deliberately unobtrusive:
 
@@ -50,9 +60,15 @@ It is deliberately unobtrusive:
 - **`?intro=off`** — bypasses it, so screenshot and end-to-end runs capture the page rather than a
   random frame of the animation.
 
+The whole timeline lives in one `TIMING` object in `IntroCurtain`, including a full second of
+stillness after the tagline lands so the lockup can actually be read before the curtain lifts.
+End to end it runs about 4.4s.
+
 It covers the page, it never gates it: the content is fully rendered underneath the whole time, so
-crawlers are unaffected. The tradeoff is that it fronts the largest contentful paint by up to 2.6s
-on a first visit — a deliberate call for a brand site, and the reason it never repeats.
+crawlers are unaffected. The tradeoff is real, though — on a first visit the visitor waits those
+4.4s before they see the page, and the largest contentful paint lands on the intro wordmark rather
+than the hero. That is a deliberate call for a brand site, and the reason it never repeats within
+a session. Shorten `INTRO_DURATION_MS` if that trade stops being worth it.
 
 Design intent, tokens, motion rules and conventions are specified in **[`CLAUDE.md`](CLAUDE.md)** —
 read that before changing anything visual. It is the source of truth; this file is the operator's
@@ -104,7 +120,8 @@ app/
   sitemap.ts robots.ts   Generated SEO endpoints
 components/
   layout/                Navbar, MobileNav, LocaleSwitcher, Footer, SkipLink,
-                         IntroCurtain, MotionProvider, ScrollProgress, SectionNav
+                         IntroCurtain, IntroMark, MotionProvider,
+                         ScrollProgress, SectionNav
   sections/              One file per homepage band
   ui/                    Design-system primitives (no business logic)
 content/                 vi.ts · en.ts dictionaries + the SiteContent contract

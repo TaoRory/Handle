@@ -2,14 +2,12 @@ import { StatCounter } from "@/components/sections/StatCounter";
 import { Container } from "@/components/ui/container";
 import { Icon } from "@/components/ui/icon";
 import { Reveal } from "@/components/ui/reveal";
-import { Eyebrow } from "@/components/ui/section-heading";
 
 import type { SectionCopy, Stat } from "@/types";
 
 interface StatsBandProps {
   id: string;
   copy: SectionCopy;
-  step: string;
   stats: Stat[];
 }
 
@@ -24,7 +22,7 @@ interface StatsBandProps {
  * Gold at this size only works with ink type on top — never cream. See the
  * contrast floors in CLAUDE.md.
  */
-export function StatsBand({ id, copy, step, stats }: StatsBandProps) {
+export function StatsBand({ id, copy, stats }: StatsBandProps) {
   return (
     <section
       id={id}
@@ -44,12 +42,6 @@ export function StatsBand({ id, copy, step, stats }: StatsBandProps) {
       <Container className="relative">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:items-center lg:gap-16">
           <div className="flex flex-col gap-4">
-            <Reveal>
-              <Eyebrow step={step} tone="onGold">
-                {copy.eyebrow}
-              </Eyebrow>
-            </Reveal>
-
             <Reveal index={1}>
               <h2 id="stats-title" className="text-h2 text-ink max-w-[18ch]">
                 {copy.title}{" "}

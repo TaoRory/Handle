@@ -3,7 +3,6 @@ import Link from "next/link";
 import { ArrowTrail, Icon } from "@/components/ui/icon";
 import { Media } from "@/components/ui/media";
 import { Reveal } from "@/components/ui/reveal";
-import { Eyebrow } from "@/components/ui/section-heading";
 import { SECTION_IDS } from "@/lib/site-config";
 import { cn } from "@/lib/utils";
 
@@ -73,10 +72,6 @@ interface LifestyleExperienceProps {
 export function LifestyleExperience({ copy, experiences }: LifestyleExperienceProps) {
   return (
     <section aria-labelledby="experiences-title" className="flex flex-col">
-      <Reveal>
-        <Eyebrow>{copy.eyebrow}</Eyebrow>
-      </Reveal>
-
       <Reveal index={1}>
         {/* min-height reserves two lines so this heading and the services
             heading beside it share a baseline, whatever the language. */}

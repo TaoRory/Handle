@@ -3,7 +3,6 @@ import Link from "next/link";
 import { ArrowTrail, Icon } from "@/components/ui/icon";
 import { Media } from "@/components/ui/media";
 import { Reveal } from "@/components/ui/reveal";
-import { Eyebrow } from "@/components/ui/section-heading";
 import { SECTION_IDS } from "@/lib/site-config";
 import { cn } from "@/lib/utils";
 
@@ -50,7 +49,6 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
 
 interface MedicalServicesProps {
   copy: SectionCopy;
-  step: string;
   services: Service[];
 }
 
@@ -60,13 +58,9 @@ interface MedicalServicesProps {
  * Renders as a `<section>` nested inside `ServicesAndLifestyle`, which owns the
  * landmark and the shared vertical rhythm.
  */
-export function MedicalServices({ copy, step, services }: MedicalServicesProps) {
+export function MedicalServices({ copy, services }: MedicalServicesProps) {
   return (
     <section aria-labelledby="services-title" className="flex flex-col">
-      <Reveal>
-        <Eyebrow step={step}>{copy.eyebrow}</Eyebrow>
-      </Reveal>
-
       <Reveal index={1}>
         {/* Matches the min-height on the experiences heading — see the note
             there; the two columns must share a baseline. */}

@@ -56,14 +56,12 @@ export const vi: SiteContent = {
   },
 
   whyVietnam: {
-    eyebrow: "Bối cảnh",
     title: "Vì sao ngày càng nhiều người chọn điều trị tại",
     accent: "Việt Nam?",
     lead: "Không phải vì họ muốn đi xa. Mà vì họ muốn được điều trị sớm hơn và hợp lý hơn.",
   },
 
   about: {
-    eyebrow: "Về Handle",
     title: "Đó là lý do Handle",
     accent: "ra đời.",
     body: [
@@ -86,14 +84,12 @@ export const vi: SiteContent = {
   },
 
   whyUs: {
-    eyebrow: "Vì sao chọn Handle",
     title: "Một đầu mối duy nhất cho toàn bộ",
     accent: "hành trình.",
     lead: "Sáu cam kết định hình cách chúng tôi làm việc với mỗi khách hàng.",
   },
 
   journey: {
-    eyebrow: "Quy trình",
     title: "Hành trình cùng",
     accent: "Handle",
     lead: "Chúng tôi đồng hành cùng bạn từng bước, từ email đầu tiên đến lần tái khám sau khi bạn đã về nhà.",
@@ -101,32 +97,27 @@ export const vi: SiteContent = {
   },
 
   stats: {
-    eyebrow: "Con số",
     title: "Những gì chúng tôi đã",
     accent: "làm được.",
     lead: "Số liệu tổng hợp từ các ca Handle đã điều phối, cập nhật quý gần nhất.",
   },
 
   services: {
-    eyebrow: "Chuyên khoa",
     title: "Dịch vụ y tế chúng tôi hỗ trợ",
     action: "Xem tất cả dịch vụ",
   },
 
   experiences: {
-    eyebrow: "Ngoài phòng khám",
     title: "Trải nghiệm tại Việt Nam",
     action: "Xem tất cả trải nghiệm",
   },
 
   testimonials: {
-    eyebrow: "Câu chuyện khách hàng",
     title: "Những người đã đi cùng chúng tôi",
     lead: "Trích từ khảo sát sau điều trị, được đăng với sự đồng ý của khách hàng.",
   },
 
   faq: {
-    eyebrow: "Giải đáp",
     title: "Câu hỏi thường",
     accent: "gặp.",
     lead: "Sáu điều được hỏi nhiều nhất trước khi một hành trình bắt đầu.",
@@ -164,6 +155,7 @@ export const vi: SiteContent = {
   intro: {
     skip: "Bỏ qua",
     loading: "Đang mở trang Handle",
+    mark: "Bàn tay nâng đỡ tạo thành thanh ngang của chữ H trong logo Handle",
   },
 
   footer: {

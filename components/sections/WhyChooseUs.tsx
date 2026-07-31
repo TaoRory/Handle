@@ -16,7 +16,12 @@ import type { Advantage, SectionCopy } from "@/types";
 function AdvantageCard({ advantage, index }: { advantage: Advantage; index: number }) {
   return (
     <Reveal index={index} className="h-full">
-      <Card variant="cream" isInteractive padding="lg" className="h-full gap-5 rounded-sm">
+      <Card
+        variant="cream"
+        isInteractive
+        padding="lg"
+        className="h-full gap-5 rounded-sm"
+      >
         <span
           aria-hidden="true"
           className="bg-gold absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/card:scale-x-100"
@@ -41,19 +46,16 @@ function AdvantageCard({ advantage, index }: { advantage: Advantage; index: numb
 
 interface WhyChooseUsProps {
   id: string;
-  step: string;
   copy: SectionCopy;
   advantages: Advantage[];
 }
 
-export function WhyChooseUs({ id, step, copy, advantages }: WhyChooseUsProps) {
+export function WhyChooseUs({ id, copy, advantages }: WhyChooseUsProps) {
   return (
     <Section id={id} labelledBy="why-us-title" tone="surface">
       <Container>
         <SectionHeading
           id="why-us-title"
-          step={step}
-          eyebrow={copy.eyebrow}
           title={copy.title}
           accent={copy.accent}
           lead={copy.lead}

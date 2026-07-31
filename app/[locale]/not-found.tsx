@@ -3,7 +3,6 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { ArrowTrail } from "@/components/ui/icon";
-import { Eyebrow } from "@/components/ui/section-heading";
 import { DEFAULT_LOCALE, getContent } from "@/content";
 import { contactLinks } from "@/lib/site-config";
 
@@ -22,7 +21,10 @@ export default function NotFound() {
     <div className="flex min-h-[70vh] items-center py-24">
       <Container>
         <div className="flex max-w-[52ch] flex-col gap-6">
-          <Eyebrow>404</Eyebrow>
+          {/* Inline rather than a shared kicker component: the status code is
+              real information on this page, not the section label that was
+              removed from the rest of the site. */}
+          <span className="font-brand text-gold-600 text-eyebrow uppercase">404</span>
 
           <h1 className="text-h1 text-ink">{content.notFound.title}</h1>
 

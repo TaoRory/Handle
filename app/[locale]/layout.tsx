@@ -167,6 +167,7 @@ export default async function LocaleLayout({
           <IntroCurtain
             skipLabel={content.intro.skip}
             loadingLabel={content.intro.loading}
+            markLabel={content.intro.mark}
           />
 
           <SkipLink label={content.a11y.skipToContent} />

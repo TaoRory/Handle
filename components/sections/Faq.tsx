@@ -20,7 +20,6 @@ import type { Faq as FaqRecord, SectionCopy } from "@/types";
 
 interface FaqProps {
   id: string;
-  step: string;
   copy: SectionCopy;
   faqs: FaqRecord[];
   /** Copy for the help card beside the list. */
@@ -36,7 +35,7 @@ interface FaqProps {
  * `collapsible` keeps one answer open at a time, so the section never grows
  * into a wall of text.
  */
-export function Faq({ id, step, copy, faqs, help }: FaqProps) {
+export function Faq({ id, copy, faqs, help }: FaqProps) {
   return (
     <Section id={id} labelledBy="faq-title" tone="surface">
       <Container>
@@ -44,8 +43,6 @@ export function Faq({ id, step, copy, faqs, help }: FaqProps) {
           <div>
             <SectionHeading
               id="faq-title"
-              step={step}
-              eyebrow={copy.eyebrow}
               title={copy.title}
               accent={copy.accent}
               lead={copy.lead}

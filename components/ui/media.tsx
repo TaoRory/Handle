@@ -74,7 +74,7 @@ export function Media({
         className={cn(
           "absolute inset-0",
           hasHoverZoom &&
-          "transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/card:scale-[1.06]",
+            "transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/card:scale-[1.06]",
         )}
       >
         {asset.src ? (
