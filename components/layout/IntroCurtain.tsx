@@ -7,7 +7,31 @@ import { IntroMark } from "@/components/layout/IntroMark";
 import { EASE_EXPO } from "@/lib/motion";
 
 export const INTRO_SESSION_KEY = "handle:intro-played";
-const INTRO_DURATION_MS = 2500;
+
+/**
+ * Intro timeline, in seconds. Kept in one place because the steps have to stay
+ * in step with each other — nudging any single delay in isolation is how an
+ * intro ends up feeling ragged.
+ *
+ *   0.00  the H settles in                       (0.70s)
+ *   0.45  the hand flies in from the left        (1.05s, lands at 1.50)
+ *   0.90  the skip control fades up
+ *   1.55  HANDLE wipes left to right             (0.75s, ends 2.30)
+ *   2.05  the tagline wipes left to right        (0.65s, ends 2.70)
+ *   2.70  ── one full second of stillness, so the lockup can be read ──
+ *   3.70  the curtain lifts                      (0.65s)
+ */
+const TIMING = {
+  mark: { duration: 0.7 },
+  hand: { delay: 0.45, duration: 1.05 },
+  skip: { delay: 0.9 },
+  wordmark: { delay: 1.55, duration: 0.75 },
+  tagline: { delay: 2.05, duration: 0.65 },
+  exit: { duration: 0.65 },
+} as const;
+
+/** How long the curtain holds before it starts lifting. */
+const INTRO_DURATION_MS = 3700;
 
 interface IntroCurtainProps {
   skipLabel: string;
@@ -150,30 +174,35 @@ export function IntroCurtain({
           className="bg-cream fixed inset-0 z-[200] flex flex-col items-center justify-center"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0, y: "-4%" }}
-          transition={{ duration: 0.55, ease: EASE_EXPO }}
+          transition={{ duration: TIMING.exit.duration, ease: EASE_EXPO }}
         >
           {/* Deliberately a flat field. The hand cut-out carries the logo's
               cream knockout ring baked into the PNG, so anything that tints the
               background behind the mark — a bloom, a gradient — makes that ring
               read as a visible outline instead of disappearing into the page. */}
           <div className="relative flex flex-col items-center">
-            <IntroMark altText={markLabel} />
+            <IntroMark
+              altText={markLabel}
+              markDuration={TIMING.mark.duration}
+              handDelay={TIMING.hand.delay}
+              handDuration={TIMING.hand.duration}
+            />
 
             {/* Type sizes are derived from the supplied artwork rather than
                 picked: there the wordmark's cap height is 0.32 of the H's, and
                 the word runs about 2.5x the H's width. `leading-[0.74]` crops
                 the line box to the caps so the gaps below match too. */}
             <WipeIn
-              delay={1.15}
-              duration={0.6}
+              delay={TIMING.wordmark.delay}
+              duration={TIMING.wordmark.duration}
               className="font-brand mt-[30px] text-[clamp(2.25rem,12vw,4.25rem)] leading-[0.74] font-medium tracking-[0.12em] text-[#9F8772] sm:mt-[38px] sm:text-[5.4rem]"
             >
               HANDLE
             </WipeIn>
 
             <WipeIn
-              delay={1.6}
-              duration={0.5}
+              delay={TIMING.tagline.delay}
+              duration={TIMING.tagline.duration}
               className="font-brand mt-[11px] text-[clamp(0.6rem,3.1vw,0.95rem)] leading-[0.74] tracking-[0.15em] text-[#C4B2A0] uppercase sm:mt-[14px] sm:text-[1.2rem]"
             >
               You heal. We handle the rest.
@@ -186,7 +215,7 @@ export function IntroCurtain({
             className="text-ink-400 hover:text-ink focus-visible:outline-gold-600 absolute bottom-8 text-xs underline underline-offset-4 transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.3, delay: 0.8 }}
+            transition={{ duration: 0.3, delay: TIMING.skip.delay }}
           >
             {skipLabel}
           </motion.button>

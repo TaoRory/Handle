@@ -60,9 +60,15 @@ It is deliberately unobtrusive:
 - **`?intro=off`** — bypasses it, so screenshot and end-to-end runs capture the page rather than a
   random frame of the animation.
 
+The whole timeline lives in one `TIMING` object in `IntroCurtain`, including a full second of
+stillness after the tagline lands so the lockup can actually be read before the curtain lifts.
+End to end it runs about 4.4s.
+
 It covers the page, it never gates it: the content is fully rendered underneath the whole time, so
-crawlers are unaffected. The tradeoff is that it fronts the largest contentful paint by up to 2.6s
-on a first visit — a deliberate call for a brand site, and the reason it never repeats.
+crawlers are unaffected. The tradeoff is real, though — on a first visit the visitor waits those
+4.4s before they see the page, and the largest contentful paint lands on the intro wordmark rather
+than the hero. That is a deliberate call for a brand site, and the reason it never repeats within
+a session. Shorten `INTRO_DURATION_MS` if that trade stops being worth it.
 
 Design intent, tokens, motion rules and conventions are specified in **[`CLAUDE.md`](CLAUDE.md)** —
 read that before changing anything visual. It is the source of truth; this file is the operator's

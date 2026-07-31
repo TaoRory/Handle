@@ -48,7 +48,20 @@ const HAND = { x: 6, y: 92, w: 414, h: 190 };
 
 const asPercent = (value: number, total: number) => `${(value / total) * 100}%`;
 
-export function IntroMark({ altText }: { altText: string }) {
+interface IntroMarkProps {
+  altText: string;
+  /** Timings are owned by `IntroCurtain`, which holds the whole timeline. */
+  markDuration: number;
+  handDelay: number;
+  handDuration: number;
+}
+
+export function IntroMark({
+  altText,
+  markDuration,
+  handDelay,
+  handDuration,
+}: IntroMarkProps) {
   return (
     <div
       className="relative w-[190px] sm:w-[240px]"
@@ -62,7 +75,7 @@ export function IntroMark({ altText }: { altText: string }) {
         aria-hidden="true"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.55, ease: EASE_EXPO }}
+        transition={{ duration: markDuration, ease: EASE_EXPO }}
       >
         <defs>
           <clipPath id="intro-left-bar">
@@ -96,7 +109,7 @@ export function IntroMark({ altText }: { altText: string }) {
         }}
         initial={{ x: "-108%", y: "14%", opacity: 0 }}
         animate={{ x: "0%", y: "0%", opacity: 1 }}
-        transition={{ duration: 0.85, ease: EASE_EXPO, delay: 0.3 }}
+        transition={{ duration: handDuration, ease: EASE_EXPO, delay: handDelay }}
       >
         <Image
           src="/intro/hand.png"
