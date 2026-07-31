@@ -336,6 +336,24 @@ redirects unprefixed paths.
 | `Logo`                             | Inline SVG `icon` / `wordmark` / `lockup` at three sizes.                                                                                                   |
 | `IconTile`, `Rating`, `SocialIcon` | Small repeated atoms.                                                                                                                                       |
 
+**`ConsultationProvider` + `ConsultationButton`** — every "free consultation" button (header, hero,
+mobile drawer) opens one shared dialog holding the same `ConsultationForm`. They used to hand the
+visitor to WhatsApp, which is a good path for someone who already wants to talk and a dead end for
+someone still deciding: it leaves the site, needs an app, and asks them to compose the first message.
+
+The dialog is mounted once in the layout and opened through context rather than a `Dialog.Trigger`
+per button, because the triggers sit in server components across the tree and a `Root` each would
+mean a copy of the form each. Radix supplies the focus trap, `Esc`, scroll lock and `aria-modal`;
+the mobile drawer closes itself on the way out, since two stacked modals is a focus trap fighting a
+focus trap.
+
+The closing band keeps its own inline form — that one is the destination at the end of the argument,
+this one is for the visitor convinced early. Two live instances is why `ConsultationForm` namespaces
+its field ids with `useId`: duplicate ids would silently point every label and every
+`aria-describedby` at the first copy. Its `isCompact` prop exists for the same reason the dialog
+needed it — `sm:`/`lg:` are viewport widths, so inside a 560px dialog on a desktop screen the wide
+arrangement still fires and squashes three fields into a third of the space each.
+
 **`ConsultationSent`** — the confirmation that replaces the form's fields inside the same card
 once a request is written. A gold hairline ring closes, an ink tick strokes inside it, one halo
 breathes outward and is gone; then the copy and a three-step "what happens next" settle in. The
@@ -392,10 +410,11 @@ They are two different logos in two different palettes; unify them before launch
  ├ IntroCurtain ───────── IntroMark (hand flies in) · type fades up · curtain rises
  ├ SkipLink
  ├ ScrollProgress ──────── gold rule, scroll-linked
- ├ Navbar ── Logo · NavLinks · LocaleSwitcher · Button · MobileNav(Dialog)
+ ├ ConsultationProvider ─ the dialog every "free consultation" button opens
+ ├ Navbar ── Logo · NavLinks · LocaleSwitcher · ConsultationButton · MobileNav(Dialog)
  ├ SectionNav ─────────── 8 dots · hover labels · aria-current   (xl only)
  ├ main
- │  ├ Hero ─────────────── headline · lead · 2 CTAs · TrustStrip · full-bleed Media · float decor
+ │  ├ Hero ─────────────── headline · lead · ConsultationButton + anchor · TrustStrip · full-bleed Media
  │  ├ PartnerCarousel ──── Marquee × PartnerLogo   (overlaps the hero bottom)
  │  ├ 01 WhyVietnam ────── SectionHeading · ReasonCard × 4 (one gold)
  │  ├ 02 AboutHandle ───── INK panel · Media · copy · proof pills · Button

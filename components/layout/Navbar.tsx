@@ -5,11 +5,10 @@ import { useEffect, useMemo, useState } from "react";
 
 import { LocaleSwitcher } from "@/components/layout/LocaleSwitcher";
 import { MobileNav } from "@/components/layout/MobileNav";
-import { Button } from "@/components/ui/button";
+import { ConsultationButton } from "@/components/layout/ConsultationDialog";
 import { ArrowTrail } from "@/components/ui/icon";
 import { Logo } from "@/components/ui/logo";
 import { useScrollSpy } from "@/hooks/use-scroll-spy";
-import { contactLinks } from "@/lib/site-config";
 import { cn } from "@/lib/utils";
 
 import type { Locale, NavLink } from "@/types";
@@ -115,16 +114,13 @@ export function Navbar({
             className="hidden sm:block"
           />
 
-          <Button
-            asChild
+          <ConsultationButton
             size="sm"
             className="hidden h-11 rounded-sm px-5 sm:inline-flex"
           >
-            <Link href={contactLinks.whatsapp}>
-              {ctaLabel}
-              <ArrowTrail />
-            </Link>
-          </Button>
+            {ctaLabel}
+            <ArrowTrail />
+          </ConsultationButton>
 
           <MobileNav
             links={links}

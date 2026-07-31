@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { Play } from "lucide-react";
 
+import { ConsultationButton } from "@/components/layout/ConsultationDialog";
 import { HeroDecor } from "@/components/sections/HeroDecor";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { ArrowTrail, Icon } from "@/components/ui/icon";
 import { Media } from "@/components/ui/media";
 import { Reveal } from "@/components/ui/reveal";
-import { SECTION_IDS, contactLinks } from "@/lib/site-config";
+import { SECTION_IDS } from "@/lib/site-config";
 
 import type { HeroCopy } from "@/types";
 
@@ -92,12 +93,10 @@ export function Hero({ copy }: { copy: HeroCopy }) {
 
           <Reveal index={2}>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <Button asChild size="lg" className="rounded-sm">
-                <Link href={contactLinks.whatsapp}>
-                  {copy.primaryCta}
-                  <ArrowTrail />
-                </Link>
-              </Button>
+              <ConsultationButton size="lg" className="rounded-sm">
+                {copy.primaryCta}
+                <ArrowTrail />
+              </ConsultationButton>
 
               <Button asChild variant="outline" size="lg" className="rounded-sm">
                 <Link href={`#${SECTION_IDS.about}`}>

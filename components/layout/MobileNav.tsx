@@ -5,7 +5,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
 
-import { Button } from "@/components/ui/button";
+import { ConsultationButton } from "@/components/layout/ConsultationDialog";
 import { ArrowTrail } from "@/components/ui/icon";
 import { Logo } from "@/components/ui/logo";
 import { contactLinks, siteConfig } from "@/lib/site-config";
@@ -86,14 +86,16 @@ export function MobileNav({ links, ctaLabel, menuLabel, closeLabel }: MobileNavP
           </nav>
 
           <div className="border-line flex flex-col gap-3 border-t px-5 py-6">
-            <Dialog.Close asChild>
-              <Button asChild size="lg" className="w-full">
-                <Link href={contactLinks.whatsapp}>
-                  {ctaLabel}
-                  <ArrowTrail />
-                </Link>
-              </Button>
-            </Dialog.Close>
+            {/* Closes the drawer on the way out — two stacked modals is a focus
+                trap fighting a focus trap. */}
+            <ConsultationButton
+              size="lg"
+              className="w-full"
+              onOpen={() => setIsOpen(false)}
+            >
+              {ctaLabel}
+              <ArrowTrail />
+            </ConsultationButton>
             <a
               href={contactLinks.tel}
               className="text-ink-600 hover:text-ink text-center text-sm transition-colors duration-200"
