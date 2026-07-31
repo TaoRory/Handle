@@ -286,14 +286,12 @@ export interface CtaCopy {
   whatsapp: string;
   consultation: string;
   form: {
+    /**
+     * Short kicker on the form card. The band's own `title`/`lead` above it
+     * carry the heading, so the card does not repeat them.
+     */
     eyebrow: string;
-    title: string;
-    lead: string;
     chatLabel: string;
-    qrEyebrow: string;
-    qrTitle: string;
-    qrLead: string;
-    qrAction: string;
     nameLabel: string;
     emailLabel: string;
     phoneLabel: string;

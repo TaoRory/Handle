@@ -140,14 +140,7 @@ export const en: SiteContent = {
     consultation: "Free consultation",
     form: {
       eyebrow: "Consultation form",
-      title: "Leave your details and we will reach out",
-      lead: "Just a few short fields. The Handle team will review your request and reply with the next best step.",
       chatLabel: "Chat on WhatsApp",
-      qrEyebrow: "Quick scan",
-      qrTitle: "Or contact now",
-      qrLead:
-        "If you want to message us now, scan the code on your phone to open a conversation with the Handle team.",
-      qrAction: "Open WhatsApp now",
       nameLabel: "Full name",
       emailLabel: "Email",
       phoneLabel: "Phone number",

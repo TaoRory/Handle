@@ -4,12 +4,12 @@ import Link from "next/link";
 import { useActionState, useEffect, useRef } from "react";
 import { Loader2, MessageCircle, ShieldCheck } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
-import { Card, CardBody, CardTitle } from "@/components/ui/card";
 import {
   consultationInitialState,
   submitConsultation,
 } from "@/app/actions/consultation";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { contactLinks } from "@/lib/site-config";
 import { cn } from "@/lib/utils";
 
@@ -23,6 +23,14 @@ interface ConsultationFormProps {
 const fieldBase =
   "border-line bg-cream-100 text-ink placeholder:text-ink-400 focus-visible:border-gold focus-visible:ring-gold/20 w-full rounded-sm border px-4 py-3.5 text-[0.9375rem] transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2";
 
+/**
+ * The consultation form.
+ *
+ * Laid out wide rather than tall: the three short fields share a row from `sm`
+ * up, and only the free-text box takes the full width. The heading for the
+ * section lives in `CtaBanner` above, so this card opens straight on its own
+ * short kicker and the fields.
+ */
 export function ConsultationForm({ copy, locale }: ConsultationFormProps) {
   const formRef = useRef<HTMLFormElement>(null);
   const [state, formAction, isPending] = useActionState(
@@ -47,22 +55,14 @@ export function ConsultationForm({ copy, locale }: ConsultationFormProps) {
 
   return (
     <Card variant="surface" padding="lg" className="rounded-sm shadow-lg">
-      <div className="mb-6 flex items-start justify-between gap-4">
-        <div className="flex flex-col gap-2">
-          <p className="font-brand text-gold text-xs tracking-[0.18em] uppercase">
-            {copy.eyebrow}
-          </p>
-          <CardTitle className="max-w-[18ch] text-[1.75rem] leading-tight lg:text-[2rem]">
-            {copy.title}
-          </CardTitle>
-          <CardBody className="max-w-[38ch] text-[0.9375rem]">{copy.lead}</CardBody>
-        </div>
-      </div>
+      <p className="font-brand text-gold mb-6 text-xs tracking-[0.18em] uppercase">
+        {copy.eyebrow}
+      </p>
 
-      <form ref={formRef} action={formAction} className="space-y-4">
+      <form ref={formRef} action={formAction} className="space-y-5">
         <input type="hidden" name="locale" value={locale} />
 
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid gap-4 sm:grid-cols-3">
           <div className="space-y-1.5">
             <label htmlFor="fullName" className="text-ink text-sm font-medium">
               {copy.nameLabel}
@@ -112,29 +112,29 @@ export function ConsultationForm({ copy, locale }: ConsultationFormProps) {
               </p>
             ) : null}
           </div>
-        </div>
 
-        <div className="space-y-1.5">
-          <label htmlFor="phone" className="text-ink text-sm font-medium">
-            {copy.phoneLabel}
-          </label>
-          <input
-            id="phone"
-            name="phone"
-            type="tel"
-            autoComplete="tel"
-            inputMode="tel"
-            placeholder={copy.phonePlaceholder}
-            className={cn(fieldBase, state.fieldErrors?.phone && "border-danger/70")}
-            aria-invalid={Boolean(state.fieldErrors?.phone)}
-            aria-describedby={state.fieldErrors?.phone ? "phone-error" : undefined}
-            required
-          />
-          {state.fieldErrors?.phone ? (
-            <p id="phone-error" className="text-danger text-xs">
-              {state.fieldErrors.phone}
-            </p>
-          ) : null}
+          <div className="space-y-1.5">
+            <label htmlFor="phone" className="text-ink text-sm font-medium">
+              {copy.phoneLabel}
+            </label>
+            <input
+              id="phone"
+              name="phone"
+              type="tel"
+              autoComplete="tel"
+              inputMode="tel"
+              placeholder={copy.phonePlaceholder}
+              className={cn(fieldBase, state.fieldErrors?.phone && "border-danger/70")}
+              aria-invalid={Boolean(state.fieldErrors?.phone)}
+              aria-describedby={state.fieldErrors?.phone ? "phone-error" : undefined}
+              required
+            />
+            {state.fieldErrors?.phone ? (
+              <p id="phone-error" className="text-danger text-xs">
+                {state.fieldErrors.phone}
+              </p>
+            ) : null}
+          </div>
         </div>
 
         <div className="space-y-1.5">
@@ -144,7 +144,7 @@ export function ConsultationForm({ copy, locale }: ConsultationFormProps) {
           <textarea
             id="message"
             name="message"
-            rows={5}
+            rows={3}
             placeholder={copy.messagePlaceholder}
             className={cn(
               fieldBase,
@@ -162,62 +162,59 @@ export function ConsultationForm({ copy, locale }: ConsultationFormProps) {
           ) : null}
         </div>
 
-        <div className="grid gap-3 pt-2 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center">
-          <Button
-            type="submit"
-            variant="primary"
-            size="lg"
-            className="w-full rounded-sm"
-          >
-            {isPending ? (
-              <Loader2 className="size-4 animate-spin" aria-hidden="true" />
-            ) : null}
-            {copy.submit}
-          </Button>
+        {/* Actions and reassurance share the last row: the buttons sit left,
+            the status line and chips fill the space that would otherwise be
+            empty beside them. */}
+        <div className="border-line flex flex-col gap-5 border-t pt-5 lg:flex-row lg:items-start lg:justify-between lg:gap-10">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+            <Button type="submit" variant="primary" size="lg" className="rounded-sm">
+              {isPending ? (
+                <Loader2 className="size-4 animate-spin" aria-hidden="true" />
+              ) : null}
+              {copy.submit}
+            </Button>
 
-          <Button
-            asChild
-            variant="outline"
-            size="lg"
-            className="w-full rounded-sm sm:w-auto"
-          >
-            <Link
-              href={contactLinks.whatsapp}
-              target="_blank"
-              rel="noreferrer noopener"
-            >
-              <MessageCircle
-                className="size-4.5"
-                strokeWidth={1.75}
-                aria-hidden="true"
-              />
-              {copy.chatLabel}
-            </Link>
-          </Button>
-        </div>
-
-        <div className="space-y-3 pt-1">
-          <p className={cn("text-sm", statusTone)} aria-live="polite">
-            {state.message || copy.hint}
-          </p>
-
-          <div className="flex flex-wrap gap-2">
-            {copy.chips.map((chip) => (
-              <span
-                key={chip}
-                className="border-line text-ink-600 bg-cream-100 inline-flex items-center gap-2 rounded-sm border px-3 py-1.5 text-xs"
+            <Button asChild variant="outline" size="lg" className="rounded-sm">
+              <Link
+                href={contactLinks.whatsapp}
+                target="_blank"
+                rel="noreferrer noopener"
               >
-                <ShieldCheck
-                  className="text-gold size-3.5"
-                  strokeWidth={2}
+                <MessageCircle
+                  className="size-4.5"
+                  strokeWidth={1.75}
                   aria-hidden="true"
                 />
-                {chip}
-              </span>
-            ))}
+                {copy.chatLabel}
+              </Link>
+            </Button>
           </div>
 
-          <p className="text-ink-600 text-xs leading-6">{copy.privacy}</p>
+          <div className="flex flex-col gap-2.5 lg:items-end lg:text-right">
+            <p className={cn("text-sm", statusTone)} aria-live="polite">
+              {state.message || copy.hint}
+            </p>
+
+            <div className="flex flex-wrap gap-2 lg:justify-end">
+              {copy.chips.map((chip) => (
+                <span
+                  key={chip}
+                  className="border-line text-ink-600 bg-cream-100 inline-flex items-center gap-2 rounded-sm border px-3 py-1.5 text-xs"
+                >
+                  <ShieldCheck
+                    className="text-gold size-3.5"
+                    strokeWidth={2}
+                    aria-hidden="true"
+                  />
+                  {chip}
+                </span>
+              ))}
+            </div>
+
+            <p className="text-ink-400 max-w-[52ch] text-xs leading-6">
+              {copy.privacy}
+            </p>
+          </div>
         </div>
       </form>
     </Card>

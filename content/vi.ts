@@ -136,14 +136,7 @@ export const vi: SiteContent = {
     consultation: "Tư vấn miễn phí",
     form: {
       eyebrow: "Biểu mẫu tư vấn",
-      title: "Để lại thông tin, chúng tôi sẽ chủ động liên hệ",
-      lead: "Chỉ cần vài dòng ngắn. Đội ngũ Handle sẽ xem nhu cầu của bạn và phản hồi với bước tiếp theo phù hợp.",
       chatLabel: "Chat trên WhatsApp",
-      qrEyebrow: "Quét mã nhanh",
-      qrTitle: "Hoặc liên hệ ngay",
-      qrLead:
-        "Nếu muốn nhắn ngay, dùng điện thoại quét mã để mở cuộc trò chuyện với đội ngũ Handle.",
-      qrAction: "Mở WhatsApp ngay",
       nameLabel: "Họ và tên",
       emailLabel: "Email",
       phoneLabel: "Số điện thoại",
