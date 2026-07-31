@@ -6,6 +6,8 @@
  * change to the data is a compile error rather than a runtime surprise.
  */
 
+import { ConsultationState } from "@/app/actions/consultation";
+
 /* ------------------------------------------------------------------ *
  *  Locale
  * ------------------------------------------------------------------ */
@@ -369,3 +371,10 @@ export interface SiteContent {
     contact: string;
   };
 }
+
+const defaultState: ConsultationState = {
+  success: false,
+  message: "",
+};
+
+export const consultationInitialState = defaultState;
