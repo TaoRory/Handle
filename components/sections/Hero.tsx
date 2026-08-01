@@ -100,7 +100,7 @@ export function Hero({ copy }: { copy: HeroCopy }) {
                 <ArrowTrail />
               </ConsultationLink>
 
-              <Button asChild variant="outline" size="lg" className="rounded-sm">
+              <Button asChild variant="outline" size="lg">
                 <Link href={`#${SECTION_IDS.about}`}>
                   <span className="bg-gold/15 text-gold-600 rounded-pill -ml-2 inline-flex size-8 items-center justify-center">
                     <Play

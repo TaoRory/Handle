@@ -131,7 +131,7 @@ export function ConsultationSent({
           variants={fadeUp}
           className="border-line flex w-full flex-col gap-2.5 border-t pt-5 sm:flex-row sm:justify-center"
         >
-          <Button asChild variant="primary" size="md" className="rounded-sm">
+          <Button asChild variant="primary" size="md">
             <Link
               href={contactLinks.whatsapp}
               target="_blank"
@@ -142,13 +142,7 @@ export function ConsultationSent({
             </Link>
           </Button>
 
-          <Button
-            type="button"
-            variant="ghost"
-            size="md"
-            className="rounded-sm"
-            onClick={onReset}
-          >
+          <Button type="button" variant="ghost" size="md" onClick={onReset}>
             {copy.again}
           </Button>
         </motion.div>

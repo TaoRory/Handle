@@ -76,9 +76,23 @@ Derived ramp (declared once in `app/globals.css` under Tailwind v4 `@theme`):
 ```
 
 **Gold discipline.** Gold is the scarcest resource on the page. Budget: at most one gold element
-per viewport-height of scroll, plus the primary CTA. Gold is never a background for body copy —
+per viewport-height of scroll, plus the primary CTA on the ink bands. Gold is never a background for body copy —
 only type, 1px rules, small icon strokes, the primary button, and the two sanctioned large fills
 below (the stats band and the single highlight card).
+
+### Buttons
+
+Flat, hairline, `--radius-xs` (4px). Nothing simulates depth: no shadow at rest, no shadow on
+hover, no lift. A press is the only movement and hover is a change of tone. The set this replaced
+carried a gold glow at rest, a larger glow on hover and a translate — three effects at once — and
+on the ink band the button appeared to be emitting light, which is landing-page language rather
+than clinic language. 4px reads as a cut edge; 10px and the pill both read as an app.
+
+Ink carries the primary action on light surfaces and gold carries it on the ink bands, so the
+action always holds the strongest contrast available and gold stays scarce. Tertiary actions drop
+the box entirely and become a label on a gold rule — that is where gold belongs at this scale, as
+a line under a word rather than the fill behind one. The arrow slides on text links only; a button
+that already fills on hover does not need a second thing moving inside it.
 
 **Gold that carries words is always `gold-700`.** Measured on cream, `gold` is 2.0:1 and `gold-600`
 is 2.8:1 — neither clears AA at any size, including the display accent word, which was the least
@@ -352,20 +366,20 @@ redirects unprefixed paths.
 
 **`/ui` primitives**
 
-| Component                          | Responsibility                                                                                                                                              |
-| ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `Button`                           | cva variants `primary` (gold) · `dark` (ink) · `outline` · `ghost` · `whatsapp`; sizes `sm/md/lg`; `asChild` via Radix Slot; built-in arrow slide on hover. |
-| `Container`                        | The single source of page gutter + max width.                                                                                                               |
-| `Section`                          | `<section>` + `aria-labelledby` + vertical rhythm + tone (`cream`/`cream300`/`surface`/`ink`/`gold`).                                                       |
-| `SectionHeading`                   | Title (with gold accent word) + optional lead + optional action. No kicker — see "Section numbering".                                                       |
-| `Card`                             | cva variants `surface` · `cream` · `quiet` · `gold` · `ink`, hover elevation. At most one `gold` per grid — it is the eye's landing point.                  |
-| `Accordion`                        | Radix wrapper. Roles, `aria-expanded` and roving focus come free; this supplies the skin and the plus→cross rotation only.                                  |
-| `Reveal`                           | The one entrance-animation wrapper. Viewport, stagger index, reduced motion.                                                                                |
-| `Marquee`                          | Duplicated-track infinite scroller. Pause on hover/focus, reduced-motion safe.                                                                              |
-| `Media`                            | Renders `next/image` when a `src` exists, otherwise the generated brand plate. Locked aspect ratio, hover zoom, rounded mask.                               |
-| `MediaPlate`                       | The generated art: seeded warm gradient mesh + gold arcs + grain + subject glyph.                                                                           |
-| `Logo`                             | Inline SVG `icon` / `wordmark` / `lockup` at three sizes.                                                                                                   |
-| `IconTile`, `Rating`, `SocialIcon` | Small repeated atoms.                                                                                                                                       |
+| Component                          | Responsibility                                                                                                                                                                                       |
+| ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Button`                           | cva variants `primary` (ink, light surfaces) · `onDark` (gold, ink bands) · `outline` (hairline) · `ghost` (label on a gold rule); sizes `sm/md/lg`; `asChild` via Radix Slot. Flat — see "Buttons". |
+| `Container`                        | The single source of page gutter + max width.                                                                                                                                                        |
+| `Section`                          | `<section>` + `aria-labelledby` + vertical rhythm + tone (`cream`/`cream300`/`surface`/`ink`/`gold`).                                                                                                |
+| `SectionHeading`                   | Title (with gold accent word) + optional lead + optional action. No kicker — see "Section numbering".                                                                                                |
+| `Card`                             | cva variants `surface` · `cream` · `quiet` · `gold` · `ink`, hover elevation. At most one `gold` per grid — it is the eye's landing point.                                                           |
+| `Accordion`                        | Radix wrapper. Roles, `aria-expanded` and roving focus come free; this supplies the skin and the plus→cross rotation only.                                                                           |
+| `Reveal`                           | The one entrance-animation wrapper. Viewport, stagger index, reduced motion.                                                                                                                         |
+| `Marquee`                          | Duplicated-track infinite scroller. Pause on hover/focus, reduced-motion safe.                                                                                                                       |
+| `Media`                            | Renders `next/image` when a `src` exists, otherwise the generated brand plate. Locked aspect ratio, hover zoom, rounded mask.                                                                        |
+| `MediaPlate`                       | The generated art: seeded warm gradient mesh + gold arcs + grain + subject glyph.                                                                                                                    |
+| `Logo`                             | Inline SVG `icon` / `wordmark` / `lockup` at three sizes.                                                                                                                                            |
+| `IconTile`, `Rating`, `SocialIcon` | Small repeated atoms.                                                                                                                                                                                |
 
 **`ConsultationLink`** — the "free consultation" buttons in the header, the hero and the mobile
 drawer. All three are real anchors to the closing band, so they survive without JavaScript,

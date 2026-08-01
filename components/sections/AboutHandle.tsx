@@ -92,7 +92,7 @@ export function AboutHandle({ id, copy }: AboutHandleProps) {
 
               <Reveal index={5}>
                 <div className="mt-1 flex flex-wrap items-center gap-3">
-                  <Button asChild size="lg" className="rounded-sm">
+                  <Button asChild variant="onDark" size="lg">
                     <Link href={contactLinks.whatsapp}>
                       {copy.action}
                       <ArrowTrail />

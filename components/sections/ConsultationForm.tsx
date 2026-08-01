@@ -25,7 +25,7 @@ interface ConsultationFormProps {
 // 14px is the floor this project holds type to, so the fields get tighter by
 // losing padding rather than by shrinking the text.
 const fieldBase =
-  "border-line bg-cream-100 text-ink placeholder:text-ink-400 focus-visible:border-gold focus-visible:ring-gold/20 w-full rounded-sm border px-3.5 py-2.5 text-sm transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2";
+  "border-line bg-cream-100 text-ink placeholder:text-ink-400 focus-visible:border-gold focus-visible:ring-gold/20 rounded-xs w-full border px-3.5 py-2.5 text-sm transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2";
 
 /** Opacity only, so `MotionConfig reducedMotion="user"` still cross-fades it. */
 const swap = {
@@ -257,7 +257,6 @@ export function ConsultationForm({ copy, locale }: ConsultationFormProps) {
                     type="submit"
                     variant="primary"
                     size="md"
-                    className="rounded-sm"
                     disabled={isPending}
                   >
                     {isPending ? (
@@ -266,7 +265,7 @@ export function ConsultationForm({ copy, locale }: ConsultationFormProps) {
                     {copy.submit}
                   </Button>
 
-                  <Button asChild variant="outline" size="md" className="rounded-sm">
+                  <Button asChild variant="outline" size="md">
                     <Link
                       href={contactLinks.whatsapp}
                       target="_blank"
@@ -291,7 +290,7 @@ export function ConsultationForm({ copy, locale }: ConsultationFormProps) {
                     {copy.chips.map((chip) => (
                       <span
                         key={chip}
-                        className="border-line text-ink-600 bg-cream-100 inline-flex items-center gap-1.5 rounded-sm border px-2.5 py-1 text-xs"
+                        className="border-line text-ink-600 bg-cream-100 inline-flex items-center gap-1.5 rounded-xs border px-2.5 py-1 text-xs"
                       >
                         <ShieldCheck
                           className="text-gold size-3"

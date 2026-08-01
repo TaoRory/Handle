@@ -34,7 +34,7 @@ export function ArrowTrail({ className }: { className?: string }) {
     <ArrowRight
       className={cn(
         "size-4 shrink-0 transition-transform duration-200 ease-[cubic-bezier(0.4,0,0.2,1)]",
-        "group-hover/btn:translate-x-1 group-hover/link:translate-x-1",
+        "group-hover/link:translate-x-1",
         className,
       )}
       strokeWidth={1.75}
