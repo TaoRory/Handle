@@ -70,9 +70,6 @@
   --text-display--letter-spacing: -0.03em;
 
   /* -- Radii ------------------------------------------------------- */
-  /* Buttons and fields only. Small enough to read as a cut edge rather than a
-     rounded one — the difference between an instrument and an app icon. */
-  --radius-xs: 4px;
   --radius-sm: 10px;
   --radius-md: 16px;
   --radius-lg: 24px;

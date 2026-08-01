@@ -78,7 +78,7 @@ export function Faq({ id, copy, faqs, help }: FaqProps) {
                   {help.body}
                 </p>
 
-                <Button asChild variant="onDark" size="md" className="mt-2 w-full">
+                <Button asChild size="md" className="mt-2 w-full">
                   <Link
                     href={contactLinks.whatsapp}
                     target="_blank"

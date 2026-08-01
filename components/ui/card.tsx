@@ -19,8 +19,16 @@ const cardVariants = cva(
         cream: "rounded-lg border border-line bg-cream-100 shadow-none",
         /** Editorial: no chrome, just a hairline. Used by the services grid. */
         quiet: "border-line/70 bg-surface/60 rounded-lg border",
-        /** Accent. One per grid at most — it is the eye's landing point. */
-        gold: "rounded-lg border-gold-600/40 shadow-gold bg-gold border",
+        /**
+         * Accent. One per grid at most — it is the eye's landing point.
+         *
+         * A shallow gradient rather than a flat fill, and a deeper gold at the
+         * edge: gold laid down flat at this size reads as a sticker, and the
+         * gold glow it used to carry was the same trick that made the buttons
+         * look generated. The shadow is the warm neutral one every other card
+         * uses, so the accent is carried entirely by the fill.
+         */
+        gold: "rounded-lg border-gold-700/30 from-gold to-gold-600 shadow-md border bg-gradient-to-b",
         ink: "rounded-lg border-cream/12 bg-ink-800 border",
       },
       isInteractive: {

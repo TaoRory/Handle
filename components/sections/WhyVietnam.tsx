@@ -41,14 +41,16 @@ function ReasonCard({
         {/* No per-card ordinal: numbering the cards would compete with the
             section index down the right edge. Emphasis comes from the gold
             fill on the single positive card instead. */}
+        {/* Same treatment as its three neighbours — a bare icon, no container.
+            The highlighted card used to box its icon in a translucent square,
+            which read as a smudge on the gold and made the one card that is
+            supposed to be the answer look like it came from a different set. */}
         <IconTile
           name={reason.icon}
-          tone={isHighlighted ? "gold" : "transparent"}
+          tone="transparent"
           className={cn(
             "shrink-0",
-            isHighlighted
-              ? "bg-ink/10 text-ink ring-ink/15"
-              : "group-hover/card:text-gold-600",
+            isHighlighted ? "text-ink" : "group-hover/card:text-gold-600",
           )}
         />
 
@@ -58,7 +60,10 @@ function ReasonCard({
           >
             {reason.title}
           </CardTitle>
-          <CardBody className={cn(isHighlighted && "text-ink/75")}>
+          {/* `ink/75` measured 3.0:1 over the gold — the body of the one card
+              carrying the argument was the least readable text in the row.
+              `ink-800` is solid and 7.4:1. */}
+          <CardBody className={cn(isHighlighted && "text-ink-800")}>
             {reason.body}
           </CardBody>
         </div>
