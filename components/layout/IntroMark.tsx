@@ -30,7 +30,13 @@ const LEFT_X = 70;
 const RIGHT_X = 280;
 const RADIUS = 30;
 
-/** Where the left bar changes tone — under where the hand lands. */
+/**
+ * Where both bars change tone — under where the hand lands.
+ *
+ * The two bars alternate across it: the left is dark above and light below, the
+ * right light above and dark below. That diagonal is the point of the mark —
+ * the hand crosses on the line where the tones swap.
+ */
 const TONE_SPLIT = 180;
 
 const VIEW_W = 426;
@@ -81,12 +87,17 @@ export function IntroMark({
           <clipPath id="intro-left-bar">
             <path d={barPath(LEFT_X, "left")} />
           </clipPath>
+          <clipPath id="intro-right-bar">
+            <path d={barPath(RIGHT_X, "right")} />
+          </clipPath>
         </defs>
 
+        {/* Each bar is laid down light, then the dark half painted over it and
+            clipped back to the bar's own rounded outline — which is what keeps
+            the corner radii intact at the top of the left bar and the bottom of
+            the right one. The seam falls where the hand lands, so neither edge
+            is ever seen hard against the other. */}
         <path d={barPath(LEFT_X, "left")} fill={TAN} />
-        {/* The darker upper-left segment: in the artwork it reads as the arm
-            the hand is attached to. Its lower edge is covered once the hand
-            lands, which is why the split sits under the landing position. */}
         <rect
           x={LEFT_X}
           y={0}
@@ -95,7 +106,16 @@ export function IntroMark({
           fill={TAUPE}
           clipPath="url(#intro-left-bar)"
         />
+
         <path d={barPath(RIGHT_X, "right")} fill={TAN} />
+        <rect
+          x={RIGHT_X}
+          y={TONE_SPLIT}
+          width={BAR_W}
+          height={BAR_H - TONE_SPLIT}
+          fill={TAUPE}
+          clipPath="url(#intro-right-bar)"
+        />
       </motion.svg>
 
       {/* ---- The hand, flying in from the left ---- */}

@@ -405,7 +405,9 @@ tagline fade up quickly beneath it. The whole timeline lives in one `TIMING` obj
 together, because nudging a single delay in isolation is how an intro ends up ragged.
 
 `IntroMark` rebuilds the supplied artwork (`Intro/logo intro.png`) so its parts can move: the bars
-are vector paths measured off the original (76 × 361 units, outer corners `r=30`, inner square),
+are vector paths measured off the original (76 × 361 units, outer corners `r=30`, inner square) and
+alternate across `TONE_SPLIT` — left bar dark above and light below, right bar light above and dark
+below, with the hand crossing on the line where the tones swap,
 the hand is a transparent cut-out at `public/intro/hand.png` carrying the logo's cream knockout
 ring, and the type is sized from the artwork's own ratios. Two constraints follow:
 
