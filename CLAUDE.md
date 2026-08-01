@@ -110,20 +110,23 @@ above a title; if the case for a kicker comes back, bring back a shared componen
 scattering them, because the failure this replaced was exactly that — some bands kept a label and
 others lost it.
 
-### Section anchoring
+### Section anchoring — and why there is no scroll snapping
 
-Scrolling settles onto bands: `scroll-snap-type: y proximity` on `html`, with `snap-start` declared
-by each band that is a stop. **Proximity, never mandatory** — several bands here run two to three
-viewports tall, and mandatory snapping traps a reader inside one, unable to reach the bottom of what
-they are reading. Proximity only pulls when the scroll comes to rest near a boundary, so long bands
-scroll normally and a fast flick past six of them is never interrupted.
+There was briefly `scroll-snap-type: y proximity` with a `snap-start` per band. It is gone, and it
+should not come back on this page. Measured at 1440x900, four of the ten stops were taller than the
+viewport; at 390x844, eight were, up to **2.48x**. Snapping a band whose bottom sits a viewport and a
+half below its own snap point means the reader can never rest there — every pause near a boundary
+pulls them back to the top of something they were halfway through. That is the jitter and the cut-off
+content, and it is a property of the content, not a tuning problem. Proximity was already the gentle
+variant; there was no gentler one left.
 
-Which elements are stops is decided at the band, not by a selector in `globals.css`: the partner
-strip is deliberately not one, because it is a panel overlapping the hero rather than a chapter —
-the same reason `SectionNav` leaves it out. Services and experiences share a single stop, since they
-sit side by side at `xl` and two stops for one screen would fight. Snapping is switched off entirely
-under `prefers-reduced-motion`: it moves the page the reader did not ask it to move, and with smooth
-scrolling off it would arrive as a jump rather than a glide.
+What a long editorial page needs instead is that a jump **lands exactly**, which is
+`scroll-padding-top` on `html` and nothing else. It was previously fighting a
+`scroll-mt-[calc(var(--header-h)+24px)]` on every band, and the two compounded: the container's
+padding insets the scrollport while the target's margin outsets the target, so every nav jump stopped
+**200px short** with the previous section still filling the top of the screen. One or the other,
+never both — and the container is the right place, because it covers every anchor target including
+ones added later by someone who does not know about the class.
 
 Reading position is still stated, once: the fixed `SectionNav` down the right edge at `xl`.
 `SECTION_ORDER` in `lib/site-config.ts` is its single source, and `sectionStep()` exists only to

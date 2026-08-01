@@ -57,7 +57,7 @@ export function PartnerCarousel({ copy, partners }: PartnerCarouselProps) {
     <section
       id={SECTION_IDS.partners}
       aria-labelledby="partners-title"
-      className="relative z-20 -mt-14 scroll-mt-[calc(var(--header-h)+24px)] pb-8 sm:-mt-16 lg:-mt-24"
+      className="relative z-20 -mt-14 pb-8 sm:-mt-16 lg:-mt-24"
     >
       <Container size="wide">
         <Reveal>

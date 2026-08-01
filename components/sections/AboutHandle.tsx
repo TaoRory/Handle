@@ -28,7 +28,7 @@ export function AboutHandle({ id, copy }: AboutHandleProps) {
     <section
       id={id}
       aria-labelledby="about-title"
-      className="relative scroll-mt-[calc(var(--header-h)+24px)] snap-start overflow-hidden py-4"
+      className="relative overflow-hidden py-4"
     >
       <Container>
         <div className="bg-ink relative isolate overflow-hidden rounded-sm">

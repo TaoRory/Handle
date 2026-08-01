@@ -38,7 +38,7 @@ export function Hero({ copy }: { copy: HeroCopy }) {
     <section
       id={SECTION_IDS.hero}
       aria-labelledby="hero-title"
-      className="relative isolate snap-start pt-[calc(var(--header-h)+32px)] lg:pt-[calc(var(--header-h)+64px)]"
+      className="relative isolate pt-[calc(var(--header-h)+32px)] lg:pt-[calc(var(--header-h)+64px)]"
     >
       <HeroDecor />
 

@@ -29,19 +29,14 @@ export function ServicesAndLifestyle({
   experiences,
 }: ServicesAndLifestyleProps) {
   return (
-    // The snap stop is the pairing, not each half: services and experiences sit
-    // side by side at `xl`, and two stops for one screen would fight.
-    <div className="bg-surface relative snap-start">
+    <div className="bg-surface relative">
       <Container>
         <div className="section-y grid gap-16 xl:grid-cols-2 xl:gap-14">
-          <div id={servicesId} className="scroll-mt-[calc(var(--header-h)+24px)]">
+          <div id={servicesId}>
             <MedicalServices copy={servicesCopy} services={services} />
           </div>
 
-          <div
-            id={experiencesId}
-            className="border-line scroll-mt-[calc(var(--header-h)+24px)] xl:border-l xl:pl-14"
-          >
+          <div id={experiencesId} className="border-line xl:border-l xl:pl-14">
             <LifestyleExperience copy={experiencesCopy} experiences={experiences} />
           </div>
         </div>

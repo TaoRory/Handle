@@ -25,11 +25,7 @@ export function CtaBanner({
   locale: Locale;
 }) {
   return (
-    <section
-      id={id}
-      aria-labelledby="cta-title"
-      className="relative scroll-mt-[calc(var(--header-h)+24px)] snap-start pb-16 lg:pb-24"
-    >
+    <section id={id} aria-labelledby="cta-title" className="relative pb-16 lg:pb-24">
       <Container>
         <div className="bg-ink relative isolate mt-14 overflow-hidden rounded-sm px-6 py-14 sm:px-10 lg:px-14 lg:py-20">
           {/* Warm bloom behind the copy, and a gold hairline along the top. */}
