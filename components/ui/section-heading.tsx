@@ -70,7 +70,7 @@ export function SectionHeading({
             {accent ? (
               <>
                 {" "}
-                <span className="font-display text-gold italic">{accent}</span>
+                <span className="font-display text-gold-700 italic">{accent}</span>
               </>
             ) : null}
           </Tag>

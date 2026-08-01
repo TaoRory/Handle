@@ -72,7 +72,7 @@ export function MobileNav({ links, ctaLabel, menuLabel, closeLabel }: MobileNavP
                       className="group/link text-ink hover:text-gold-600 flex items-center justify-between gap-4 py-4 text-xl font-medium transition-colors duration-200"
                     >
                       <span className="flex items-baseline gap-4">
-                        <span className="font-brand text-gold/70 text-xs tracking-widest">
+                        <span className="font-brand text-gold-700 text-xs tracking-widest">
                           {String(index + 1).padStart(2, "0")}
                         </span>
                         {link.label}

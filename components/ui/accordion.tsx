@@ -45,7 +45,7 @@ export function AccordionTrigger({
         className={cn(
           "group/trigger flex flex-1 items-start justify-between gap-6 py-6 text-left",
           "text-ink text-[1.0625rem] leading-snug font-medium",
-          "hover:text-gold-600 data-[state=open]:text-gold-600 transition-colors duration-200",
+          "hover:text-gold-700 data-[state=open]:text-gold-700 transition-colors duration-200",
           "focus-visible:outline-gold-600 focus-visible:outline-2 focus-visible:outline-offset-4",
           className,
         )}

@@ -59,7 +59,7 @@ export function SectionNav({
                     "bg-ink text-cream-100 shadow-sm",
                   )}
                 >
-                  <span className="text-gold mr-1.5">{item.step}</span>
+                  <span className="text-gold-700 mr-1.5">{item.step}</span>
                   {item.label}
                 </span>
 

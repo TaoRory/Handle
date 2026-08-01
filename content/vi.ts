@@ -253,7 +253,7 @@ export const vi: SiteContent = {
         id: "support",
         title: "Hỗ trợ",
         links: [
-          { id: "faq", label: "Câu hỏi thường gặp", href: `#${SECTION_IDS.journey}` },
+          { id: "faq", label: "Câu hỏi thường gặp", href: `#${SECTION_IDS.faq}` },
           { id: "payment", label: "Hướng dẫn thanh toán", href: `#${SECTION_IDS.cta}` },
           { id: "terms", label: "Điều khoản sử dụng", href: `#${SECTION_IDS.cta}` },
           { id: "privacy", label: "Chính sách bảo mật", href: `#${SECTION_IDS.cta}` },

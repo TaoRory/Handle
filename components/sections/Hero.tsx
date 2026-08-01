@@ -83,7 +83,9 @@ export function Hero({ copy }: { copy: HeroCopy }) {
               <br />
               {titleLine2}
               <br />
-              <span className="font-display text-gold italic">{copy.titleAccent}</span>
+              <span className="font-display text-gold-700 italic">
+                {copy.titleAccent}
+              </span>
             </h1>
           </Reveal>
 

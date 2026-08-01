@@ -98,12 +98,12 @@ export function ConsultationSent({
         className="flex w-full flex-col items-center gap-5"
       >
         <motion.div variants={fadeUp} className="flex flex-col gap-2.5">
-          <p className="font-brand text-gold text-xs tracking-[0.18em] uppercase">
+          <p className="font-brand text-gold-700 text-xs tracking-[0.18em] uppercase">
             {copy.eyebrow}
           </p>
           <h3 className="text-h3 text-ink mx-auto max-w-[26ch] text-balance">
             {copy.title}{" "}
-            <span className="font-display text-gold italic">{copy.accent}</span>
+            <span className="font-display text-gold-700 italic">{copy.accent}</span>
           </h3>
           <p className="text-ink-600 mx-auto max-w-[54ch] text-sm leading-6">
             {copy.lead}

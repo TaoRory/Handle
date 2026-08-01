@@ -55,6 +55,18 @@ export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }));
 }
 
+/**
+ * The share card. Rendered from the real page at 1200x630 so the wordmark and
+ * both display faces are the ones the site actually ships, not a rasteriser's
+ * substitutes. Regenerate it if the hero photograph or the headline changes.
+ */
+const OG_IMAGE = {
+  url: "/og.jpg",
+  width: 1200,
+  height: 630,
+  alt: "Handle — Chăm sóc sức khỏe tại Việt Nam. Handled.",
+};
+
 export const viewport: Viewport = {
   themeColor: "#F6F3EE",
   colorScheme: "light",
@@ -113,11 +125,17 @@ export async function generateMetadata({
       url: `${siteConfig.url}/${locale}`,
       title: `${siteConfig.name} — ${title}`,
       description: content.hero.lead,
+      images: [OG_IMAGE],
     },
     twitter: {
+      // Declaring the large card without an image is worse than declaring
+      // nothing: the platforms render the empty frame rather than falling back
+      // to a text card. This site is shared person to person, so the preview is
+      // often the first thing anyone sees of it.
       card: "summary_large_image",
       title: `${siteConfig.name} — ${title}`,
       description: content.hero.lead,
+      images: [OG_IMAGE],
     },
     robots: {
       index: true,

@@ -112,7 +112,7 @@ export function ConsultationForm({ copy, locale }: ConsultationFormProps) {
             {...swap}
             transition={{ duration: DURATION.micro, ease: EASE_EXPO }}
           >
-            <p className="font-brand text-gold mb-5 text-xs tracking-[0.18em] uppercase">
+            <p className="font-brand text-gold-700 mb-5 text-xs tracking-[0.18em] uppercase">
               {copy.eyebrow}
             </p>
 

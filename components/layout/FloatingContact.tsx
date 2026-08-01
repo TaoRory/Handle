@@ -15,6 +15,11 @@ import { cn } from "@/lib/utils";
  * hero, then slides in once the reader has committed to scrolling.
  *
  * The label is always in the DOM for screen readers; only its width animates.
+ *
+ * Ink and gold, not WhatsApp green. It used to carry the platform's own colour
+ * as a raw hex, which made the single loudest element on the page one that is
+ * not in the palette at all — worst of all sitting over the gold stats band. The
+ * icon says which app it opens; the button does not have to shout it.
  */
 export function FloatingContact({ label }: { label: string }) {
   const [isVisible, setIsVisible] = useState(false);
@@ -35,16 +40,17 @@ export function FloatingContact({ label }: { label: string }) {
       aria-hidden={isVisible ? undefined : true}
       className={cn(
         "group/fab rounded-pill fixed right-5 bottom-5 z-[70] inline-flex items-center gap-3",
-        "bg-[#1f7a4d] py-3.5 pr-4 pl-4 text-white shadow-lg",
+        "bg-ink text-cream-100 py-3.5 pr-4 pl-4 shadow-lg",
+        "ring-gold/25 ring-1",
         "transition-[opacity,transform,background-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]",
-        "hover:bg-[#186139] focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#1f7a4d]",
+        "hover:bg-ink-800 focus-visible:outline-gold-600 focus-visible:outline-2 focus-visible:outline-offset-3",
         isVisible
           ? "translate-y-0 opacity-100"
           : "pointer-events-none translate-y-4 opacity-0",
       )}
     >
       <MessageCircle
-        className="size-5 shrink-0"
+        className="text-gold size-5 shrink-0"
         strokeWidth={1.75}
         aria-hidden="true"
       />

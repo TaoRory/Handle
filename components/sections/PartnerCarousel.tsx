@@ -29,7 +29,8 @@ function PartnerLogo({ partner }: { partner: Partner }) {
         <span className="text-ink-400 group-hover/partner:text-ink text-[0.9375rem] font-medium whitespace-nowrap transition-colors duration-300">
           {partner.name}
         </span>
-        <span className="text-stone text-[0.6875rem] whitespace-nowrap">
+        {/* ink-400, not stone: stone at this size measured 2.5:1 on the panel. */}
+        <span className="text-ink-400 text-xs whitespace-nowrap">
           {partner.kind} · {partner.city}
         </span>
       </span>
@@ -73,7 +74,7 @@ export function PartnerCarousel({ copy, partners }: PartnerCarouselProps) {
               {copy.action ? (
                 <Link
                   href={`#${SECTION_IDS.about}`}
-                  className="group/link text-gold-600 hover:text-ink inline-flex items-center gap-2 text-sm font-medium transition-colors duration-200"
+                  className="group/link text-gold-700 hover:text-ink inline-flex min-h-11 items-center gap-2 text-sm font-medium transition-colors duration-200"
                 >
                   {copy.action}
                   <ArrowTrail />

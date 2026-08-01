@@ -21,6 +21,12 @@
 
   --color-gold: #c9a86a;
   --color-gold-600: #b08f4e;
+  /* Gold that is legible as type. Measured on the cream canvas — the harshest
+     of the light surfaces — `gold` reads 2.0:1 and `gold-600` 2.8:1, so neither
+     clears AA at any size; this one is 4.8:1 and clears it at every size. The
+     lighter two stay for fills, rules, icon strokes and hover states, where the
+     3:1 non-text rule applies instead. Any gold carrying words uses this. */
+  --color-gold-700: #85662f;
   --color-gold-100: #f1e6d2;
 
   --color-stone: #a8a29c;

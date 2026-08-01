@@ -58,7 +58,9 @@ export function AboutHandle({ id, copy }: AboutHandleProps) {
               <Reveal index={1}>
                 <h2 id="about-title" className="text-h2 text-cream-100 max-w-[18ch]">
                   {copy.title}{" "}
-                  <span className="font-display text-gold italic">{copy.accent}</span>
+                  <span className="font-display text-gold-700 italic">
+                    {copy.accent}
+                  </span>
                 </h2>
               </Reveal>
 
@@ -99,7 +101,7 @@ export function AboutHandle({ id, copy }: AboutHandleProps) {
 
                   <Link
                     href={`#${SECTION_IDS.journey}`}
-                    className="group/link text-cream/70 hover:text-gold inline-flex items-center gap-2 px-2 text-sm font-medium transition-colors duration-200"
+                    className="group/link text-cream/70 hover:text-gold inline-flex min-h-11 items-center gap-2 px-2 text-sm font-medium transition-colors duration-200"
                   >
                     {copy.secondaryAction}
                     <ArrowTrail />

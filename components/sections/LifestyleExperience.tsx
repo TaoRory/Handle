@@ -41,10 +41,16 @@ function ExperienceCard({
           sizes="(max-width: 640px) 45vw, (max-width: 1280px) 30vw, 200px"
         />
 
-        {/* Scrim — light at rest so the plate still reads, deeper on hover. */}
+        {/*
+          Scrim. Deep enough at the foot that the label clears 4.5:1 over the
+          lightest photograph in the set — the spa still life, which measured
+          about 4.4:1 at the previous weight. It is set for the worst case on
+          purpose, because the photographs here get replaced and the next one
+          may be lighter still.
+        */}
         <span
           aria-hidden="true"
-          className="from-ink/85 via-ink/35 absolute inset-0 bg-gradient-to-t to-transparent opacity-90 transition-opacity duration-300 group-hover/card:opacity-100"
+          className="from-ink/92 via-ink/45 absolute inset-0 bg-gradient-to-t to-transparent opacity-95 transition-opacity duration-300 group-hover/card:opacity-100"
         />
 
         {/* Title only — the supporting line lives in the record for the detail
@@ -94,7 +100,7 @@ export function LifestyleExperience({ copy, experiences }: LifestyleExperiencePr
       <Reveal index={3} className="mt-7">
         <Link
           href={`#${SECTION_IDS.cta}`}
-          className="group/link border-line hover:border-gold hover:text-gold-600 text-ink-600 rounded-pill inline-flex items-center gap-2 border px-5 py-3 text-sm font-medium transition-colors duration-200"
+          className="group/link border-line hover:border-gold hover:text-gold-700 text-ink-600 rounded-pill inline-flex items-center gap-2 border px-5 py-3 text-sm font-medium transition-colors duration-200"
         >
           {copy.action}
           <ArrowTrail />

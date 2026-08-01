@@ -256,7 +256,7 @@ export const en: SiteContent = {
           {
             id: "faq",
             label: "Frequently asked questions",
-            href: `#${SECTION_IDS.journey}`,
+            href: `#${SECTION_IDS.faq}`,
           },
           { id: "payment", label: "Payment guide", href: `#${SECTION_IDS.cta}` },
           { id: "terms", label: "Terms of use", href: `#${SECTION_IDS.cta}` },

@@ -70,6 +70,7 @@ Derived ramp (declared once in `app/globals.css` under Tailwind v4 `@theme`):
 --color-ink-400    #6E6A65    --color-cream-500  #E2DACD
 --color-stone      #A8A29C    --color-gold       #C9A86A
 --color-stone-300  #D6D2CB    --color-gold-600   #B08F4E
+--color-danger     #A8332A    --color-gold-700   #85662F
 --color-line       #E6E0D6    --color-gold-100   #F1E6D2
 --color-surface    #FFFFFF    --color-success    #4F7A63
 ```
@@ -78,6 +79,12 @@ Derived ramp (declared once in `app/globals.css` under Tailwind v4 `@theme`):
 per viewport-height of scroll, plus the primary CTA. Gold is never a background for body copy —
 only type, 1px rules, small icon strokes, the primary button, and the two sanctioned large fills
 below (the stats band and the single highlight card).
+
+**Gold that carries words is always `gold-700`.** Measured on cream, `gold` is 2.0:1 and `gold-600`
+is 2.8:1 — neither clears AA at any size, including the display accent word, which was the least
+legible text on the page precisely because it is the most distinctive. `gold-700` is 4.8:1 and
+clears it everywhere. The lighter two remain for fills, hairlines, icon strokes and hover states,
+where the 3:1 non-text rule applies instead.
 
 ### Surface rhythm
 
@@ -133,8 +140,10 @@ Reading position is still stated, once: the fixed `SectionNav` down the right ed
 feed it. The hero and the partner strip are excluded on purpose — they are the cover, not a
 chapter. Nothing else on the page may introduce a second numbering system.
 
-**Contrast floors (verified):** ink on cream 17.4:1 · ink-600 on cream 7.4:1 · ink on gold 11.8:1 ·
-gold-600 on cream 3.6:1 (large text ≥24px only) · cream on ink 16.9:1.
+**Contrast floors (measured in a browser, not estimated):** ink on cream 17.4:1 · ink-600 on cream
+7.4:1 · ink-400 on white 5.4:1 · ink on gold 11.8:1 · gold-700 on cream 4.8:1 · cream on ink 16.9:1.
+An earlier version of this table claimed gold-600 on cream was 3.6:1 and safe for large text; it is
+2.8:1 and was never safe. Re-measure rather than reason about a hex.
 
 ## Typography
 
@@ -204,7 +213,11 @@ Section column maps:
   the space with a spacer so nothing under it shifts.
 - **Reason cards** — 4 up ≥`lg`, 2 up ≥`sm`, 1 up mobile.
 - **Advantage cards** — 3 up ≥`lg`, 2 up ≥`sm`, 1 up mobile (6 cards total).
-- **Timeline** — horizontal snap rail ≥`lg`, vertical rail below.
+- **Timeline** — five steps to a row from `lg` (so 5 + 4), vertical rail below. Nine across left each
+  column about 130px at 1440, roughly fourteen characters, and the body copy shredded. The connector
+  is drawn per step, from one node's centre to the next, rather than as one bar across the band: a
+  single absolutely-positioned line cannot survive the steps wrapping, and drawing it per step makes
+  the last node in a row simply not draw one.
 - **Services / Experience** — the two blocks sit side by side 6/6 ≥`xl`, stacked below.
 - **Testimonials** — 3 visible ≥`lg`, 2 ≥`md`, 1 below (Embla).
 
@@ -504,9 +517,15 @@ Budget: **LCP < 2.0s**, **CLS < 0.02**, **INP < 150ms**, first-load JS **< 130KB
   art direction for the shot that would fill it. Once a real `src` lands, that has to become a
   description of what is actually in the frame — a screen reader reads the file that shipped, not
   the one that was planned.
-- **Testimonial media stays abstract on purpose.** A real, identifiable face beside an invented
-  quote presents that person as having said something they did not. Plates until there are consenting
-  patients.
+- **Testimonial cards carry the author's initials, not a picture.** A real, identifiable face beside
+  an invented quote presents that person as having said something they did not; the generated plate
+  avoided that but read as a broken avatar rather than a decision. A monogram reads as chosen. The
+  `Testimonial` type therefore has no `media` field — do not add one back without consenting patients
+  and real photographs.
+- **The share card is `public/og.jpg`,** 1200×630, rendered from a throwaway route so the wordmark and
+  both display faces are the ones the site ships rather than a rasteriser's substitutes. Regenerate it
+  when the hero photograph or the headline changes. Declaring `summary_large_image` without it is
+  worse than declaring nothing — the platforms render an empty frame instead of a text card.
 - Remote hosts must be allow-listed in `next.config.ts` `images.remotePatterns` before use.
 
 ## Future CMS Integration

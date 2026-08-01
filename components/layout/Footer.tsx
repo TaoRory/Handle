@@ -50,12 +50,14 @@ export function Footer({ content }: { content: SiteContent }) {
               >
                 {column.title}
               </h2>
-              <ul className="flex flex-col gap-3">
+              {/* `-my-2` pulls the row spacing back to where it looked right,
+                  so the taps get their 44px without the column growing. */}
+              <ul className="-my-2 flex flex-col">
                 {column.links.map((link) => (
                   <li key={link.id}>
                     <Link
                       href={link.href}
-                      className="text-ink-600 hover:text-gold-600 text-sm transition-colors duration-200"
+                      className="text-ink-600 hover:text-gold-700 inline-flex min-h-11 items-center text-sm transition-colors duration-200"
                     >
                       {link.label}
                     </Link>
@@ -70,11 +72,11 @@ export function Footer({ content }: { content: SiteContent }) {
             <h2 className="font-brand text-ink text-eyebrow mb-5 uppercase">
               {footer.contactTitle}
             </h2>
-            <ul className="flex flex-col gap-4 text-sm">
+            <ul className="flex flex-col gap-1 text-sm">
               <li>
                 <a
                   href={contactLinks.tel}
-                  className="group/link text-ink-600 hover:text-gold-600 flex items-start gap-3 transition-colors duration-200"
+                  className="group/link text-ink-600 hover:text-gold-700 flex min-h-11 items-center gap-3 transition-colors duration-200"
                 >
                   <Phone
                     className="text-gold mt-0.5 size-4 shrink-0"
@@ -87,7 +89,7 @@ export function Footer({ content }: { content: SiteContent }) {
               <li>
                 <a
                   href={contactLinks.mail}
-                  className="group/link text-ink-600 hover:text-gold-600 flex items-start gap-3 transition-colors duration-200"
+                  className="group/link text-ink-600 hover:text-gold-700 flex min-h-11 items-center gap-3 transition-colors duration-200"
                 >
                   <Mail
                     className="text-gold mt-0.5 size-4 shrink-0"
@@ -97,7 +99,7 @@ export function Footer({ content }: { content: SiteContent }) {
                   {siteConfig.email}
                 </a>
               </li>
-              <li className="text-ink-600 flex items-start gap-3">
+              <li className="text-ink-600 mt-3 flex items-start gap-3">
                 <MapPin
                   className="text-gold mt-0.5 size-4 shrink-0"
                   strokeWidth={1.5}
@@ -117,7 +119,7 @@ export function Footer({ content }: { content: SiteContent }) {
 
         <div className="border-line mt-14 flex flex-col items-center justify-between gap-4 border-t pt-8 sm:flex-row">
           <p className="text-ink-400 text-xs">{footer.legal}</p>
-          <p className="font-brand text-stone text-[0.6875rem] tracking-[0.16em] uppercase">
+          <p className="font-brand text-ink-400 text-xs tracking-[0.16em] uppercase">
             Healthcare in Vietnam. Handled.
           </p>
         </div>

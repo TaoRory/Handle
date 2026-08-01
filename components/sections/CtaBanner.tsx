@@ -41,7 +41,7 @@ export function CtaBanner({
           <Reveal className="flex flex-col gap-4">
             <h2 id="cta-title" className="text-h2 text-cream-100 max-w-[24ch]">
               {copy.title}{" "}
-              <span className="font-display text-gold italic">{copy.accent}</span>
+              <span className="font-display text-gold-700 italic">{copy.accent}</span>
             </h2>
             <p className="text-cream/70 text-lead max-w-[62ch]">{copy.lead}</p>
           </Reveal>

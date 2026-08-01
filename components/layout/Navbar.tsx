@@ -69,7 +69,7 @@ export function Navbar({
       <div className="mx-auto flex h-full w-full max-w-[1480px] items-center justify-between gap-6 px-5 sm:px-8 lg:px-10">
         <Link
           href={`/${locale}`}
-          className="focus-visible:outline-gold-600 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4"
+          className="focus-visible:outline-gold-600 inline-flex min-h-11 items-center rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4"
           aria-label={homeLabel}
         >
           {/* The lockup's tagline costs ~120px of horizontal room, which the
@@ -89,7 +89,7 @@ export function Navbar({
                     aria-current={isActive ? "true" : undefined}
                     className={cn(
                       "rounded-pill relative inline-flex h-11 items-center px-2.5 text-[0.8125rem] font-medium whitespace-nowrap transition-colors duration-200 xl:px-3.5 xl:text-sm",
-                      isActive ? "text-gold-600" : "text-ink-600 hover:text-ink",
+                      isActive ? "text-gold-700" : "text-ink-600 hover:text-ink",
                     )}
                   >
                     {link.label}

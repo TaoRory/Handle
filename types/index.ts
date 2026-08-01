@@ -183,7 +183,9 @@ export interface Testimonial {
   context: string;
   location: string;
   rating: 1 | 2 | 3 | 4 | 5;
-  media: MediaAsset;
+  // No media. The card shows the author's initials: a real face beside an
+  // invented quote would attribute words to someone who never said them, and
+  // the generated plate read as a broken avatar rather than a decision.
 }
 
 /**

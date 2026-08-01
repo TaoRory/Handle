@@ -83,7 +83,7 @@ export function MedicalServices({ copy, services }: MedicalServicesProps) {
       <Reveal index={3} className="mt-7">
         <Link
           href={`#${SECTION_IDS.cta}`}
-          className="group/link border-line hover:border-gold hover:text-gold-600 text-ink-600 rounded-pill inline-flex items-center gap-2 border px-5 py-3 text-sm font-medium transition-colors duration-200"
+          className="group/link border-line hover:border-gold hover:text-gold-700 text-ink-600 rounded-pill inline-flex items-center gap-2 border px-5 py-3 text-sm font-medium transition-colors duration-200"
         >
           {copy.action}
           <ArrowTrail />
