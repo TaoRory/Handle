@@ -13,31 +13,40 @@ export const INTRO_SESSION_KEY = "handle:intro-played";
  * in step with each other — nudging any single delay in isolation is how an
  * intro ends up feeling ragged.
  *
- *   0.00  the H settles in                       (0.70s)
- *   0.45  the hand flies in from the left        (1.05s, lands at 1.50)
+ *   0.00  the mark fades in                      (0.70s)
+ *   0.12  two dashes on the centre line extend into the stems (0.62s, done 0.74)
+ *   0.80  the hand flies in from the left        (1.05s, lands at 1.85)
  *   0.90  the skip control fades up
- *   1.55  HANDLE and the tagline fade up together (0.40s, ends 1.95)
- *   1.95  ── one full second of stillness, so the lockup can be read ──
- *   2.95  the curtain lifts                      (0.65s)
+ *   1.90  HANDLE and the tagline fade up together (0.40s, ends 2.30)
+ *   2.30  ── one full second of stillness, so the lockup can be read ──
+ *   3.30  the curtain lifts                      (0.65s)
  *
- * The two lines share one delay on purpose: they are one lockup, and staggering
- * them made the tagline read as an afterthought rather than part of the mark.
- * The type still runs quicker than the hand — that is the thing to watch.
+ * The bar growth is the one step not declared here: it is a CSS animation in
+ * `globals.css` (`--animate-intro-bar`), because a Motion transform would be
+ * withheld under reduced motion and leave the H as two slivers. Its 0.12s delay
+ * and 0.62s duration are the numbers the hand's delay is set against, so the two
+ * files have to move together.
+ *
+ * The two lines of type share one delay on purpose: they are one lockup, and
+ * staggering them made the tagline read as an afterthought rather than part of
+ * the mark. The type still runs quicker than the hand — that is the thing to
+ * watch.
  */
 const TIMING = {
   mark: { duration: 0.7 },
-  hand: { delay: 0.45, duration: 1.05 },
+  /** Starts once the stems are at full height, so the hand completes a real H. */
+  hand: { delay: 0.8, duration: 1.05 },
   skip: { delay: 0.9 },
   /** Shared by both lines of type. Keep them equal. */
-  type: { delay: 1.55, duration: 0.4 },
+  type: { delay: 1.9, duration: 0.4 },
   exit: { duration: 0.65 },
 } as const;
 
 /**
  * How long the curtain holds before it starts lifting.
- * Set to the type landing (1.95s) plus the one second of reading time.
+ * Set to the type landing (2.30s) plus the one second of reading time.
  */
-const INTRO_DURATION_MS = 2950;
+const INTRO_DURATION_MS = 3300;
 
 interface IntroCurtainProps {
   skipLabel: string;

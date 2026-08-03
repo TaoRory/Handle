@@ -92,6 +92,11 @@
   --animate-accordion-down: accordion-down 0.28s var(--ease-expo);
   --animate-accordion-up: accordion-up 0.24s var(--ease-expo);
 
+  /* The intro's two bars growing out of their centre line. Held back far enough
+     that the curtain has faded in first, and finished before the hand arrives —
+     `IntroCurtain`'s TIMING owns the rest of that sequence. */
+  --animate-intro-bar: intro-bar 0.62s var(--ease-expo) 0.12s backwards;
+
   /* The consultation seal. CSS rather than Framer Motion on purpose — see the
      keyframes below for why. The three steps are one gesture, so their delays
      are set here together and should be edited together. */
@@ -189,6 +194,20 @@
   to {
     opacity: 0;
     transform: scale(1.3);
+  }
+}
+
+/* Two dashes on the centre line, extending into the H's stems. `backwards` so
+   the sliver is already in place during the delay rather than flashing at full
+   height first; under the reduced-motion block the whole thing collapses to the
+   final frame, which is the complete bar. */
+@keyframes intro-bar {
+  from {
+    transform: scaleY(0.028);
+  }
+
+  to {
+    transform: scaleY(1);
   }
 }
 

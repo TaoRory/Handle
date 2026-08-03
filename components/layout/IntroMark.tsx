@@ -92,30 +92,49 @@ export function IntroMark({
           </clipPath>
         </defs>
 
-        {/* Each bar is laid down light, then the dark half painted over it and
-            clipped back to the bar's own rounded outline — which is what keeps
-            the corner radii intact at the top of the left bar and the bottom of
-            the right one. The seam falls where the hand lands, so neither edge
-            is ever seen hard against the other. */}
-        <path d={barPath(LEFT_X, "left")} fill={TAN} />
-        <rect
-          x={LEFT_X}
-          y={0}
-          width={BAR_W}
-          height={TONE_SPLIT}
-          fill={TAUPE}
-          clipPath="url(#intro-left-bar)"
-        />
+        {/*
+          Each bar is laid down light, then the dark half painted over it and
+          clipped back to the bar's own rounded outline — which is what keeps
+          the corner radii intact at the top of the left bar and the bottom of
+          the right one. The seam falls where the hand lands, so neither edge is
+          ever seen hard against the other.
 
-        <path d={barPath(RIGHT_X, "right")} fill={TAN} />
-        <rect
-          x={RIGHT_X}
-          y={TONE_SPLIT}
-          width={BAR_W}
-          height={BAR_H - TONE_SPLIT}
-          fill={TAUPE}
-          clipPath="url(#intro-right-bar)"
-        />
+          The group around each bar is what grows. It starts squashed to a
+          sliver about its own centre, so the mark opens as two horizontal
+          dashes on the line the hand will later cross, then extends to full
+          height. `transform-box: fill-box` puts the origin at the bar's centre
+          rather than the SVG's, which is what makes the two grow in place
+          instead of sliding toward the middle.
+
+          The growth is a CSS animation, not a Motion one. `MotionConfig
+          reducedMotion="user"` withholds a Motion transform, which here would
+          leave both bars frozen as slivers — no H at all — for exactly the
+          people that setting protects. A CSS animation with `forwards`
+          collapses to its final frame under the reduce block instead.
+        */}
+        <g className="animate-intro-bar origin-center [transform-box:fill-box]">
+          <path d={barPath(LEFT_X, "left")} fill={TAN} />
+          <rect
+            x={LEFT_X}
+            y={0}
+            width={BAR_W}
+            height={TONE_SPLIT}
+            fill={TAUPE}
+            clipPath="url(#intro-left-bar)"
+          />
+        </g>
+
+        <g className="animate-intro-bar origin-center [transform-box:fill-box]">
+          <path d={barPath(RIGHT_X, "right")} fill={TAN} />
+          <rect
+            x={RIGHT_X}
+            y={TONE_SPLIT}
+            width={BAR_W}
+            height={BAR_H - TONE_SPLIT}
+            fill={TAUPE}
+            clipPath="url(#intro-right-bar)"
+          />
+        </g>
       </motion.svg>
 
       {/* ---- The hand, flying in from the left ---- */}

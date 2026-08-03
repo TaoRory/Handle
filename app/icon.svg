@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!--
+    The tab icon.
+
+    The slab H from the intro rather than the thin-stroke mark from the header:
+    at 16px a 5-unit stroke on a 48-unit box disappears, and the curved crossbar
+    with its junction cuts turns to mush. This is the same construction as
+    `IntroMark` — two bars, fully rounded outer corners, square where they meet
+    the crossbar — with the hand replaced by a plain bar, because a hand at
+    16px is a smudge. Ink field so the mark holds on both light and dark tab
+    strips; gold would vanish against a cream browser chrome.
+  -->
+  <rect width="64" height="64" rx="12" fill="#0D0D0D" />
+  <g fill="#F6F3EE">
+    <rect x="16" y="14" width="9" height="36" rx="4.5" />
+    <rect x="39" y="14" width="9" height="36" rx="4.5" />
+    <rect x="16" y="27.5" width="32" height="9" rx="1" />
+  </g>
+</svg>

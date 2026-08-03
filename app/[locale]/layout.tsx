@@ -142,7 +142,9 @@ export async function generateMetadata({
       follow: true,
       googleBot: { index: true, follow: true, "max-image-preview": "large" },
     },
-    icons: { icon: "/favicon.ico" },
+    // No `icons` here on purpose: `app/icon.svg`, `app/apple-icon.png` and
+    // `app/favicon.ico` are picked up by the file convention, and declaring the
+    // field manually would override all three with whatever it lists.
   };
 }
 

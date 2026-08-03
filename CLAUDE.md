@@ -412,7 +412,13 @@ together, because nudging a single delay in isolation is how an intro ends up ra
 `IntroMark` rebuilds the supplied artwork (`Intro/logo intro.png`) so its parts can move: the bars
 are vector paths measured off the original (76 × 361 units, outer corners `r=30`, inner square) and
 alternate across `TONE_SPLIT` — left bar dark above and light below, right bar light above and dark
-below, with the hand crossing on the line where the tones swap,
+below, with the hand crossing on the line where the tones swap. Each bar **grows out of that same
+line**: it opens squashed to a sliver about its own centre, reads for a beat as two horizontal
+dashes, then extends to full height before the hand arrives. That growth is a CSS animation
+(`--animate-intro-bar`) and not a Motion one, for the reason below — a withheld Motion transform
+would leave the H as two slivers and nothing else. Its delay and duration are what `TIMING.hand` is
+set against, so `globals.css` and `IntroCurtain` have to move together. The hand cut-out is at
+`public/intro/hand.png`,
 the hand is a transparent cut-out at `public/intro/hand.png` carrying the logo's cream knockout
 ring, and the type is sized from the artwork's own ratios. Two constraints follow:
 
