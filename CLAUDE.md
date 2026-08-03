@@ -307,7 +307,7 @@ redirects unprefixed paths.
 /data                    Locale-keyed mock records: services, testimonials, partners, timeline…
 /hooks                   use-media-query, use-mounted, use-scroll-spy
 /lib                     cn(), motion presets, site config, icon map
-/public                  Static assets, favicon, og image
+/public                  Static assets, photography, og image  (icons live in /app)
 /types                   Shared TypeScript contracts
 /design-reference        Source brand sheet + layout reference (not shipped)
 ```
@@ -480,6 +480,14 @@ Reserved for phase 2 (nav anchors point at homepage sections until these exist):
 
 ## SEO Strategy
 
+- Tab icon: `app/icon.svg`, with `app/favicon.ico` and `app/apple-icon.png` beside it — all three
+  picked up by the App Router file convention. Do **not** set `icons` in `generateMetadata`: that
+  field overrides the convention wholesale, which is how the scaffold's default icon survived this
+  long. The drawing is the site's own mark from `ui/logo.tsx` on cream, with two adjustments that
+  only matter at tab size — the stroke is 7 rather than 5, because the header's weight renders about
+  1.1px at 16px and goes faint and grey, and the mark is positioned from its _stroked_ bounds rather
+  than its path box so it does not sit half a stroke up and left of centre. `apple-icon.png` drops
+  the corner radius, since iOS masks it and would otherwise round it twice.
 - Metadata API in `app/layout.tsx`: `metadataBase`, title template `%s · Handle`, description,
   keywords, `openGraph` (type/locale/siteName/images 1200×630), `twitter: summary_large_image`,
   `robots` with `max-image-preview: large`, canonical + `hreflang` via `alternates`.
