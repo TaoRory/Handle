@@ -351,21 +351,24 @@
     );
   }
 
-  /* Frosted panel. Used sparingly — header and floating stat cards only. */
   /*
-    The scrolled header.
+    The scrolled header. Named for what it is, rather than for the frosted-glass
+    effect it used to attempt.
 
-    The opacity carries the legibility on its own and the blur is a bonus, not
-    the mechanism. At 0.72 the header depended on `backdrop-filter` to hide what
-    passed beneath it, and wherever that does not apply — a headless render, a
-    browser with it disabled, an older Android WebView — the hero's trust badges
-    read straight through the wordmark. Blur is the first thing an engine drops;
-    a header has to stay opaque without it.
+    It was `rgb(251 250 247 / 0.72)` plus a `backdrop-filter` blur, and it leant
+    on the blur to hide whatever passed beneath. Blur is the first thing an
+    engine drops — a headless render, a browser with effects off, an older
+    Android WebView — and without it the hero's trust badges read straight
+    through the wordmark. Raising the alpha to 0.97 still left a legible ghost,
+    because 3% of ink on cream is 3% of a 17:1 pair.
+
+    So it is opaque, and the blur goes with it: over the hero the header sits on
+    the cream scrim anyway, so there was never much behind it worth seeing. The
+    header is the one element always on screen. It does not get to be subtle at
+    the cost of the wordmark.
   */
-  .glass {
-    background-color: rgb(251 250 247 / 0.97);
-    backdrop-filter: blur(14px) saturate(1.4);
-    -webkit-backdrop-filter: blur(14px) saturate(1.4);
+  .header-panel {
+    background-color: var(--color-cream-100);
   }
 
   /* Fine paper grain. Keeps large cream fields from looking flat. */

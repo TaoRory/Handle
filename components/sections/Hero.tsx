@@ -133,8 +133,11 @@ export function Hero({ copy }: { copy: HeroCopy }) {
         <div className="hidden h-28 lg:block" aria-hidden="true" />
       </Container>
 
-      {/* ---- Full-bleed media, mobile and tablet ---- */}
-      <Reveal className="lg:hidden">
+      {/* ---- Full-bleed media, mobile and tablet ----
+          The band runs edge to edge, so nothing but this margin separates the
+          last trust badge from the top of the photograph. Without it the two
+          touch and the copy reads as though it is sitting on the image. */}
+      <Reveal className="mt-12 sm:mt-14 lg:mt-0 lg:hidden">
         <Media
           asset={copy.media}
           seed="hero"

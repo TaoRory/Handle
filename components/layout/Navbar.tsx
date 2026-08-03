@@ -27,8 +27,9 @@ interface NavbarProps {
 /**
  * Sticky site header.
  *
- * Transparent over the hero, then settles into a frosted panel once the page
- * scrolls — the same trick Apple uses to keep the first screen uninterrupted.
+ * Transparent over the hero, then settles into a solid panel once the page
+ * scrolls, so the first screen stays uninterrupted. The panel is opaque and not
+ * frosted — see `.header-panel` for why the blur had to go.
  * The active link is driven by an IntersectionObserver, not a scroll listener.
  */
 export function Navbar({
@@ -62,7 +63,7 @@ export function Navbar({
         "fixed inset-x-0 top-0 z-[60] h-[var(--header-h)]",
         "transition-[background-color,box-shadow,border-color] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]",
         isScrolled
-          ? "glass border-line/80 border-b shadow-sm"
+          ? "header-panel border-line/80 border-b shadow-sm"
           : "border-b border-transparent",
       )}
     >
