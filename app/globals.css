@@ -305,13 +305,38 @@
     );
   }
 
-  /* Fades the edges of a horizontal rail so items dissolve, not clip. */
+  /*
+    The partner rail's speed. On a phone the blocks are narrower, so the track
+    is shorter — holding the duration would drop the px-per-second and make the
+    names crawl. Set here rather than as a prop because the inline custom
+    property a prop writes would win over any class.
+  */
+  .marquee-partners {
+    --marquee-duration: 32s;
+  }
+
+  @media (width >= 40rem) {
+    .marquee-partners {
+      --marquee-duration: 52s;
+    }
+  }
+
+  /*
+    Fades the edges of a horizontal rail so items dissolve, not clip.
+
+    The fade is a clamped length, not a bare percentage. At 7% it scaled with
+    the rail: 98px of fade on a desktop panel but 24px on a 390px phone, which
+    is not a fade at all — partner names were guillotined mid-word at both
+    edges. The floor is what makes the effect survive the narrowest case.
+  */
   .mask-edges {
+    --fade-edge: clamp(2.5rem, 7%, 6rem);
+
     mask-image: linear-gradient(
       90deg,
       transparent 0,
-      #000 7%,
-      #000 93%,
+      #000 var(--fade-edge),
+      #000 calc(100% - var(--fade-edge)),
       transparent 100%
     );
   }
@@ -327,16 +352,20 @@
   }
 
   /* Frosted panel. Used sparingly — header and floating stat cards only. */
+  /*
+    The scrolled header.
+
+    The opacity carries the legibility on its own and the blur is a bonus, not
+    the mechanism. At 0.72 the header depended on `backdrop-filter` to hide what
+    passed beneath it, and wherever that does not apply — a headless render, a
+    browser with it disabled, an older Android WebView — the hero's trust badges
+    read straight through the wordmark. Blur is the first thing an engine drops;
+    a header has to stay opaque without it.
+  */
   .glass {
-    background-color: rgb(251 250 247 / 0.72);
+    background-color: rgb(251 250 247 / 0.97);
     backdrop-filter: blur(14px) saturate(1.4);
     -webkit-backdrop-filter: blur(14px) saturate(1.4);
-  }
-
-  .glass-dark {
-    background-color: rgb(13 13 13 / 0.42);
-    backdrop-filter: blur(12px) saturate(1.2);
-    -webkit-backdrop-filter: blur(12px) saturate(1.2);
   }
 
   /* Fine paper grain. Keeps large cream fields from looking flat. */

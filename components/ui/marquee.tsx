@@ -4,7 +4,13 @@ import type { ReactNode } from "react";
 
 interface MarqueeProps {
   children: ReactNode;
-  /** Seconds for one full pass. Slower reads calmer. */
+  /**
+   * Seconds for one full pass. Slower reads calmer.
+   *
+   * Omit it to let CSS decide — the inline variable would beat a class, and the
+   * speed has to change at a breakpoint wherever the track's own length does:
+   * the same duration over a shorter track is a slower rail, not an equal one.
+   */
   durationSeconds?: number;
   direction?: "left" | "right";
   className?: string;
@@ -22,7 +28,7 @@ interface MarqueeProps {
  */
 export function Marquee({
   children,
-  durationSeconds = 46,
+  durationSeconds,
   direction = "left",
   className,
 }: MarqueeProps) {
@@ -33,7 +39,9 @@ export function Marquee({
         className="animate-marquee flex w-max items-center will-change-transform motion-reduce:animate-none"
         style={
           {
-            "--marquee-duration": `${durationSeconds}s`,
+            ...(durationSeconds
+              ? { "--marquee-duration": `${durationSeconds}s` }
+              : null),
             animationDirection: direction === "right" ? "reverse" : "normal",
           } as React.CSSProperties
         }
