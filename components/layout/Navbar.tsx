@@ -109,11 +109,10 @@ export function Navbar({
         </nav>
 
         <div className="flex items-center gap-2.5">
-          <LocaleSwitcher
-            current={locale}
-            label={localeLabel}
-            className="hidden sm:block"
-          />
+          {/* Was `hidden sm:block`, which left a phone with no way to change
+              language anywhere on the site — it is not in the drawer either.
+              The trigger tightens instead of disappearing. */}
+          <LocaleSwitcher current={locale} label={localeLabel} />
 
           <ConsultationLink
             size="sm"

@@ -56,10 +56,12 @@ export type IconName =
   | "leaf"
   | "life-buoy"
   | "luggage"
+  | "mail"
   | "map-pin"
   | "message-circle"
   | "microscope"
   | "notebook-pen"
+  | "phone"
   | "plane"
   | "receipt"
   | "route"
@@ -367,7 +369,23 @@ export interface SiteContent {
   cta: CtaCopy;
   /** Labels for the fixed section index; ids come from `SECTION_IDS`. */
   sectionNav: { label: string; items: { id: string; label: string }[] };
-  floatingCta: string;
+  /**
+   * The persistent contact button and the channels behind it.
+   *
+   * More than one channel on purpose: Zalo is how Vietnamese families message,
+   * WhatsApp is how most of the overseas audience does, and a single button
+   * wired to either one quietly excludes the other half of the market.
+   */
+  floatingContact: {
+    /** The button's own label, and its accessible name when collapsed. */
+    label: string;
+    /** Heading inside the panel. */
+    title: string;
+    /** One line under the heading, setting the response expectation. */
+    note: string;
+    closeLabel: string;
+    channels: { id: string; icon: IconName; name: string; hint: string }[];
+  };
   intro: { skip: string; loading: string; mark: string };
   footer: {
     tagline: string;

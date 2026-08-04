@@ -372,6 +372,17 @@ trick that made the buttons look generated. Its icon gets no container, exactly 
 neutral cards beside it: boxing it made the one card that carries the argument look like it came
 from a different set. Body copy on it is `ink-800` — `ink/75` measured 3.0:1 over the gold.
 
+**`FloatingContact`** — the gold pill bottom-right, present from the first screen rather than
+appearing after 700px of scroll: the moment a contact path matters most is the one where the visitor
+is still deciding whether this is real. It opens a **choice of channel** instead of firing one app —
+a lone WhatsApp button serves the overseas half of this audience and quietly excludes the Vietnamese
+half, who message on Zalo, and the reverse is equally true. Phone and email are there because some
+people want a voice and some want to attach a scan.
+
+Channels are named in words, not drawn as brand logos: reproducing someone else's mark badly is
+worse than not reproducing it, and the name is what a visitor scans for. `Esc` closes the panel and
+returns focus to the trigger, or a keyboard user is dropped at the top of the document.
+
 **`ConsultationLink`** — the "free consultation" buttons in the header, the hero and the mobile
 drawer. All three are real anchors to the closing band, so they survive without JavaScript,
 middle-click into a new tab and copy as links; the smooth scroll is the browser's and `scroll-mt`
@@ -402,7 +413,7 @@ The ring's dash length is its circumference (r=43 → 271); change `r` and the k
 **Wayfinding layer** — three pieces whose only job is making a long page legible:
 `ScrollProgress` (2px gold rule, how far is left), `SectionNav` (fixed index down the right edge
 at `xl`, which part am I in, labels on hover/focus, `aria-current` for assistive tech) and
-`FloatingContact` (holds the conversion path open once the hero's CTA has scrolled away).
+`FloatingContact` (a persistent way to reach a human).
 
 **`IntroCurtain` + `IntroMark`** — the brand intro, and the one piece of theatre on the site. The
 H settles in, the open hand flies in from the left and completes the mark, then the wordmark and
@@ -464,7 +475,7 @@ They are two different logos in two different palettes; unify them before launch
  │  ├ 08 Faq ──────────── Accordion × 6 · sticky ink help card
  │  └ CtaBanner ────────── INK · headline · ConsultationForm ⇄ ConsultationSent (seal)
  ├ Footer ── Logo · 4 link columns · contact · socials · legal
- └ FloatingContact ─────── WhatsApp, appears past 700px of scroll
+ └ FloatingContact ─────── gold pill · Zalo · WhatsApp · phone · email, from the first screen
 ```
 
 ## Pages

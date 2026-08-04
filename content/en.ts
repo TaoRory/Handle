@@ -212,7 +212,33 @@ export const en: SiteContent = {
     ],
   },
 
-  floatingCta: "Chat on WhatsApp",
+  floatingContact: {
+    label: "Contact us",
+    title: "Choose how to reach us",
+    note: "We reply within one business day, in English or Vietnamese.",
+    closeLabel: "Close",
+    channels: [
+      {
+        id: "zalo",
+        icon: "message-circle",
+        name: "Zalo",
+        hint: "Fastest inside Vietnam",
+      },
+      {
+        id: "whatsapp",
+        icon: "globe",
+        name: "WhatsApp",
+        hint: "Best if you are overseas",
+      },
+      { id: "phone", icon: "phone", name: "Call us", hint: "Office hours, GMT+7" },
+      {
+        id: "email",
+        icon: "mail",
+        name: "Email",
+        hint: "Attach your medical records",
+      },
+    ],
+  },
 
   intro: {
     skip: "Skip",

@@ -208,7 +208,33 @@ export const vi: SiteContent = {
     ],
   },
 
-  floatingCta: "Chat trên WhatsApp",
+  floatingContact: {
+    label: "Liên hệ ngay",
+    title: "Chọn cách liên hệ",
+    note: "Chúng tôi trả lời trong vòng 24 giờ làm việc, bằng tiếng Việt hoặc tiếng Anh.",
+    closeLabel: "Đóng",
+    channels: [
+      {
+        id: "zalo",
+        icon: "message-circle",
+        name: "Zalo",
+        hint: "Nhắn tin nhanh trong nước",
+      },
+      {
+        id: "whatsapp",
+        icon: "globe",
+        name: "WhatsApp",
+        hint: "Dành cho khách ở nước ngoài",
+      },
+      {
+        id: "phone",
+        icon: "phone",
+        name: "Gọi điện",
+        hint: "Giờ hành chính, GMT+7",
+      },
+      { id: "email", icon: "mail", name: "Email", hint: "Gửi kèm hồ sơ y tế" },
+    ],
+  },
 
   intro: {
     skip: "Bỏ qua",

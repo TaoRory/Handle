@@ -216,7 +216,7 @@ export default async function LocaleLayout({
 
           <Footer content={content} />
 
-          <FloatingContact label={content.floatingCta} />
+          <FloatingContact copy={content.floatingContact} />
         </MotionProvider>
       </body>
     </html>
