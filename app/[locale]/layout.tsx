@@ -34,32 +34,6 @@ const beVietnam = Be_Vietnam_Pro({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
-  title: {
-    default: 'Handle — Luxury Medical Concierge',
-    template: '%s | Handle',
-  },
-  description: 'Chăm sóc sức khỏe tại Việt Nam cùng Handle. Chúng tôi điều phối khám chữa bệnh, đặt lịch, phiên dịch, di chuyển và theo dõi sau điều trị cho khách quốc tế.',
-  alternates: {
-    canonical: '/',
-    languages: {
-      'vi': '/vi',
-      'en': '/en',
-      'x-default': '/vi',
-    },
-  },
-  openGraph: {
-    title: 'Handle — Luxury Medical Concierge',
-    description: 'Chăm sóc sức khỏe tại Việt Nam cùng Handle.',
-    url: siteUrl,
-    siteName: 'Handle',
-    locale: 'vi_VN',
-    alternateLocale: ['en_US'],
-    type: 'website',
-  },
-};
-
 const playfair = Playfair_Display({
   subsets: ["latin", "vietnamese"],
   weight: ["400", "500"],
@@ -119,10 +93,10 @@ export async function generateMetadata({
       : "Healthcare in Vietnam with Handle: consultation, scheduling, interpreting, transfers and follow-up for international patients.";
 
   return {
-    metadataBase: new URL(siteConfig.url),
+    metadataBase: new URL(siteConfig.url || siteUrl),
     title: {
-      default: `${title} | ${siteConfig.name}`,
       template: `%s · ${siteConfig.name}`,
+      default: `${title} | ${siteConfig.name}`,
     },
     description,
     applicationName: siteConfig.name,
@@ -159,6 +133,7 @@ export async function generateMetadata({
       url: `${siteConfig.url}/${locale}`,
       title: `${title} | ${siteConfig.name}`,
       description,
+      alternateLocale: ["en_US"],
       images: [OG_IMAGE],
     },
     twitter: {
