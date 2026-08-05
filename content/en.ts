@@ -100,29 +100,31 @@ export const en: SiteContent = {
   whyUs: {
     title: "One point of contact for the whole",
     accent: "journey.",
-    lead: "Six commitments that shape how we work with every patient.",
+    lead: "Six commitments that shape how we work with every patient, from record review to remote follow-up after you are home again.",
   },
 
   journey: {
     title: "Your journey with",
     accent: "Handle",
-    lead: "We stay with you at every step — from the first email to the follow-up long after you are home.",
+    lead: "We stay with you at every step — from the first email to the follow-up long after you are home. Every milestone has an owner, a response time and a clear next action.",
     action: "See the full journey",
   },
 
   stats: {
     title: "What we have",
     accent: "delivered.",
-    lead: "Aggregated across the cases Handle has coordinated, updated each quarter.",
+    lead: "Aggregated across the cases Handle has coordinated, updated each quarter. These numbers reflect live work, not vague promises.",
   },
 
   services: {
     title: "Medical services we coordinate",
+    lead: "From screening and IVF to cardiology and aesthetics, we help you choose the right specialty and the right hospital from the start.",
     action: "See all services",
   },
 
   experiences: {
     title: "Experiencing Vietnam",
+    lead: "While you recover, you can still eat well, rest properly and discover Vietnam at a pace that fits your treatment.",
     action: "See all experiences",
   },
 

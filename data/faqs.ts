@@ -44,6 +44,12 @@ export const faqs: Localized<Faq[]> = {
       answer:
         "Toàn bộ hồ sơ, chỉ định và đơn thuốc được dịch và bàn giao trước khi bạn rời Việt Nam. Chúng tôi tiếp tục theo dõi từ xa và kết nối lại với bác sĩ điều trị khi bạn hoặc bác sĩ tại nước sở tại cần trao đổi.",
     },
+    {
+      id: "timeline",
+      question: "Mất bao lâu để bắt đầu điều trị?",
+      answer:
+        "Tùy chuyên khoa và tình trạng hồ sơ, nhưng phần lớn quy trình có thể bắt đầu ngay sau khi thẩm định hồ sơ và xác nhận lịch với bệnh viện. Chúng tôi sẽ cho bạn một mốc thời gian rõ ràng trước khi bạn quyết định bay.",
+    },
   ],
   en: [
     {
@@ -81,6 +87,12 @@ export const faqs: Localized<Faq[]> = {
       question: "What happens once I fly home?",
       answer:
         "Every report, instruction and prescription is translated and handed over before you leave Vietnam. We continue remote follow-up and reconnect you with your treating doctor whenever you or your physician at home needs it.",
+    },
+    {
+      id: "timeline",
+      question: "How quickly can treatment start?",
+      answer:
+        "It depends on the specialty and the condition of your records, but in many cases we can begin as soon as the file review is complete and the hospital confirms a date. We give you a clear timeline before you decide to fly.",
     },
   ],
 };

@@ -96,29 +96,31 @@ export const vi: SiteContent = {
   whyUs: {
     title: "Một đầu mối duy nhất cho toàn bộ",
     accent: "hành trình.",
-    lead: "Sáu cam kết định hình cách chúng tôi làm việc với mỗi khách hàng.",
+    lead: "Sáu cam kết định hình cách chúng tôi làm việc với mỗi khách hàng, từ lúc đọc hồ sơ cho tới khi bạn đã trở về nhà và cần theo dõi lại từ xa.",
   },
 
   journey: {
     title: "Hành trình cùng",
     accent: "Handle",
-    lead: "Chúng tôi đồng hành cùng bạn từng bước, từ email đầu tiên đến lần tái khám sau khi bạn đã về nhà.",
+    lead: "Chúng tôi đồng hành cùng bạn từng bước, từ email đầu tiên đến lần tái khám sau khi bạn đã về nhà. Mỗi mốc đều có người phụ trách, thời gian phản hồi và việc cần làm tiếp theo.",
     action: "Xem chi tiết hành trình",
   },
 
   stats: {
     title: "Những gì chúng tôi đã",
     accent: "làm được.",
-    lead: "Số liệu tổng hợp từ các ca Handle đã điều phối, cập nhật quý gần nhất.",
+    lead: "Số liệu tổng hợp từ các ca Handle đã điều phối, cập nhật quý gần nhất. Những con số này phản ánh quy mô công việc thực tế chứ không phải lời hứa chung chung.",
   },
 
   services: {
     title: "Dịch vụ y tế chúng tôi hỗ trợ",
+    lead: "Từ tầm soát, IVF đến tim mạch và thẩm mỹ, chúng tôi giúp bạn chọn đúng chuyên khoa và đúng bệnh viện ngay từ đầu.",
     action: "Xem tất cả dịch vụ",
   },
 
   experiences: {
     title: "Trải nghiệm tại Việt Nam",
+    lead: "Trong lúc hồi phục, bạn vẫn có thể ăn uống, nghỉ ngơi và khám phá Việt Nam theo nhịp phù hợp với tình trạng sức khỏe của mình.",
     action: "Xem tất cả trải nghiệm",
   },
 

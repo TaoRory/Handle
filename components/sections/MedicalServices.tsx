@@ -72,7 +72,15 @@ export function MedicalServices({ copy, services }: MedicalServicesProps) {
         </h2>
       </Reveal>
 
-      <ul className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3">
+      {copy.lead ? (
+        <Reveal index={2}>
+          <p className="text-ink-400 mt-4 max-w-[54ch] text-[0.9375rem] leading-relaxed">
+            {copy.lead}
+          </p>
+        </Reveal>
+      ) : null}
+
+      <ul className={copy.lead ? "mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3" : "mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3"}>
         {services.map((service, index) => (
           <li key={service.id} className="h-full">
             <ServiceCard service={service} index={index} />
@@ -80,7 +88,7 @@ export function MedicalServices({ copy, services }: MedicalServicesProps) {
         ))}
       </ul>
 
-      <Reveal index={3} className="mt-7">
+      <Reveal index={copy.lead ? 4 : 3} className="mt-7">
         <Link
           href={`#${SECTION_IDS.cta}`}
           className="group/link border-line hover:border-gold hover:text-gold-700 text-ink-600 rounded-pill inline-flex items-center gap-2 border px-5 py-3 text-sm font-medium transition-colors duration-200"
