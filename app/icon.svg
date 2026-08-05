@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!--
+    The tab icon: the site's own mark from `components/ui/logo.tsx` — two stems
+    with rounded caps and the crossbar that curves rather than sits flat — on
+    the cream canvas the rest of the site uses.
+
+    Two things differ from the header, both because 16px is not 36px. The stroke
+    is 7 rather than 5: at the header's weight it renders about 1.1px in a tab
+    and goes faint and grey. And the mark is placed from its *stroked* bounds
+    rather than its path box, so it sits optically centred instead of drifting
+    up and left by half a stroke.
+
+    Geometry is otherwise the brand sheet's: stems at x=6 and x=42 over a 48x52
+    field, crossbar cut short of each stem, uniform weight.
+  -->
+  <rect width="64" height="64" rx="12" fill="#F6F3EE" />
+  <g
+    transform="translate(10.28 6.87) scale(0.8627)"
+    stroke="#0D0D0D"
+    stroke-width="7"
+    stroke-linecap="round"
+    fill="none"
+  >
+    <path d="M6 4v44" />
+    <path d="M42 4v44" />
+    <path d="M11.5 27C17 24.5 31 24.5 36.5 27" />
+  </g>
+</svg>

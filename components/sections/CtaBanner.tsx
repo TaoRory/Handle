@@ -25,11 +25,7 @@ export function CtaBanner({
   locale: Locale;
 }) {
   return (
-    <section
-      id={id}
-      aria-labelledby="cta-title"
-      className="relative scroll-mt-[calc(var(--header-h)+24px)] pb-16 lg:pb-24"
-    >
+    <section id={id} aria-labelledby="cta-title" className="relative pb-16 lg:pb-24">
       <Container>
         <div className="bg-ink relative isolate mt-14 overflow-hidden rounded-sm px-6 py-14 sm:px-10 lg:px-14 lg:py-20">
           {/* Warm bloom behind the copy, and a gold hairline along the top. */}
@@ -45,7 +41,7 @@ export function CtaBanner({
           <Reveal className="flex flex-col gap-4">
             <h2 id="cta-title" className="text-h2 text-cream-100 max-w-[24ch]">
               {copy.title}{" "}
-              <span className="font-display text-gold italic">{copy.accent}</span>
+              <span className="font-display text-gold-700 italic">{copy.accent}</span>
             </h2>
             <p className="text-cream/70 text-lead max-w-[62ch]">{copy.lead}</p>
           </Reveal>

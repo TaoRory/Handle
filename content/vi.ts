@@ -42,7 +42,12 @@ export const vi: SiteContent = {
       { id: "privacy", icon: "file-check", label: "Bảo mật thông tin tuyệt đối" },
     ],
     media: {
-      alt: "Chuyên viên Handle đón khách hàng quốc tế tại sảnh bệnh viện, ánh sáng ấm buổi sáng",
+      alt: "Sảnh đón tiếp với quầy lễ tân đá cẩm thạch, tường gỗ lam và cây xanh",
+      src: "/images/photos/hero-lobby.jpg",
+      width: 1600,
+      height: 2000,
+      blurDataURL:
+        "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAAAQAgCdASoMAA8AA4BaJQBOgBuffLvYUj3AAP7nOxuqnaMm9Iso0urHz6E8eDIHlYFwK6AraXsT8Knm7ubrElSuAAA=",
       glyph: "hand-heart",
       tone: "sand",
       seed: "handle-hero-arrival",
@@ -76,7 +81,12 @@ export const vi: SiteContent = {
       { id: "quote", icon: "receipt", label: "Báo giá trọn gói" },
     ],
     media: {
-      alt: "Điều phối viên Handle trao đổi Personal Care Plan cùng gia đình bệnh nhân trong phòng tư vấn",
+      alt: "Nhóm bác sĩ cùng xem hồ sơ bên cửa sổ phòng hội chẩn",
+      src: "/images/photos/about.jpg",
+      width: 1440,
+      height: 900,
+      blurDataURL:
+        "data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAADQAQCdASoMAAcAA4BaJZwAAl2+hWhggAD+6zYcCrD8aiK7IuywZ9j7ZWNbq/7F6UI6RfkigAA=",
       glyph: "notebook-pen",
       tone: "linen",
       seed: "handle-about-consult",
@@ -154,6 +164,33 @@ export const vi: SiteContent = {
       privacy:
         "Thông tin của bạn chỉ được dùng để liên hệ tư vấn và sẽ không chia sẻ cho bên thứ ba.",
       chips: ["Hỗ trợ tiếng Việt & tiếng Anh", "Thông tin được giữ kín"],
+      sent: {
+        eyebrow: "Đã tiếp nhận",
+        title: "Thông tin của bạn đã",
+        accent: "đến nơi.",
+        lead: "Một chuyên viên điều phối sẽ đọc yêu cầu của bạn và liên hệ qua email hoặc số điện thoại bạn vừa để lại.",
+        steps: [
+          {
+            id: "received",
+            icon: "file-check",
+            label: "Tiếp nhận",
+            body: "Yêu cầu của bạn đã được ghi nhận an toàn.",
+          },
+          {
+            id: "review",
+            icon: "user-round-check",
+            label: "Chuyên viên xem xét",
+            body: "Chúng tôi đối chiếu nhu cầu với bệnh viện và bác sĩ phù hợp.",
+          },
+          {
+            id: "reply",
+            icon: "message-circle",
+            label: "Phản hồi trong 24 giờ",
+            body: "Bạn nhận được tư vấn đầu tiên, miễn phí và không ràng buộc.",
+          },
+        ],
+        again: "Gửi yêu cầu khác",
+      },
     },
   },
 
@@ -171,7 +208,33 @@ export const vi: SiteContent = {
     ],
   },
 
-  floatingCta: "Chat trên WhatsApp",
+  floatingContact: {
+    label: "Liên hệ ngay",
+    title: "Chọn cách liên hệ",
+    note: "Chúng tôi trả lời trong vòng 24 giờ làm việc, bằng tiếng Việt hoặc tiếng Anh.",
+    closeLabel: "Đóng",
+    channels: [
+      {
+        id: "zalo",
+        icon: "message-circle",
+        name: "Zalo",
+        hint: "Nhắn tin nhanh trong nước",
+      },
+      {
+        id: "whatsapp",
+        icon: "globe",
+        name: "WhatsApp",
+        hint: "Dành cho khách ở nước ngoài",
+      },
+      {
+        id: "phone",
+        icon: "phone",
+        name: "Gọi điện",
+        hint: "Giờ hành chính, GMT+7",
+      },
+      { id: "email", icon: "mail", name: "Email", hint: "Gửi kèm hồ sơ y tế" },
+    ],
+  },
 
   intro: {
     skip: "Bỏ qua",
@@ -216,7 +279,7 @@ export const vi: SiteContent = {
         id: "support",
         title: "Hỗ trợ",
         links: [
-          { id: "faq", label: "Câu hỏi thường gặp", href: `#${SECTION_IDS.journey}` },
+          { id: "faq", label: "Câu hỏi thường gặp", href: `#${SECTION_IDS.faq}` },
           { id: "payment", label: "Hướng dẫn thanh toán", href: `#${SECTION_IDS.cta}` },
           { id: "terms", label: "Điều khoản sử dụng", href: `#${SECTION_IDS.cta}` },
           { id: "privacy", label: "Chính sách bảo mật", href: `#${SECTION_IDS.cta}` },

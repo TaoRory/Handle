@@ -67,7 +67,7 @@ export function LocaleSwitcher({
         aria-haspopup="menu"
         aria-label={label}
         className={cn(
-          "rounded-pill inline-flex h-11 items-center gap-1.5 border px-3.5 text-sm font-medium transition-colors duration-200",
+          "rounded-pill inline-flex h-11 items-center gap-1.5 border px-2.5 text-sm font-medium transition-colors duration-200 sm:px-3.5",
           tone === "cream"
             ? "border-cream/25 text-cream-100 hover:border-cream/60"
             : "border-line bg-surface text-ink hover:border-gold",
@@ -77,7 +77,7 @@ export function LocaleSwitcher({
         {LOCALE_LABELS[current].short}
         <ChevronDown
           className={cn(
-            "size-3.5 transition-transform duration-200",
+            "hidden size-3.5 transition-transform duration-200 sm:block",
             isOpen && "rotate-180",
           )}
           strokeWidth={2}

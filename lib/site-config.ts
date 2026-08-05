@@ -14,6 +14,8 @@ export const siteConfig = {
   email: "contact@handle.vn",
   phone: "+84 28 1234 5678",
   whatsapp: "+84 28 1234 5678",
+  /* Zalo is how Vietnamese patients and their families actually message. */
+  zalo: "+84 28 1234 5678",
   addressLines: ["Tầng 5, 123 Nguyễn Huệ", "Quận 1, TP. Hồ Chí Minh, Việt Nam"],
   socials: {
     facebook: "https://facebook.com/handle.vn",
@@ -27,6 +29,7 @@ export const contactLinks = {
   tel: `tel:${toDialString(siteConfig.phone)}`,
   mail: `mailto:${siteConfig.email}`,
   whatsapp: `https://wa.me/${toDialString(siteConfig.whatsapp).replace("+", "")}`,
+  zalo: `https://zalo.me/${toDialString(siteConfig.zalo).replace("+", "")}`,
 } as const;
 
 /**

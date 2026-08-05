@@ -5,11 +5,22 @@ import useEmblaCarousel from "embla-carousel-react";
 import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 
-import { Media } from "@/components/ui/media";
 import { Rating } from "@/components/ui/rating";
 import { cn } from "@/lib/utils";
 
 import type { Testimonial } from "@/types";
+
+/** "Nguyễn Thị Mai" -> "NM". Falls back to one letter for a single word. */
+function initials(author: string) {
+  const parts = author
+    .replace(/[^\p{L}\s]/gu, "")
+    .trim()
+    .split(/\s+/);
+  if (parts.length === 0) return "";
+  const first = parts[0]!;
+  const last = parts[parts.length - 1]!;
+  return (parts.length === 1 ? first.slice(0, 1) : first[0]! + last[0]!).toUpperCase();
+}
 
 interface TestimonialSliderProps {
   testimonials: Testimonial[];
@@ -104,14 +115,18 @@ export function TestimonialSlider({ testimonials, labels }: TestimonialSliderPro
             >
               <figure className="border-line bg-surface flex h-full flex-col overflow-hidden rounded-lg border shadow-xs">
                 <div className="flex gap-4 p-4 sm:gap-5 sm:p-5">
-                  <Media
-                    asset={testimonial.media}
-                    seed={testimonial.id}
-                    ratio="square"
-                    rounded="md"
-                    sizes="96px"
-                    className="w-24 shrink-0 sm:w-28"
-                  />
+                  {/*
+                    Initials, not a photograph and not the generated plate.
+                    A real face beside an invented quote would put words in a
+                    real person's mouth, and the abstract plate read as a broken
+                    avatar rather than a decision. A monogram reads as chosen.
+                  */}
+                  <span
+                    aria-hidden="true"
+                    className="border-line bg-cream-100 text-ink font-brand flex aspect-square w-24 shrink-0 items-center justify-center rounded-md border text-xl tracking-[0.08em] sm:w-28 sm:text-2xl"
+                  >
+                    {initials(testimonial.author)}
+                  </span>
 
                   <div className="flex min-w-0 flex-col justify-center gap-1.5">
                     <Rating
@@ -125,7 +140,7 @@ export function TestimonialSlider({ testimonials, labels }: TestimonialSliderPro
                       <span className="text-ink-400 block truncate text-xs">
                         {testimonial.location}
                       </span>
-                      <span className="text-gold-600 mt-1 block truncate text-[0.6875rem]">
+                      <span className="text-gold-700 mt-1 block truncate text-[0.6875rem]">
                         {testimonial.context}
                       </span>
                     </figcaption>
@@ -154,17 +169,21 @@ export function TestimonialSlider({ testimonials, labels }: TestimonialSliderPro
       </p>
 
       {/* ---- Controls ---- */}
-      <div className="mt-8 flex items-center justify-center gap-5">
+      <div className="mt-8 flex items-center justify-center gap-3 sm:gap-5">
         <button
           type="button"
           onClick={scrollPrev}
           aria-label={labels.previous}
-          className="border-line bg-surface text-ink-600 hover:border-gold hover:text-gold-600 rounded-pill inline-flex size-11 items-center justify-center border transition-colors duration-200"
+          className="border-line bg-surface text-ink-600 hover:border-gold hover:text-gold-700 rounded-pill inline-flex size-11 shrink-0 items-center justify-center border transition-colors duration-200"
         >
           <ChevronLeft className="size-5" strokeWidth={1.5} aria-hidden="true" />
         </button>
 
-        <ul className="flex items-center gap-2">
+        {/* The dot is 6px because that is the right size for the mark; the
+            button around it is 44px because that is the right size for a thumb.
+            Padding carries the difference, so the row still reads as hairline
+            dots while every one of them is comfortably tappable. */}
+        <ul className="flex items-center">
           {Array.from({ length: snapCount }, (_, index) => (
             <li key={index}>
               <button
@@ -172,13 +191,18 @@ export function TestimonialSlider({ testimonials, labels }: TestimonialSliderPro
                 onClick={() => scrollTo(index)}
                 aria-label={`${labels.goToSlide} ${index + 1}`}
                 aria-current={index === selectedIndex ? "true" : undefined}
-                className={cn(
-                  "rounded-pill block h-1.5 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]",
-                  index === selectedIndex
-                    ? "bg-gold w-7"
-                    : "hover:bg-stone w-1.5 bg-stone-300",
-                )}
-              />
+                className="group/dot flex h-11 w-8 shrink-0 items-center justify-center sm:w-11"
+              >
+                <span
+                  aria-hidden="true"
+                  className={cn(
+                    "rounded-pill block h-1.5 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]",
+                    index === selectedIndex
+                      ? "bg-gold w-7"
+                      : "group-hover/dot:bg-stone w-1.5 bg-stone-300",
+                  )}
+                />
+              </button>
             </li>
           ))}
         </ul>
@@ -187,7 +211,7 @@ export function TestimonialSlider({ testimonials, labels }: TestimonialSliderPro
           type="button"
           onClick={scrollNext}
           aria-label={labels.next}
-          className="border-line bg-surface text-ink-600 hover:border-gold hover:text-gold-600 rounded-pill inline-flex size-11 items-center justify-center border transition-colors duration-200"
+          className="border-line bg-surface text-ink-600 hover:border-gold hover:text-gold-700 rounded-pill inline-flex size-11 shrink-0 items-center justify-center border transition-colors duration-200"
         >
           <ChevronRight className="size-5" strokeWidth={1.5} aria-hidden="true" />
         </button>

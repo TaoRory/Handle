@@ -11,7 +11,7 @@ const buttonVariants = cva(
     "font-medium whitespace-nowrap select-none",
     "rounded-pill transition-[transform,box-shadow,background-color,color,border-color]",
     "duration-200 ease-[cubic-bezier(0.4,0,0.2,1)]",
-    "focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-gold-600",
+    "focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-gold-700",
     "disabled:pointer-events-none disabled:opacity-50",
     "active:translate-y-px",
   ],
@@ -26,8 +26,8 @@ const buttonVariants = cva(
         ghost: "text-ink-600 hover:bg-cream-300 hover:text-ink",
         onDark:
           "border border-cream/25 bg-transparent text-cream-100 hover:border-cream/60 hover:bg-cream/10 hover:-translate-y-0.5",
-        whatsapp:
-          "bg-[#1f7a4d] text-white hover:bg-[#186139] hover:-translate-y-0.5 hover:shadow-md",
+        // No `whatsapp` variant: it carried the platform's green as a raw hex,
+        // and nothing uses it since the floating contact went ink and gold.
       },
       size: {
         sm: "h-10 px-4 text-sm",

@@ -17,8 +17,8 @@ import type { Partner, SectionCopy } from "@/types";
  */
 function PartnerLogo({ partner }: { partner: Partner }) {
   return (
-    <div className="group/partner flex shrink-0 items-center gap-3.5 px-7 py-2 sm:px-9">
-      <span className="text-stone group-hover/partner:text-gold-600 font-brand flex size-11 items-center justify-center rounded-md text-sm tracking-[0.08em] transition-colors duration-300">
+    <div className="group/partner flex shrink-0 items-center gap-2.5 px-4 py-2 sm:gap-3.5 sm:px-9">
+      <span className="text-stone group-hover/partner:text-gold-600 font-brand flex size-9 items-center justify-center rounded-md text-sm tracking-[0.08em] transition-colors duration-300 sm:size-11">
         {partner.logo ? (
           <img src={partner.logo} alt={`${partner.name} logo`} className="h-6 w-auto" />
         ) : (
@@ -26,10 +26,18 @@ function PartnerLogo({ partner }: { partner: Partner }) {
         )}
       </span>
       <span className="flex flex-col">
-        <span className="text-ink-400 group-hover/partner:text-ink text-[0.9375rem] font-medium whitespace-nowrap transition-colors duration-300">
+        <span className="text-ink-400 group-hover/partner:text-ink text-sm font-medium whitespace-nowrap transition-colors duration-300 sm:text-[0.9375rem]">
           {partner.name}
         </span>
-        <span className="text-stone text-[0.6875rem] whitespace-nowrap">
+        {/*
+          Hidden below `sm`. Each block was about 250px wide against 350px of
+          panel, so a phone saw one and a half partners at a time — a wall of
+          logos that cannot show a wall says nothing. The category and city are
+          the droppable half; the names are the proof.
+
+          ink-400, not stone: stone at this size measured 2.5:1 on the panel.
+        */}
+        <span className="text-ink-400 hidden text-xs whitespace-nowrap sm:block">
           {partner.kind} · {partner.city}
         </span>
       </span>
@@ -57,12 +65,15 @@ export function PartnerCarousel({ copy, partners }: PartnerCarouselProps) {
     <section
       id={SECTION_IDS.partners}
       aria-labelledby="partners-title"
-      className="relative z-20 -mt-14 scroll-mt-[calc(var(--header-h)+24px)] pb-8 sm:-mt-16 lg:-mt-24"
+      className="relative z-20 -mt-14 pb-8 sm:-mt-16 lg:-mt-24"
     >
       <Container size="wide">
         <Reveal>
           <div className="border-line bg-surface mt-12 overflow-hidden rounded-sm border shadow-md">
-            <div className="border-line/70 flex flex-col items-center justify-between gap-2 px-6 py-4 sm:flex-row sm:px-8">
+            {/* `border-b`, not just `border-line/70`: the divider was specified
+                as a colour and never given a width, so the panel read as one
+                undifferentiated white box with things floating in it. */}
+            <div className="border-line/70 flex flex-col items-center justify-between gap-1 border-b px-6 py-3.5 sm:flex-row sm:px-8 sm:py-4">
               <h2
                 id="partners-title"
                 className="text-ink-400 text-eyebrow font-medium uppercase"
@@ -73,7 +84,7 @@ export function PartnerCarousel({ copy, partners }: PartnerCarouselProps) {
               {copy.action ? (
                 <Link
                   href={`#${SECTION_IDS.about}`}
-                  className="group/link text-gold-600 hover:text-ink inline-flex items-center gap-2 text-sm font-medium transition-colors duration-200"
+                  className="group/link text-gold-700 hover:text-ink inline-flex min-h-11 items-center gap-2 text-sm font-medium transition-colors duration-200"
                 >
                   {copy.action}
                   <ArrowTrail />
@@ -81,7 +92,11 @@ export function PartnerCarousel({ copy, partners }: PartnerCarouselProps) {
               ) : null}
             </div>
 
-            <Marquee durationSeconds={52} className="py-5">
+            {/* No `durationSeconds`: the speed is a breakpoint decision, so it
+                comes from `.marquee-partners` in globals.css. A second Marquee
+                for mobile would have put the whole partner list in the DOM
+                twice over for a screen reader. */}
+            <Marquee className="marquee-partners py-3.5 sm:py-5">
               {partners.map((partner) => (
                 <PartnerLogo key={partner.id} partner={partner} />
               ))}

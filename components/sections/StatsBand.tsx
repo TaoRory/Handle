@@ -27,7 +27,7 @@ export function StatsBand({ id, copy, stats }: StatsBandProps) {
     <section
       id={id}
       aria-labelledby="stats-title"
-      className="bg-gold relative scroll-mt-[calc(var(--header-h)+24px)] overflow-hidden py-16 lg:py-20"
+      className="bg-gold relative overflow-hidden py-16 lg:py-20"
     >
       {/* Two soft blooms keep a flat 1400px field of gold from looking printed. */}
       <span

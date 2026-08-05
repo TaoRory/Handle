@@ -53,12 +53,7 @@ export function Section({
     <section
       id={id}
       aria-labelledby={labelledBy}
-      className={cn(
-        "relative scroll-mt-[calc(var(--header-h)+24px)] overflow-hidden",
-        tones[tone],
-        sizes[size],
-        className,
-      )}
+      className={cn("relative overflow-hidden", tones[tone], sizes[size], className)}
     >
       {children}
     </section>

@@ -30,7 +30,13 @@ const LEFT_X = 70;
 const RIGHT_X = 280;
 const RADIUS = 30;
 
-/** Where the left bar changes tone — under where the hand lands. */
+/**
+ * Where both bars change tone — under where the hand lands.
+ *
+ * The two bars alternate across it: the left is dark above and light below, the
+ * right light above and dark below. That diagonal is the point of the mark —
+ * the hand crosses on the line where the tones swap.
+ */
 const TONE_SPLIT = 180;
 
 const VIEW_W = 426;
@@ -81,21 +87,54 @@ export function IntroMark({
           <clipPath id="intro-left-bar">
             <path d={barPath(LEFT_X, "left")} />
           </clipPath>
+          <clipPath id="intro-right-bar">
+            <path d={barPath(RIGHT_X, "right")} />
+          </clipPath>
         </defs>
 
-        <path d={barPath(LEFT_X, "left")} fill={TAN} />
-        {/* The darker upper-left segment: in the artwork it reads as the arm
-            the hand is attached to. Its lower edge is covered once the hand
-            lands, which is why the split sits under the landing position. */}
-        <rect
-          x={LEFT_X}
-          y={0}
-          width={BAR_W}
-          height={TONE_SPLIT}
-          fill={TAUPE}
-          clipPath="url(#intro-left-bar)"
-        />
-        <path d={barPath(RIGHT_X, "right")} fill={TAN} />
+        {/*
+          Each bar is laid down light, then the dark half painted over it and
+          clipped back to the bar's own rounded outline — which is what keeps
+          the corner radii intact at the top of the left bar and the bottom of
+          the right one. The seam falls where the hand lands, so neither edge is
+          ever seen hard against the other.
+
+          The group around each bar is what grows. It starts squashed to a
+          sliver about its own centre, so the mark opens as two horizontal
+          dashes on the line the hand will later cross, then extends to full
+          height. `transform-box: fill-box` puts the origin at the bar's centre
+          rather than the SVG's, which is what makes the two grow in place
+          instead of sliding toward the middle.
+
+          The growth is a CSS animation, not a Motion one. `MotionConfig
+          reducedMotion="user"` withholds a Motion transform, which here would
+          leave both bars frozen as slivers — no H at all — for exactly the
+          people that setting protects. A CSS animation with `forwards`
+          collapses to its final frame under the reduce block instead.
+        */}
+        <g className="animate-intro-bar origin-center [transform-box:fill-box]">
+          <path d={barPath(LEFT_X, "left")} fill={TAN} />
+          <rect
+            x={LEFT_X}
+            y={0}
+            width={BAR_W}
+            height={TONE_SPLIT}
+            fill={TAUPE}
+            clipPath="url(#intro-left-bar)"
+          />
+        </g>
+
+        <g className="animate-intro-bar origin-center [transform-box:fill-box]">
+          <path d={barPath(RIGHT_X, "right")} fill={TAN} />
+          <rect
+            x={RIGHT_X}
+            y={TONE_SPLIT}
+            width={BAR_W}
+            height={BAR_H - TONE_SPLIT}
+            fill={TAUPE}
+            clipPath="url(#intro-right-bar)"
+          />
+        </g>
       </motion.svg>
 
       {/* ---- The hand, flying in from the left ---- */}

@@ -17,11 +17,6 @@ export const testimonials: Localized<Testimonial[]> = {
       context: "Kiểm tra sức khỏe tổng quát · 2025",
       location: "Melbourne, Úc",
       rating: 5,
-      media: {
-        alt: "Chân dung Jessica L. tại nhà, ánh sáng tự nhiên",
-        glyph: "users-round",
-        tone: "sand",
-      },
     },
     {
       id: "michael",
@@ -31,11 +26,6 @@ export const testimonials: Localized<Testimonial[]> = {
       context: "Phẫu thuật tim mạch · 2025",
       location: "Vancouver, Canada",
       rating: 5,
-      media: {
-        alt: "Chân dung Michael R. ngoài trời, tông xám ấm",
-        glyph: "heart-pulse",
-        tone: "clay",
-      },
     },
     {
       id: "sophie",
@@ -45,11 +35,6 @@ export const testimonials: Localized<Testimonial[]> = {
       context: "Phẫu thuật mắt · 2024",
       location: "Singapore",
       rating: 5,
-      media: {
-        alt: "Chân dung Sophie T. trong văn phòng sáng",
-        glyph: "eye",
-        tone: "dusk",
-      },
     },
     {
       id: "daniel",
@@ -59,11 +44,6 @@ export const testimonials: Localized<Testimonial[]> = {
       context: "Nha khoa phục hình · 2025",
       location: "Seoul, Hàn Quốc",
       rating: 5,
-      media: {
-        alt: "Chân dung Daniel K. bên cửa sổ, tông trung tính",
-        glyph: "smile",
-        tone: "sage",
-      },
     },
     {
       id: "amelie",
@@ -73,11 +53,6 @@ export const testimonials: Localized<Testimonial[]> = {
       context: "Hỗ trợ sinh sản (IVF) · 2024",
       location: "Lyon, Pháp",
       rating: 5,
-      media: {
-        alt: "Chân dung Amélie D. trong không gian ấm",
-        glyph: "baby",
-        tone: "linen",
-      },
     },
     {
       id: "hoang",
@@ -87,11 +62,6 @@ export const testimonials: Localized<Testimonial[]> = {
       context: "Chăm sóc người thân · 2025",
       location: "Sydney, Úc",
       rating: 5,
-      media: {
-        alt: "Chân dung Hoàng N. ngoài trời buổi chiều",
-        glyph: "hand-heart",
-        tone: "gold",
-      },
     },
   ],
   en: [
@@ -103,11 +73,6 @@ export const testimonials: Localized<Testimonial[]> = {
       context: "Executive health screening · 2025",
       location: "Melbourne, Australia",
       rating: 5,
-      media: {
-        alt: "Portrait of Jessica L. at home in natural light",
-        glyph: "users-round",
-        tone: "sand",
-      },
     },
     {
       id: "michael",
@@ -117,11 +82,6 @@ export const testimonials: Localized<Testimonial[]> = {
       context: "Cardiac surgery · 2025",
       location: "Vancouver, Canada",
       rating: 5,
-      media: {
-        alt: "Portrait of Michael R. outdoors in warm grey tones",
-        glyph: "heart-pulse",
-        tone: "clay",
-      },
     },
     {
       id: "sophie",
@@ -131,11 +91,6 @@ export const testimonials: Localized<Testimonial[]> = {
       context: "Eye surgery · 2024",
       location: "Singapore",
       rating: 5,
-      media: {
-        alt: "Portrait of Sophie T. in a bright office",
-        glyph: "eye",
-        tone: "dusk",
-      },
     },
     {
       id: "daniel",
@@ -145,11 +100,6 @@ export const testimonials: Localized<Testimonial[]> = {
       context: "Restorative dentistry · 2025",
       location: "Seoul, South Korea",
       rating: 5,
-      media: {
-        alt: "Portrait of Daniel K. beside a window in neutral tones",
-        glyph: "smile",
-        tone: "sage",
-      },
     },
     {
       id: "amelie",
@@ -159,11 +109,6 @@ export const testimonials: Localized<Testimonial[]> = {
       context: "Fertility & IVF · 2024",
       location: "Lyon, France",
       rating: 5,
-      media: {
-        alt: "Portrait of Amélie D. in a warm interior",
-        glyph: "baby",
-        tone: "linen",
-      },
     },
     {
       id: "hoang",
@@ -173,11 +118,6 @@ export const testimonials: Localized<Testimonial[]> = {
       context: "Caring for a parent · 2025",
       location: "Sydney, Australia",
       rating: 5,
-      media: {
-        alt: "Portrait of Hoang N. outdoors in afternoon light",
-        glyph: "hand-heart",
-        tone: "gold",
-      },
     },
   ],
 };

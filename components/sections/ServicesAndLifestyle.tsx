@@ -32,14 +32,11 @@ export function ServicesAndLifestyle({
     <div className="bg-surface relative">
       <Container>
         <div className="section-y grid gap-16 xl:grid-cols-2 xl:gap-14">
-          <div id={servicesId} className="scroll-mt-[calc(var(--header-h)+24px)]">
+          <div id={servicesId}>
             <MedicalServices copy={servicesCopy} services={services} />
           </div>
 
-          <div
-            id={experiencesId}
-            className="border-line scroll-mt-[calc(var(--header-h)+24px)] xl:border-l xl:pl-14"
-          >
+          <div id={experiencesId} className="border-line xl:border-l xl:pl-14">
             <LifestyleExperience copy={experiencesCopy} experiences={experiences} />
           </div>
         </div>

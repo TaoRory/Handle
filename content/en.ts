@@ -46,7 +46,12 @@ export const en: SiteContent = {
       { id: "privacy", icon: "file-check", label: "Records kept confidential" },
     ],
     media: {
-      alt: "A Handle coordinator welcoming an international patient in a hospital lobby, warm morning light",
+      alt: "A reception lobby with a marble desk, fluted wood walls and planted ferns",
+      src: "/images/photos/hero-lobby.jpg",
+      width: 1600,
+      height: 2000,
+      blurDataURL:
+        "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAAAQAgCdASoMAA8AA4BaJQBOgBuffLvYUj3AAP7nOxuqnaMm9Iso0urHz6E8eDIHlYFwK6AraXsT8Knm7ubrElSuAAA=",
       glyph: "hand-heart",
       tone: "sand",
       seed: "handle-hero-arrival",
@@ -80,7 +85,12 @@ export const en: SiteContent = {
       { id: "quote", icon: "receipt", label: "One itemised quote" },
     ],
     media: {
-      alt: "A Handle coordinator walking a patient's family through their Personal Care Plan",
+      alt: "Clinicians reviewing a chart together by a consulting-room window",
+      src: "/images/photos/about.jpg",
+      width: 1440,
+      height: 900,
+      blurDataURL:
+        "data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAADQAQCdASoMAAcAA4BaJZwAAl2+hWhggAD+6zYcCrD8aiK7IuywZ9j7ZWNbq/7F6UI6RfkigAA=",
       glyph: "notebook-pen",
       tone: "linen",
       seed: "handle-about-consult",
@@ -158,6 +168,33 @@ export const en: SiteContent = {
       privacy:
         "Your details are used only to contact you about your consultation and are never shared with third parties.",
       chips: ["English & Vietnamese support", "Information kept private"],
+      sent: {
+        eyebrow: "Received",
+        title: "Your details have",
+        accent: "reached us.",
+        lead: "A care coordinator will read your request and reply on the email or phone number you just gave us.",
+        steps: [
+          {
+            id: "received",
+            icon: "file-check",
+            label: "Received",
+            body: "Your request has been recorded securely.",
+          },
+          {
+            id: "review",
+            icon: "user-round-check",
+            label: "A coordinator reviews it",
+            body: "We match your needs to the right hospital and surgeon.",
+          },
+          {
+            id: "reply",
+            icon: "message-circle",
+            label: "A reply within 24 hours",
+            body: "Your first consultation, free and with no obligation.",
+          },
+        ],
+        again: "Send another request",
+      },
     },
   },
 
@@ -175,7 +212,33 @@ export const en: SiteContent = {
     ],
   },
 
-  floatingCta: "Chat on WhatsApp",
+  floatingContact: {
+    label: "Contact us",
+    title: "Choose how to reach us",
+    note: "We reply within one business day, in English or Vietnamese.",
+    closeLabel: "Close",
+    channels: [
+      {
+        id: "zalo",
+        icon: "message-circle",
+        name: "Zalo",
+        hint: "Fastest inside Vietnam",
+      },
+      {
+        id: "whatsapp",
+        icon: "globe",
+        name: "WhatsApp",
+        hint: "Best if you are overseas",
+      },
+      { id: "phone", icon: "phone", name: "Call us", hint: "Office hours, GMT+7" },
+      {
+        id: "email",
+        icon: "mail",
+        name: "Email",
+        hint: "Attach your medical records",
+      },
+    ],
+  },
 
   intro: {
     skip: "Skip",
@@ -219,7 +282,7 @@ export const en: SiteContent = {
           {
             id: "faq",
             label: "Frequently asked questions",
-            href: `#${SECTION_IDS.journey}`,
+            href: `#${SECTION_IDS.faq}`,
           },
           { id: "payment", label: "Payment guide", href: `#${SECTION_IDS.cta}` },
           { id: "terms", label: "Terms of use", href: `#${SECTION_IDS.cta}` },

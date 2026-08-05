@@ -1,15 +1,19 @@
 import Link from "next/link";
 import { Play } from "lucide-react";
 
+import { ConsultationLink } from "@/components/layout/ConsultationLink";
 import { HeroDecor } from "@/components/sections/HeroDecor";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { ArrowTrail, Icon } from "@/components/ui/icon";
 import { Media } from "@/components/ui/media";
 import { Reveal } from "@/components/ui/reveal";
-import { SECTION_IDS, contactLinks } from "@/lib/site-config";
+import { SECTION_IDS } from "@/lib/site-config";
 
 import type { HeroCopy } from "@/types";
+
+/** Shared by both hero placements so they resolve to one download. */
+const HERO_SIZES = "(max-width: 1023px) 100vw, 58vw";
 
 /**
  * The first screen.
@@ -40,16 +44,23 @@ export function Hero({ copy }: { copy: HeroCopy }) {
 
       {/* ---- Full-bleed media, desktop ---- */}
       <div
-        aria-hidden={copy.media.src ? undefined : "true"}
+        aria-hidden="true"
         className="absolute inset-y-0 right-0 -z-10 hidden w-[58%] lg:block xl:w-[56%]"
       >
+        {/*
+          This layer and the band below are the same photograph at two
+          placements, and `display: none` does not stop a browser fetching an
+          image. They therefore declare an identical `sizes` so both resolve to
+          the same srcset candidate and the second is a cache hit rather than a
+          second download of the LCP image. Only the band carries the alt.
+        */}
         <Media
           asset={copy.media}
           seed="hero"
           ratio="fill"
           rounded="none"
           priority
-          sizes="58vw"
+          sizes={HERO_SIZES}
           className="size-full"
         />
 
@@ -72,7 +83,9 @@ export function Hero({ copy }: { copy: HeroCopy }) {
               <br />
               {titleLine2}
               <br />
-              <span className="font-display text-gold italic">{copy.titleAccent}</span>
+              <span className="font-display text-gold-700 italic">
+                {copy.titleAccent}
+              </span>
             </h1>
           </Reveal>
 
@@ -82,12 +95,10 @@ export function Hero({ copy }: { copy: HeroCopy }) {
 
           <Reveal index={2}>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <Button asChild size="lg" className="rounded-sm">
-                <Link href={contactLinks.whatsapp}>
-                  {copy.primaryCta}
-                  <ArrowTrail />
-                </Link>
-              </Button>
+              <ConsultationLink size="lg" className="rounded-sm">
+                {copy.primaryCta}
+                <ArrowTrail />
+              </ConsultationLink>
 
               <Button asChild variant="outline" size="lg" className="rounded-sm">
                 <Link href={`#${SECTION_IDS.about}`}>
@@ -122,15 +133,18 @@ export function Hero({ copy }: { copy: HeroCopy }) {
         <div className="hidden h-28 lg:block" aria-hidden="true" />
       </Container>
 
-      {/* ---- Full-bleed media, mobile and tablet ---- */}
-      <Reveal className="lg:hidden">
+      {/* ---- Full-bleed media, mobile and tablet ----
+          The band runs edge to edge, so nothing but this margin separates the
+          last trust badge from the top of the photograph. Without it the two
+          touch and the copy reads as though it is sitting on the image. */}
+      <Reveal className="mt-12 sm:mt-14 lg:mt-0 lg:hidden">
         <Media
           asset={copy.media}
           seed="hero"
           ratio="wide"
           rounded="none"
           priority
-          sizes="100vw"
+          sizes={HERO_SIZES}
         />
       </Reveal>
     </section>

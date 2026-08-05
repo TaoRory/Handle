@@ -5,11 +5,10 @@ import { useEffect, useMemo, useState } from "react";
 
 import { LocaleSwitcher } from "@/components/layout/LocaleSwitcher";
 import { MobileNav } from "@/components/layout/MobileNav";
-import { Button } from "@/components/ui/button";
+import { ConsultationLink } from "@/components/layout/ConsultationLink";
 import { ArrowTrail } from "@/components/ui/icon";
 import { Logo } from "@/components/ui/logo";
 import { useScrollSpy } from "@/hooks/use-scroll-spy";
-import { contactLinks } from "@/lib/site-config";
 import { cn } from "@/lib/utils";
 
 import type { Locale, NavLink } from "@/types";
@@ -28,8 +27,9 @@ interface NavbarProps {
 /**
  * Sticky site header.
  *
- * Transparent over the hero, then settles into a frosted panel once the page
- * scrolls — the same trick Apple uses to keep the first screen uninterrupted.
+ * Transparent over the hero, then settles into a solid panel once the page
+ * scrolls, so the first screen stays uninterrupted. The panel is opaque and not
+ * frosted — see `.header-panel` for why the blur had to go.
  * The active link is driven by an IntersectionObserver, not a scroll listener.
  */
 export function Navbar({
@@ -63,14 +63,14 @@ export function Navbar({
         "fixed inset-x-0 top-0 z-[60] h-[var(--header-h)]",
         "transition-[background-color,box-shadow,border-color] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]",
         isScrolled
-          ? "glass border-line/80 border-b shadow-sm"
+          ? "header-panel border-line/80 border-b shadow-sm"
           : "border-b border-transparent",
       )}
     >
       <div className="mx-auto flex h-full w-full max-w-[1480px] items-center justify-between gap-6 px-5 sm:px-8 lg:px-10">
         <Link
           href={`/${locale}`}
-          className="focus-visible:outline-gold-600 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4"
+          className="focus-visible:outline-gold-600 inline-flex min-h-11 items-center rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4"
           aria-label={homeLabel}
         >
           {/* The lockup's tagline costs ~120px of horizontal room, which the
@@ -90,7 +90,7 @@ export function Navbar({
                     aria-current={isActive ? "true" : undefined}
                     className={cn(
                       "rounded-pill relative inline-flex h-11 items-center px-2.5 text-[0.8125rem] font-medium whitespace-nowrap transition-colors duration-200 xl:px-3.5 xl:text-sm",
-                      isActive ? "text-gold-600" : "text-ink-600 hover:text-ink",
+                      isActive ? "text-gold-700" : "text-ink-600 hover:text-ink",
                     )}
                   >
                     {link.label}
@@ -109,22 +109,18 @@ export function Navbar({
         </nav>
 
         <div className="flex items-center gap-2.5">
-          <LocaleSwitcher
-            current={locale}
-            label={localeLabel}
-            className="hidden sm:block"
-          />
+          {/* Was `hidden sm:block`, which left a phone with no way to change
+              language anywhere on the site — it is not in the drawer either.
+              The trigger tightens instead of disappearing. */}
+          <LocaleSwitcher current={locale} label={localeLabel} />
 
-          <Button
-            asChild
+          <ConsultationLink
             size="sm"
             className="hidden h-11 rounded-sm px-5 sm:inline-flex"
           >
-            <Link href={contactLinks.whatsapp}>
-              {ctaLabel}
-              <ArrowTrail />
-            </Link>
-          </Button>
+            {ctaLabel}
+            <ArrowTrail />
+          </ConsultationLink>
 
           <MobileNav
             links={links}

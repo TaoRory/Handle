@@ -56,10 +56,12 @@ export type IconName =
   | "leaf"
   | "life-buoy"
   | "luggage"
+  | "mail"
   | "map-pin"
   | "message-circle"
   | "microscope"
   | "notebook-pen"
+  | "phone"
   | "plane"
   | "receipt"
   | "route"
@@ -183,7 +185,9 @@ export interface Testimonial {
   context: string;
   location: string;
   rating: 1 | 2 | 3 | 4 | 5;
-  media: MediaAsset;
+  // No media. The card shows the author's initials: a real face beside an
+  // invented quote would attribute words to someone who never said them, and
+  // the generated plate read as a broken avatar rather than a decision.
 }
 
 /**
@@ -308,6 +312,24 @@ export interface CtaCopy {
     hint: string;
     privacy: string;
     chips: string[];
+    /**
+     * The panel that replaces the fields once a request is written.
+     *
+     * Kept as copy rather than reusing `success`: that sentence is the server
+     * action's return value and has to stand alone in a status line, while this
+     * is a laid-out confirmation with its own heading and next steps. Anything
+     * promised here must be something Handle actually does — no reference codes
+     * for rows we do not read back.
+     */
+    sent: {
+      eyebrow: string;
+      title: string;
+      accent: string;
+      lead: string;
+      /** What happens after the form. Three, in order, icon paired with label. */
+      steps: { id: string; icon: IconName; label: string; body: string }[];
+      again: string;
+    };
   };
 }
 
@@ -347,7 +369,23 @@ export interface SiteContent {
   cta: CtaCopy;
   /** Labels for the fixed section index; ids come from `SECTION_IDS`. */
   sectionNav: { label: string; items: { id: string; label: string }[] };
-  floatingCta: string;
+  /**
+   * The persistent contact button and the channels behind it.
+   *
+   * More than one channel on purpose: Zalo is how Vietnamese families message,
+   * WhatsApp is how most of the overseas audience does, and a single button
+   * wired to either one quietly excludes the other half of the market.
+   */
+  floatingContact: {
+    /** The button's own label, and its accessible name when collapsed. */
+    label: string;
+    /** Heading inside the panel. */
+    title: string;
+    /** One line under the heading, setting the response expectation. */
+    note: string;
+    closeLabel: string;
+    channels: { id: string; icon: IconName; name: string; hint: string }[];
+  };
   intro: { skip: string; loading: string; mark: string };
   footer: {
     tagline: string;

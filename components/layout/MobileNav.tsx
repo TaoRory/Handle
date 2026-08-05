@@ -5,7 +5,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
 
-import { Button } from "@/components/ui/button";
+import { ConsultationLink } from "@/components/layout/ConsultationLink";
 import { ArrowTrail } from "@/components/ui/icon";
 import { Logo } from "@/components/ui/logo";
 import { contactLinks, siteConfig } from "@/lib/site-config";
@@ -72,7 +72,7 @@ export function MobileNav({ links, ctaLabel, menuLabel, closeLabel }: MobileNavP
                       className="group/link text-ink hover:text-gold-600 flex items-center justify-between gap-4 py-4 text-xl font-medium transition-colors duration-200"
                     >
                       <span className="flex items-baseline gap-4">
-                        <span className="font-brand text-gold/70 text-xs tracking-widest">
+                        <span className="font-brand text-gold-700 text-xs tracking-widest">
                           {String(index + 1).padStart(2, "0")}
                         </span>
                         {link.label}
@@ -86,14 +86,16 @@ export function MobileNav({ links, ctaLabel, menuLabel, closeLabel }: MobileNavP
           </nav>
 
           <div className="border-line flex flex-col gap-3 border-t px-5 py-6">
-            <Dialog.Close asChild>
-              <Button asChild size="lg" className="w-full">
-                <Link href={contactLinks.whatsapp}>
-                  {ctaLabel}
-                  <ArrowTrail />
-                </Link>
-              </Button>
-            </Dialog.Close>
+            {/* Closes the drawer first, otherwise the page scrolls behind a
+                panel that is still covering it. */}
+            <ConsultationLink
+              size="lg"
+              className="w-full"
+              onNavigate={() => setIsOpen(false)}
+            >
+              {ctaLabel}
+              <ArrowTrail />
+            </ConsultationLink>
             <a
               href={contactLinks.tel}
               className="text-ink-600 hover:text-ink text-center text-sm transition-colors duration-200"

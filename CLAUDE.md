@@ -70,6 +70,7 @@ Derived ramp (declared once in `app/globals.css` under Tailwind v4 `@theme`):
 --color-ink-400    #6E6A65    --color-cream-500  #E2DACD
 --color-stone      #A8A29C    --color-gold       #C9A86A
 --color-stone-300  #D6D2CB    --color-gold-600   #B08F4E
+--color-danger     #A8332A    --color-gold-700   #85662F
 --color-line       #E6E0D6    --color-gold-100   #F1E6D2
 --color-surface    #FFFFFF    --color-success    #4F7A63
 ```
@@ -78,6 +79,12 @@ Derived ramp (declared once in `app/globals.css` under Tailwind v4 `@theme`):
 per viewport-height of scroll, plus the primary CTA. Gold is never a background for body copy —
 only type, 1px rules, small icon strokes, the primary button, and the two sanctioned large fills
 below (the stats band and the single highlight card).
+
+**Gold that carries words is always `gold-700`.** Measured on cream, `gold` is 2.0:1 and `gold-600`
+is 2.8:1 — neither clears AA at any size, including the display accent word, which was the least
+legible text on the page precisely because it is the most distinctive. `gold-700` is 4.8:1 and
+clears it everywhere. The lighter two remain for fills, hairlines, icon strokes and hover states,
+where the 3:1 non-text rule applies instead.
 
 ### Surface rhythm
 
@@ -110,13 +117,33 @@ above a title; if the case for a kicker comes back, bring back a shared componen
 scattering them, because the failure this replaced was exactly that — some bands kept a label and
 others lost it.
 
+### Section anchoring — and why there is no scroll snapping
+
+There was briefly `scroll-snap-type: y proximity` with a `snap-start` per band. It is gone, and it
+should not come back on this page. Measured at 1440x900, four of the ten stops were taller than the
+viewport; at 390x844, eight were, up to **2.48x**. Snapping a band whose bottom sits a viewport and a
+half below its own snap point means the reader can never rest there — every pause near a boundary
+pulls them back to the top of something they were halfway through. That is the jitter and the cut-off
+content, and it is a property of the content, not a tuning problem. Proximity was already the gentle
+variant; there was no gentler one left.
+
+What a long editorial page needs instead is that a jump **lands exactly**, which is
+`scroll-padding-top` on `html` and nothing else. It was previously fighting a
+`scroll-mt-[calc(var(--header-h)+24px)]` on every band, and the two compounded: the container's
+padding insets the scrollport while the target's margin outsets the target, so every nav jump stopped
+**200px short** with the previous section still filling the top of the screen. One or the other,
+never both — and the container is the right place, because it covers every anchor target including
+ones added later by someone who does not know about the class.
+
 Reading position is still stated, once: the fixed `SectionNav` down the right edge at `xl`.
 `SECTION_ORDER` in `lib/site-config.ts` is its single source, and `sectionStep()` exists only to
 feed it. The hero and the partner strip are excluded on purpose — they are the cover, not a
 chapter. Nothing else on the page may introduce a second numbering system.
 
-**Contrast floors (verified):** ink on cream 17.4:1 · ink-600 on cream 7.4:1 · ink on gold 11.8:1 ·
-gold-600 on cream 3.6:1 (large text ≥24px only) · cream on ink 16.9:1.
+**Contrast floors (measured in a browser, not estimated):** ink on cream 17.4:1 · ink-600 on cream
+7.4:1 · ink-400 on white 5.4:1 · ink on gold 11.8:1 · gold-700 on cream 4.8:1 · cream on ink 16.9:1.
+An earlier version of this table claimed gold-600 on cream was 3.6:1 and safe for large text; it is
+2.8:1 and was never safe. Re-measure rather than reason about a hex.
 
 ## Typography
 
@@ -186,7 +213,9 @@ Section column maps:
   the space with a spacer so nothing under it shifts.
 - **Reason cards** — 4 up ≥`lg`, 2 up ≥`sm`, 1 up mobile.
 - **Advantage cards** — 3 up ≥`lg`, 2 up ≥`sm`, 1 up mobile (6 cards total).
-- **Timeline** — horizontal snap rail ≥`lg`, vertical rail below.
+- **Timeline** — all nine steps across one row from `lg`, vertical rail below. A 5 + 4 split was
+  tried to give the copy more width and rejected on sight: two rows read as two journeys. The rail
+  stays one line because the thing it is describing is one line.
 - **Services / Experience** — the two blocks sit side by side 6/6 ≥`xl`, stacked below.
 - **Testimonials** — 3 visible ≥`lg`, 2 ≥`md`, 1 below (Embla).
 
@@ -278,7 +307,7 @@ redirects unprefixed paths.
 /data                    Locale-keyed mock records: services, testimonials, partners, timeline…
 /hooks                   use-media-query, use-mounted, use-scroll-spy
 /lib                     cn(), motion presets, site config, icon map
-/public                  Static assets, favicon, og image
+/public                  Static assets, photography, og image  (icons live in /app)
 /types                   Shared TypeScript contracts
 /design-reference        Source brand sheet + layout reference (not shipped)
 ```
@@ -321,25 +350,70 @@ redirects unprefixed paths.
 
 **`/ui` primitives**
 
-| Component                          | Responsibility                                                                                                                                              |
-| ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `Button`                           | cva variants `primary` (gold) · `dark` (ink) · `outline` · `ghost` · `whatsapp`; sizes `sm/md/lg`; `asChild` via Radix Slot; built-in arrow slide on hover. |
-| `Container`                        | The single source of page gutter + max width.                                                                                                               |
-| `Section`                          | `<section>` + `aria-labelledby` + vertical rhythm + tone (`cream`/`cream300`/`surface`/`ink`/`gold`).                                                       |
-| `SectionHeading`                   | Title (with gold accent word) + optional lead + optional action. No kicker — see "Section numbering".                                                       |
-| `Card`                             | cva variants `surface` · `cream` · `quiet` · `gold` · `ink`, hover elevation. At most one `gold` per grid — it is the eye's landing point.                  |
-| `Accordion`                        | Radix wrapper. Roles, `aria-expanded` and roving focus come free; this supplies the skin and the plus→cross rotation only.                                  |
-| `Reveal`                           | The one entrance-animation wrapper. Viewport, stagger index, reduced motion.                                                                                |
-| `Marquee`                          | Duplicated-track infinite scroller. Pause on hover/focus, reduced-motion safe.                                                                              |
-| `Media`                            | Renders `next/image` when a `src` exists, otherwise the generated brand plate. Locked aspect ratio, hover zoom, rounded mask.                               |
-| `MediaPlate`                       | The generated art: seeded warm gradient mesh + gold arcs + grain + subject glyph.                                                                           |
-| `Logo`                             | Inline SVG `icon` / `wordmark` / `lockup` at three sizes.                                                                                                   |
-| `IconTile`, `Rating`, `SocialIcon` | Small repeated atoms.                                                                                                                                       |
+| Component                          | Responsibility                                                                                                                                    |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Button`                           | cva variants `primary` (gold) · `dark` (ink) · `outline` · `ghost` · `onDark`; sizes `sm/md/lg`; `asChild` via Radix Slot; arrow slides on hover. |
+| `Container`                        | The single source of page gutter + max width.                                                                                                     |
+| `Section`                          | `<section>` + `aria-labelledby` + vertical rhythm + tone (`cream`/`cream300`/`surface`/`ink`/`gold`).                                             |
+| `SectionHeading`                   | Title (with gold accent word) + optional lead + optional action. No kicker — see "Section numbering".                                             |
+| `Card`                             | cva variants `surface` · `cream` · `quiet` · `gold` · `ink`, hover elevation. At most one `gold` per grid — it is the eye's landing point.        |
+| `Accordion`                        | Radix wrapper. Roles, `aria-expanded` and roving focus come free; this supplies the skin and the plus→cross rotation only.                        |
+| `Reveal`                           | The one entrance-animation wrapper. Viewport, stagger index, reduced motion.                                                                      |
+| `Marquee`                          | Duplicated-track infinite scroller. Pause on hover/focus, reduced-motion safe.                                                                    |
+| `Media`                            | Renders `next/image` when a `src` exists, otherwise the generated brand plate. Locked aspect ratio, hover zoom, rounded mask.                     |
+| `MediaPlate`                       | The generated art: seeded warm gradient mesh + gold arcs + grain + subject glyph.                                                                 |
+| `Logo`                             | Inline SVG `icon` / `wordmark` / `lockup` at three sizes.                                                                                         |
+| `IconTile`, `Rating`, `SocialIcon` | Small repeated atoms.                                                                                                                             |
+
+**The gold highlight card** (`Card variant="gold"`, one per grid) is a shallow top-to-bottom
+gradient with a deeper gold edge, not a flat fill — flat gold at card size reads as a sticker. It
+takes the same warm neutral shadow as every other card; the gold glow it used to carry was the same
+trick that made the buttons look generated. Its icon gets no container, exactly like the three
+neutral cards beside it: boxing it made the one card that carries the argument look like it came
+from a different set. Body copy on it is `ink-800` — `ink/75` measured 3.0:1 over the gold.
+
+**`FloatingContact`** — the gold pill bottom-right, present from the first screen rather than
+appearing after 700px of scroll: the moment a contact path matters most is the one where the visitor
+is still deciding whether this is real. It opens a **choice of channel** instead of firing one app —
+a lone WhatsApp button serves the overseas half of this audience and quietly excludes the Vietnamese
+half, who message on Zalo, and the reverse is equally true. Phone and email are there because some
+people want a voice and some want to attach a scan.
+
+Channels are named in words, not drawn as brand logos: reproducing someone else's mark badly is
+worse than not reproducing it, and the name is what a visitor scans for. `Esc` closes the panel and
+returns focus to the trigger, or a keyboard user is dropped at the top of the document.
+
+**`ConsultationLink`** — the "free consultation" buttons in the header, the hero and the mobile
+drawer. All three are real anchors to the closing band, so they survive without JavaScript,
+middle-click into a new tab and copy as links; the smooth scroll is the browser's and `scroll-mt`
+on the band keeps the heading clear of the sticky header. The one thing added on top is that focus
+lands in the first field, via `CONSULTATION_FIELD_ATTR`, so a visitor can type the moment the page
+settles instead of tabbing there from the top — `focus({ preventScroll: true })` is what makes that
+compatible with the scroll, since a plain `focus()` jumps instantly and cancels it.
+
+There was briefly a dialog here instead. It is not coming back: the form is the end of the page's
+argument, and a modal that skips the argument also skips the reason to fill it in.
+
+**`ConsultationSent`** — the confirmation that replaces the form's fields inside the same card
+once a request is written. A gold hairline ring closes, an ink tick strokes inside it, one halo
+breathes outward and is gone; then the copy and a three-step "what happens next" settle in. The
+mark is a seal on a signed record, not a notification badge — the second the check turns into a
+green circle the whole page drops a tier.
+
+Two things it must keep. **The draw is CSS, not Motion** (`--animate-seal-*` in `globals.css`):
+`MotionConfig reducedMotion="user"` withholds a Motion animation's target, which for a stroke-dash
+draw leaves an empty ring and no tick for exactly the users the preference protects, whereas a CSS
+animation with `forwards` collapses to its drawn final frame under the reduce block. Same trap as
+the intro's type reveal. And **it may only promise what Handle actually does** — no reference code
+for a row the insert never reads back.
+
+The ring's dash length is its circumference (r=43 → 271); change `r` and the keyframe in
+`globals.css` changes with it.
 
 **Wayfinding layer** — three pieces whose only job is making a long page legible:
 `ScrollProgress` (2px gold rule, how far is left), `SectionNav` (fixed index down the right edge
 at `xl`, which part am I in, labels on hover/focus, `aria-current` for assistive tech) and
-`FloatingContact` (holds the conversion path open once the hero's CTA has scrolled away).
+`FloatingContact` (a persistent way to reach a human).
 
 **`IntroCurtain` + `IntroMark`** — the brand intro, and the one piece of theatre on the site. The
 H settles in, the open hand flies in from the left and completes the mark, then the wordmark and
@@ -347,7 +421,15 @@ tagline fade up quickly beneath it. The whole timeline lives in one `TIMING` obj
 together, because nudging a single delay in isolation is how an intro ends up ragged.
 
 `IntroMark` rebuilds the supplied artwork (`Intro/logo intro.png`) so its parts can move: the bars
-are vector paths measured off the original (76 × 361 units, outer corners `r=30`, inner square),
+are vector paths measured off the original (76 × 361 units, outer corners `r=30`, inner square) and
+alternate across `TONE_SPLIT` — left bar dark above and light below, right bar light above and dark
+below, with the hand crossing on the line where the tones swap. Each bar **grows out of that same
+line**: it opens squashed to a sliver about its own centre, reads for a beat as two horizontal
+dashes, then extends to full height before the hand arrives. That growth is a CSS animation
+(`--animate-intro-bar`) and not a Motion one, for the reason below — a withheld Motion transform
+would leave the H as two slivers and nothing else. Its delay and duration are what `TIMING.hand` is
+set against, so `globals.css` and `IntroCurtain` have to move together. The hand cut-out is at
+`public/intro/hand.png`,
 the hand is a transparent cut-out at `public/intro/hand.png` carrying the logo's cream knockout
 ring, and the type is sized from the artwork's own ratios. Two constraints follow:
 
@@ -376,10 +458,10 @@ They are two different logos in two different palettes; unify them before launch
  ├ IntroCurtain ───────── IntroMark (hand flies in) · type fades up · curtain rises
  ├ SkipLink
  ├ ScrollProgress ──────── gold rule, scroll-linked
- ├ Navbar ── Logo · NavLinks · LocaleSwitcher · Button · MobileNav(Dialog)
+ ├ Navbar ── Logo · NavLinks · LocaleSwitcher · ConsultationLink · MobileNav(Dialog)
  ├ SectionNav ─────────── 8 dots · hover labels · aria-current   (xl only)
  ├ main
- │  ├ Hero ─────────────── headline · lead · 2 CTAs · TrustStrip · full-bleed Media · float decor
+ │  ├ Hero ─────────────── headline · lead · ConsultationLink + anchor · TrustStrip · full-bleed Media
  │  ├ PartnerCarousel ──── Marquee × PartnerLogo   (overlaps the hero bottom)
  │  ├ 01 WhyVietnam ────── SectionHeading · ReasonCard × 4 (one gold)
  │  ├ 02 AboutHandle ───── INK panel · Media · copy · proof pills · Button
@@ -391,9 +473,9 @@ They are two different logos in two different palettes; unify them before launch
  │  │    └ LifestyleExperience ─ ExperienceCard × 6
  │  ├ 07 Testimonials ──── Embla · TestimonialCard × 6 · dots · arrows
  │  ├ 08 Faq ──────────── Accordion × 6 · sticky ink help card
- │  └ CtaBanner ────────── INK · headline · WhatsApp · consultation
+ │  └ CtaBanner ────────── INK · headline · ConsultationForm ⇄ ConsultationSent (seal)
  ├ Footer ── Logo · 4 link columns · contact · socials · legal
- └ FloatingContact ─────── WhatsApp, appears past 700px of scroll
+ └ FloatingContact ─────── gold pill · Zalo · WhatsApp · phone · email, from the first screen
 ```
 
 ## Pages
@@ -409,6 +491,14 @@ Reserved for phase 2 (nav anchors point at homepage sections until these exist):
 
 ## SEO Strategy
 
+- Tab icon: `app/icon.svg`, with `app/favicon.ico` and `app/apple-icon.png` beside it — all three
+  picked up by the App Router file convention. Do **not** set `icons` in `generateMetadata`: that
+  field overrides the convention wholesale, which is how the scaffold's default icon survived this
+  long. The drawing is the site's own mark from `ui/logo.tsx` on cream, with two adjustments that
+  only matter at tab size — the stroke is 7 rather than 5, because the header's weight renders about
+  1.1px at 16px and goes faint and grey, and the mark is positioned from its _stroked_ bounds rather
+  than its path box so it does not sit half a stroke up and left of centre. `apple-icon.png` drops
+  the corner radius, since iOS masks it and would otherwise round it twice.
 - Metadata API in `app/layout.tsx`: `metadataBase`, title template `%s · Handle`, description,
   keywords, `openGraph` (type/locale/siteName/images 1200×630), `twitter: summary_large_image`,
   `robots` with `max-image-preview: large`, canonical + `hreflang` via `alternates`.
@@ -447,11 +537,27 @@ Budget: **LCP < 2.0s**, **CLS < 0.02**, **INP < 150ms**, first-load JS **< 130KB
   layout actually uses. Note Next 16 defaults: `qualities: [75]` and `minimumCacheTTL: 4h` — both
   set explicitly here so the intent is visible.
 - Every media box has a locked `aspect-ratio` and a warm cream placeholder → zero CLS.
-- **Today the site ships without licensed photography.** `Media` renders `MediaPlate` — a seeded,
-  brand-palette SVG composition (gradient mesh, gold arc, fine grain, subject glyph) at the exact
-  aspect ratio the photograph will occupy. The moment a `src` is added to a record in `/data`,
-  `Media` switches to `next/image` and the layout does not move by a single pixel. The art-direction
-  brief for each slot lives beside the record as its `alt` string.
+- **The photographs are placeholders, not licensed brand photography.** Fourteen CC0 images sit in
+  `public/images/photos/`, cropped to the ratio their slot declares and given one shared warm grade
+  so unrelated sources read as a set. `PHOTO-CREDITS.md` records where each came from. Replace them
+  with commissioned work before launch — they show the layout with real media in it, they do not
+  depict Handle.
+- **Everything else still falls back to `MediaPlate`** — a seeded, brand-palette SVG composition at
+  the exact aspect ratio the photograph will occupy. Drop `src` from a record and `Media` returns to
+  the plate without the layout moving a pixel; add one and it switches to `next/image` the same way.
+- **`alt` describes the photograph, not the brief.** While a slot was empty its `alt` doubled as the
+  art direction for the shot that would fill it. Once a real `src` lands, that has to become a
+  description of what is actually in the frame — a screen reader reads the file that shipped, not
+  the one that was planned.
+- **Testimonial cards carry the author's initials, not a picture.** A real, identifiable face beside
+  an invented quote presents that person as having said something they did not; the generated plate
+  avoided that but read as a broken avatar rather than a decision. A monogram reads as chosen. The
+  `Testimonial` type therefore has no `media` field — do not add one back without consenting patients
+  and real photographs.
+- **The share card is `public/og.jpg`,** 1200×630, rendered from a throwaway route so the wordmark and
+  both display faces are the ones the site ships rather than a rasteriser's substitutes. Regenerate it
+  when the hero photograph or the headline changes. Declaring `summary_large_image` without it is
+  worse than declaring nothing — the platforms render an empty frame instead of a text card.
 - Remote hosts must be allow-listed in `next.config.ts` `images.remotePatterns` before use.
 
 ## Future CMS Integration
