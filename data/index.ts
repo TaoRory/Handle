@@ -38,7 +38,15 @@ export const getTestimonials = (locale: Locale): Testimonial[] => testimonials[l
 export const getStats = (locale: Locale): Stat[] => stats[locale];
 export const getFaqs = (locale: Locale): Faq[] => faqs[locale];
 
-/** Feeds the `AggregateRating` node in the JSON-LD. */
+/**
+ * The review average, kept but not published.
+ *
+ * `AggregateRating` was removed from the JSON-LD because the testimonials
+ * behind it are placeholder copy, and a review score no patient gave is a
+ * policy violation rather than a rounding error. This stays so the node can go
+ * back in unchanged the day the reviews are real — do not delete it as dead
+ * code.
+ */
 export function getAggregateRating(locale: Locale) {
   const list = testimonials[locale];
   const total = list.reduce((sum, item) => sum + item.rating, 0);

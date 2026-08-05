@@ -10,7 +10,14 @@ import { ScrollProgress } from "@/components/layout/ScrollProgress";
 import { SectionNav } from "@/components/layout/SectionNav";
 import { SkipLink } from "@/components/layout/SkipLink";
 import { getContent, isLocale } from "@/content";
-import { OG_IMAGE, ROBOTS, getLocalePageTitle } from "@/lib/seo";
+import {
+  LANGUAGE_ALTERNATES,
+  OG_IMAGE,
+  ROBOTS,
+  getKeywords,
+  getLocalePageTitle,
+  getMetaDescription,
+} from "@/lib/seo";
 import { sectionStep, siteConfig } from "@/lib/site-config";
 import { generateMedicalOrganizationSchema } from "@/lib/json-ld";
 
@@ -25,24 +32,33 @@ import type { ReactNode } from "react";
  *  Fonts — self-hosted by next/font, no request ever leaves the origin.
  * ------------------------------------------------------------------ */
 
+/*
+ * Every weight and style declared here is preloaded, so each one that is not
+ * actually used is a render-blocking request for nothing. What the stylesheet
+ * and the components between them ask for: 400 for body, 500 for headings and
+ * `font-medium`, and Playfair only ever in italic. `font-light`, `font-semibold`
+ * and upright Playfair appear nowhere.
+ */
 const beVietnam = Be_Vietnam_Pro({
   subsets: ["latin", "vietnamese"],
-  weight: ["300", "400", "500", "600"],
+  weight: ["400", "500"],
   variable: "--font-be-vietnam",
   display: "swap",
 });
 
 const playfair = Playfair_Display({
   subsets: ["latin", "vietnamese"],
+  // Italic only: the accent word is the single thing this family sets, and it
+  // is always italic. Weight follows the heading it sits inside, hence both.
   weight: ["400", "500"],
-  style: ["italic", "normal"],
+  style: ["italic"],
   variable: "--font-playfair",
   display: "swap",
 });
 
 const jost = Jost({
   subsets: ["latin"],
-  weight: ["300", "400", "500"],
+  weight: ["400", "500"],
   variable: "--font-jost",
   display: "swap",
   // Brand furniture only — never the LCP element, so it need not preload.
@@ -72,10 +88,7 @@ export async function generateMetadata({
 
   const content = getContent(locale);
   const title = getLocalePageTitle(locale as Locale, "section");
-  const description =
-    locale === "vi"
-      ? "Chăm sóc sức khỏe tại Việt Nam cùng Handle: tư vấn, đặt lịch, phiên dịch, di chuyển và theo dõi sau điều trị cho khách quốc tế."
-      : "Healthcare in Vietnam with Handle: consultation, scheduling, interpreting, transfers and follow-up for international patients.";
+  const description = getMetaDescription(locale as Locale);
 
   return {
     metadataBase: new URL(siteConfig.url),
@@ -85,31 +98,10 @@ export async function generateMetadata({
     },
     description,
     applicationName: siteConfig.name,
-    keywords:
-      locale === "vi"
-        ? [
-            "chăm sóc sức khỏe",
-            "chăm sóc sức khỏe tại Việt Nam",
-            "điều trị tại Việt Nam",
-            "du lịch y tế Việt Nam",
-            "chi phí y tế Việt Nam",
-            "concierge y tế",
-            "bệnh viện quốc tế Việt Nam",
-          ]
-        : [
-            "medical tourism Vietnam",
-            "healthcare in Vietnam",
-            "medical concierge",
-            "treatment abroad",
-            "international hospitals Vietnam",
-          ],
+    keywords: getKeywords(locale as Locale),
     alternates: {
       canonical: `/${locale}`,
-      languages: {
-        vi: "/vi",
-        en: "/en",
-        "x-default": "/vi",
-      },
+      languages: LANGUAGE_ALTERNATES,
     },
     openGraph: {
       type: "website",

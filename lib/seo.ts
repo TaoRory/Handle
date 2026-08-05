@@ -15,6 +15,46 @@ export const OG_IMAGE = {
   alt: "Handle — Chăm sóc sức khỏe tại Việt Nam. Handled.",
 };
 
+/**
+ * The meta description, in one place.
+ *
+ * It was written out twice — once in the layout, once in the page — which is
+ * how two descriptions drift apart and a crawler ends up picking whichever it
+ * happened to read.
+ */
+export function getMetaDescription(locale: Locale) {
+  return locale === "vi"
+    ? "Chăm sóc sức khỏe tại Việt Nam cùng Handle: tư vấn, đặt lịch, phiên dịch, di chuyển và theo dõi sau điều trị cho khách quốc tế."
+    : "Healthcare in Vietnam with Handle: consultation, scheduling, interpreting, transfers and follow-up for international patients.";
+}
+
+/** Same reasoning as the description: one list, two consumers. */
+export function getKeywords(locale: Locale) {
+  return locale === "vi"
+    ? [
+        "chăm sóc sức khỏe tại Việt Nam",
+        "điều trị tại Việt Nam",
+        "du lịch y tế Việt Nam",
+        "chi phí y tế Việt Nam",
+        "concierge y tế",
+        "bệnh viện quốc tế Việt Nam",
+      ]
+    : [
+        "medical tourism Vietnam",
+        "healthcare in Vietnam",
+        "medical concierge",
+        "treatment abroad",
+        "international hospitals Vietnam",
+      ];
+}
+
+/** Canonical plus the hreflang set. Identical for every locale, so shared. */
+export const LANGUAGE_ALTERNATES = {
+  vi: "/vi",
+  en: "/en",
+  "x-default": "/vi",
+} as const;
+
 export function getLocalePageTitle(locale: Locale, variant: "home" | "section") {
   if (locale === "vi") {
     return variant === "home"

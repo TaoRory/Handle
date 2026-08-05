@@ -9,7 +9,7 @@ import { PartnerCarousel } from "@/components/sections/PartnerCarousel";
 import { WhyChooseUs } from "@/components/sections/WhyChooseUs";
 import { WhyVietnam } from "@/components/sections/WhyVietnam";
 import { getContent, isLocale } from "@/content";
-import { OG_IMAGE, ROBOTS, getLocalePageTitle } from "@/lib/seo";
+import { OG_IMAGE, ROBOTS, getLocalePageTitle, getMetaDescription } from "@/lib/seo";
 import {
   getAdvantages,
   getExperiences,
@@ -74,65 +74,33 @@ export async function generateMetadata({
 
   const locale = raw as Locale;
   const content = getContent(locale);
-  const titleBase = getLocalePageTitle(locale, "home");
-  const description =
-    locale === "vi"
-      ? "Chăm sóc sức khỏe tại Việt Nam cùng Handle: tư vấn, đặt lịch, phiên dịch, di chuyển và theo dõi sau điều trị cho khách quốc tế."
-      : "Healthcare in Vietnam with Handle: consultation, scheduling, interpreting, transfers and follow-up for international patients.";
+  const title = `${getLocalePageTitle(locale, "home")} | ${siteConfig.name}`;
 
+  /*
+   * Only what differs from the layout.
+   *
+   * Next merges page metadata over layout metadata shallowly, so everything
+   * repeated here was dead weight in one file or the other — and `openGraph`
+   * being replaced rather than merged is precisely how the share card went
+   * missing. The homepage needs its own title; the rest it inherits.
+   */
   return {
-    metadataBase: new URL(siteConfig.url),
-    title: {
-      default: `${titleBase} | ${siteConfig.name}`,
-      template: `%s · ${siteConfig.name}`,
-    },
-    description,
-    keywords:
-      locale === "vi"
-        ? [
-            "chăm sóc sức khỏe",
-            "chăm sóc sức khỏe tại Việt Nam",
-            "điều trị tại Việt Nam",
-            "du lịch y tế Việt Nam",
-            "chi phí y tế Việt Nam",
-            "concierge y tế",
-            "bệnh viện quốc tế Việt Nam",
-          ]
-        : [
-            "medical tourism Vietnam",
-            "healthcare in Vietnam",
-            "medical concierge",
-            "treatment abroad",
-            "international hospitals Vietnam",
-          ],
-    alternates: {
-      canonical: `/${locale}`,
-      languages: {
-        vi: "/vi",
-        en: "/en",
-        "x-default": "/vi",
-      },
-    },
+    title,
     openGraph: {
       type: "website",
       siteName: siteConfig.name,
       locale: content.htmlLang.replace("-", "_"),
       url: `${siteConfig.url}/${locale}`,
-      title: `${titleBase} | ${siteConfig.name}`,
-      description,
-      // Metadata merges shallowly, so redeclaring `openGraph` here dropped the
-      // layout's images and left the homepage — the page people actually share
-      // — with a blank preview card.
+      title,
+      description: getMetaDescription(locale),
       images: [OG_IMAGE],
     },
     twitter: {
       card: "summary_large_image",
-      title: `${titleBase} | ${siteConfig.name}`,
-      description,
+      title,
+      description: getMetaDescription(locale),
       images: [OG_IMAGE],
     },
-    // Shared with the layout: the page-level object used to hard-code
-    // `index: true`, which silently cancelled the preview guard above it.
     robots: ROBOTS,
   };
 }

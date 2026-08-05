@@ -22,7 +22,7 @@ import type { JourneyStep } from "@/types";
  * which is not the kind of movement that setting is protecting against.
  */
 export function JourneyRail({ steps }: { steps: JourneyStep[] }) {
-  const railRef = useRef<HTMLOListElement>(null);
+  const railRef = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
     target: railRef,
@@ -36,16 +36,14 @@ export function JourneyRail({ steps }: { steps: JourneyStep[] }) {
   });
 
   return (
-    <ol
-      ref={railRef}
-      className={cn(
-        "relative mt-14 lg:mt-16",
-        // Mobile: single column with a rail down the left gutter.
-        "flex flex-col gap-8 pl-16",
-        // Desktop: nine equal columns, rail running through the icon centres.
-        "lg:grid lg:grid-cols-9 lg:gap-x-2 lg:gap-y-0 lg:pl-0",
-      )}
-    >
+    /*
+      The rails live on this wrapper, not inside the list. `ol` only admits
+      `li`, `script` and `template` as children, and four decorative `span`s sat
+      directly in it — invalid markup, and enough to make a screen reader
+      miscount the steps. The wrapper has the list's exact box, so every
+      absolute offset below is unchanged.
+    */
+    <div ref={railRef} className="relative mt-14 lg:mt-16">
       {/* ---- Rail: vertical below lg ---- */}
       <span
         aria-hidden="true"
@@ -68,44 +66,53 @@ export function JourneyRail({ steps }: { steps: JourneyStep[] }) {
         className="bg-gold absolute top-7 right-[5.55%] left-[5.55%] hidden h-px origin-left lg:block"
       />
 
-      {steps.map((step, index) => (
-        <motion.li
-          key={step.id}
-          initial={{ opacity: 0, y: 14 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={VIEWPORT}
-          transition={{
-            duration: 0.5,
-            ease: EASE_EXPO,
-            delay: Math.min(index, 5) * 0.06,
-          }}
-          className="group/step relative lg:flex lg:flex-col lg:items-center lg:px-1 lg:text-center"
-        >
-          {/* Node */}
-          <span
-            className={cn(
-              "border-line bg-surface text-ink-400 rounded-pill absolute top-0 -left-16 inline-flex size-14 items-center justify-center border",
-              "transition-[border-color,color,box-shadow] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]",
-              "group-hover/step:border-gold group-hover/step:text-gold-600 group-hover/step:shadow-[0_0_0_6px_rgba(201,168,106,0.10)]",
-              "lg:static lg:size-14",
-            )}
+      <ol
+        className={cn(
+          // Mobile: single column with a rail down the left gutter.
+          "flex flex-col gap-8 pl-16",
+          // Desktop: nine equal columns, rail running through the icon centres.
+          "lg:grid lg:grid-cols-9 lg:gap-x-2 lg:gap-y-0 lg:pl-0",
+        )}
+      >
+        {steps.map((step, index) => (
+          <motion.li
+            key={step.id}
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={VIEWPORT}
+            transition={{
+              duration: 0.5,
+              ease: EASE_EXPO,
+              delay: Math.min(index, 5) * 0.06,
+            }}
+            className="group/step relative lg:flex lg:flex-col lg:items-center lg:px-1 lg:text-center"
           >
-            <Icon name={step.icon} className="size-[22px]" strokeWidth={1.4} />
-          </span>
+            {/* Node */}
+            <span
+              className={cn(
+                "border-line bg-surface text-ink-400 rounded-pill absolute top-0 -left-16 inline-flex size-14 items-center justify-center border",
+                "transition-[border-color,color,box-shadow] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]",
+                "group-hover/step:border-gold group-hover/step:text-gold-600 group-hover/step:shadow-[0_0_0_6px_rgba(201,168,106,0.10)]",
+                "lg:static lg:size-14",
+              )}
+            >
+              <Icon name={step.icon} className="size-[22px]" strokeWidth={1.4} />
+            </span>
 
-          <span className="font-brand text-gold-600 mt-0 block text-[0.6875rem] tracking-[0.18em] lg:mt-4">
-            {step.step}
-          </span>
+            <span className="font-brand text-gold-600 mt-0 block text-[0.6875rem] tracking-[0.18em] lg:mt-4">
+              {step.step}
+            </span>
 
-          <h3 className="text-ink mt-1.5 text-[0.9375rem] leading-snug font-medium lg:text-sm">
-            {step.title}
-          </h3>
+            <h3 className="text-ink mt-1.5 text-[0.9375rem] leading-snug font-medium lg:text-sm">
+              {step.title}
+            </h3>
 
-          <p className="text-ink-400 mt-2 max-w-[42ch] text-[0.8125rem] leading-relaxed lg:max-w-none lg:text-xs">
-            {step.body}
-          </p>
-        </motion.li>
-      ))}
-    </ol>
+            <p className="text-ink-400 mt-2 max-w-[42ch] text-[0.8125rem] leading-relaxed lg:max-w-none lg:text-xs">
+              {step.body}
+            </p>
+          </motion.li>
+        ))}
+      </ol>
+    </div>
   );
 }
