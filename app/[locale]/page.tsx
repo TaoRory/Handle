@@ -9,6 +9,7 @@ import { PartnerCarousel } from "@/components/sections/PartnerCarousel";
 import { WhyChooseUs } from "@/components/sections/WhyChooseUs";
 import { WhyVietnam } from "@/components/sections/WhyVietnam";
 import { getContent, isLocale } from "@/content";
+import { getLocalePageTitle } from "@/lib/seo";
 import {
   getAdvantages,
   getExperiences,
@@ -74,19 +75,24 @@ export async function generateMetadata({
 
   const locale = raw as Locale;
   const content = getContent(locale);
-  const titleBase = locale === "vi" ? "Chăm sóc sức khỏe tại Việt Nam" : "Healthcare in Vietnam";
-  const description = content.hero.lead;
+  const titleBase = getLocalePageTitle(locale, "home");
+  const description =
+    locale === "vi"
+      ? "Chăm sóc sức khỏe tại Việt Nam cùng Handle: tư vấn, đặt lịch, phiên dịch, di chuyển và theo dõi sau điều trị cho khách quốc tế."
+      : "Healthcare in Vietnam with Handle: consultation, scheduling, interpreting, transfers and follow-up for international patients.";
 
   return {
     metadataBase: new URL(siteConfig.url),
     title: {
-      default: `${siteConfig.name} — ${titleBase}`,
+      default: `${titleBase} | ${siteConfig.name}`,
       template: `%s · ${siteConfig.name}`,
     },
     description,
     keywords:
       locale === "vi"
         ? [
+          "chăm sóc sức khỏe",
+          "chăm sóc sức khỏe tại Việt Nam",
           "điều trị tại Việt Nam",
           "du lịch y tế Việt Nam",
           "chi phí y tế Việt Nam",
@@ -113,12 +119,12 @@ export async function generateMetadata({
       siteName: siteConfig.name,
       locale: content.htmlLang.replace("-", "_"),
       url: `${siteConfig.url}/${locale}`,
-      title: `${siteConfig.name} — ${titleBase}`,
+      title: `${titleBase} | ${siteConfig.name}`,
       description,
     },
     twitter: {
       card: "summary_large_image",
-      title: `${siteConfig.name} — ${titleBase}`,
+      title: `${titleBase} | ${siteConfig.name}`,
       description,
     },
     robots: {

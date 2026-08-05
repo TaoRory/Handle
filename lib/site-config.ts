@@ -9,8 +9,8 @@ import { toDialString } from "@/lib/utils";
 export const siteConfig = {
   name: "Handle",
   wordmark: "HANDLE",
-  domain: "handle.vn",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://handle.vn",
+  domain: "handlevietnam.com",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://handlevietnam.com",
   email: "contact@handle.vn",
   phone: "+84 28 1234 5678",
   whatsapp: "+84 28 1234 5678",

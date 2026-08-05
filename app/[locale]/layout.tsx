@@ -10,6 +10,7 @@ import { ScrollProgress } from "@/components/layout/ScrollProgress";
 import { SectionNav } from "@/components/layout/SectionNav";
 import { SkipLink } from "@/components/layout/SkipLink";
 import { getContent, isLocale } from "@/content";
+import { getLocalePageTitle } from "@/lib/seo";
 import { sectionStep, siteConfig } from "@/lib/site-config";
 import { generateMedicalOrganizationSchema } from "@/lib/json-ld";
 
@@ -24,7 +25,7 @@ import type { ReactNode } from "react";
  *  Fonts — self-hosted by next/font, no request ever leaves the origin.
  * ------------------------------------------------------------------ */
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://handle.vn';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://handlevietnam.com";
 
 const beVietnam = Be_Vietnam_Pro({
   subsets: ["latin", "vietnamese"],
@@ -39,18 +40,18 @@ export const metadata: Metadata = {
     default: 'Handle — Luxury Medical Concierge',
     template: '%s | Handle',
   },
-  description: 'Healthcare in Vietnam. Handled. Medical-concierge operator coordinating treatment for international patients.',
+  description: 'Chăm sóc sức khỏe tại Việt Nam cùng Handle. Chúng tôi điều phối khám chữa bệnh, đặt lịch, phiên dịch, di chuyển và theo dõi sau điều trị cho khách quốc tế.',
   alternates: {
     canonical: '/',
     languages: {
       'vi': '/vi',
       'en': '/en',
-      'x-default': '/vi', // Fallback ngôn ngữ chuẩn
+      'x-default': '/vi',
     },
   },
   openGraph: {
     title: 'Handle — Luxury Medical Concierge',
-    description: 'Healthcare in Vietnam. Handled.',
+    description: 'Chăm sóc sức khỏe tại Việt Nam cùng Handle.',
     url: siteUrl,
     siteName: 'Handle',
     locale: 'vi_VN',
@@ -110,22 +111,26 @@ export async function generateMetadata({
   if (!isLocale(locale)) return {};
 
   const content = getContent(locale);
-  const title =
+  const isProduction = process.env.VERCEL_ENV === "production";
+  const title = getLocalePageTitle(locale as Locale, "section");
+  const description =
     locale === "vi"
-      ? "Chăm sóc sức khỏe tại Việt Nam. Handled."
-      : "Healthcare in Vietnam. Handled.";
+      ? "Chăm sóc sức khỏe tại Việt Nam cùng Handle: tư vấn, đặt lịch, phiên dịch, di chuyển và theo dõi sau điều trị cho khách quốc tế."
+      : "Healthcare in Vietnam with Handle: consultation, scheduling, interpreting, transfers and follow-up for international patients.";
 
   return {
     metadataBase: new URL(siteConfig.url),
     title: {
-      default: `${siteConfig.name} — ${title}`,
+      default: `${title} | ${siteConfig.name}`,
       template: `%s · ${siteConfig.name}`,
     },
-    description: content.hero.lead,
+    description,
     applicationName: siteConfig.name,
     keywords:
       locale === "vi"
         ? [
+          "chăm sóc sức khỏe",
+          "chăm sóc sức khỏe tại Việt Nam",
           "điều trị tại Việt Nam",
           "du lịch y tế Việt Nam",
           "chi phí y tế Việt Nam",
@@ -152,8 +157,8 @@ export async function generateMetadata({
       siteName: siteConfig.name,
       locale: content.htmlLang.replace("-", "_"),
       url: `${siteConfig.url}/${locale}`,
-      title: `${siteConfig.name} — ${title}`,
-      description: content.hero.lead,
+      title: `${title} | ${siteConfig.name}`,
+      description,
       images: [OG_IMAGE],
     },
     twitter: {
@@ -162,14 +167,18 @@ export async function generateMetadata({
       // to a text card. This site is shared person to person, so the preview is
       // often the first thing anyone sees of it.
       card: "summary_large_image",
-      title: `${siteConfig.name} — ${title}`,
-      description: content.hero.lead,
+      title: `${title} | ${siteConfig.name}`,
+      description,
       images: [OG_IMAGE],
     },
     robots: {
-      index: true,
-      follow: true,
-      googleBot: { index: true, follow: true, "max-image-preview": "large" },
+      index: isProduction,
+      follow: isProduction,
+      googleBot: {
+        index: isProduction,
+        follow: isProduction,
+        "max-image-preview": "large",
+      },
     },
     // No `icons` here on purpose: `app/icon.svg`, `app/apple-icon.png` and
     // `app/favicon.ico` are picked up by the file convention, and declaring the

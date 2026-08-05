@@ -3,6 +3,16 @@ import { siteConfig } from "@/lib/site-config";
 
 import type { Locale, SiteContent } from "@/types";
 
+export function getLocalePageTitle(locale: Locale, variant: "home" | "section") {
+  if (locale === "vi") {
+    return variant === "home"
+      ? "Điều trị tại Việt Nam"
+      : "Chăm sóc sức khỏe tại Việt Nam";
+  }
+
+  return variant === "home" ? "Medical Tourism Vietnam" : "Handle Healthcare in Vietnam";
+}
+
 /**
  * JSON-LD for the homepage.
  *
