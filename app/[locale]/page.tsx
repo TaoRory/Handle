@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 import { notFound } from "next/navigation";
 
@@ -20,7 +21,7 @@ import {
   getTestimonials,
 } from "@/data";
 import { buildJsonLd } from "@/lib/seo";
-import { SECTION_IDS } from "@/lib/site-config";
+import { SECTION_IDS, siteConfig } from "@/lib/site-config";
 
 import type { Locale } from "@/types";
 
@@ -61,6 +62,73 @@ const Faq = dynamic(() => import("@/components/sections/Faq").then((m) => m.Faq)
  *
  * Never two accent surfaces in a row, and never more than three on the page.
  */
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale: raw } = await params;
+  if (!isLocale(raw)) {
+    return {};
+  }
+
+  const locale = raw as Locale;
+  const content = getContent(locale);
+  const titleBase = locale === "vi" ? "Chăm sóc sức khỏe tại Việt Nam" : "Healthcare in Vietnam";
+  const description = content.hero.lead;
+
+  return {
+    metadataBase: new URL(siteConfig.url),
+    title: {
+      default: `${siteConfig.name} — ${titleBase}`,
+      template: `%s · ${siteConfig.name}`,
+    },
+    description,
+    keywords:
+      locale === "vi"
+        ? [
+          "điều trị tại Việt Nam",
+          "du lịch y tế Việt Nam",
+          "chi phí y tế Việt Nam",
+          "concierge y tế",
+          "bệnh viện quốc tế Việt Nam",
+        ]
+        : [
+          "medical tourism Vietnam",
+          "healthcare in Vietnam",
+          "medical concierge",
+          "treatment abroad",
+          "international hospitals Vietnam",
+        ],
+    alternates: {
+      canonical: `/${locale}`,
+      languages: {
+        vi: "/vi",
+        en: "/en",
+        "x-default": "/vi",
+      },
+    },
+    openGraph: {
+      type: "website",
+      siteName: siteConfig.name,
+      locale: content.htmlLang.replace("-", "_"),
+      url: `${siteConfig.url}/${locale}`,
+      title: `${siteConfig.name} — ${titleBase}`,
+      description,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${siteConfig.name} — ${titleBase}`,
+      description,
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: { index: true, follow: true, "max-image-preview": "large" },
+    },
+  };
+}
+
 export default async function HomePage({
   params,
 }: {

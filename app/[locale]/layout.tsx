@@ -11,6 +11,7 @@ import { SectionNav } from "@/components/layout/SectionNav";
 import { SkipLink } from "@/components/layout/SkipLink";
 import { getContent, isLocale } from "@/content";
 import { sectionStep, siteConfig } from "@/lib/site-config";
+import { generateMedicalOrganizationSchema } from "@/lib/json-ld";
 
 import { LOCALES, type Locale } from "@/types";
 
@@ -23,12 +24,40 @@ import type { ReactNode } from "react";
  *  Fonts — self-hosted by next/font, no request ever leaves the origin.
  * ------------------------------------------------------------------ */
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://handle.vn';
+
 const beVietnam = Be_Vietnam_Pro({
   subsets: ["latin", "vietnamese"],
   weight: ["300", "400", "500", "600"],
   variable: "--font-be-vietnam",
   display: "swap",
 });
+
+export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: 'Handle — Luxury Medical Concierge',
+    template: '%s | Handle',
+  },
+  description: 'Healthcare in Vietnam. Handled. Medical-concierge operator coordinating treatment for international patients.',
+  alternates: {
+    canonical: '/',
+    languages: {
+      'vi': '/vi',
+      'en': '/en',
+      'x-default': '/vi', // Fallback ngôn ngữ chuẩn
+    },
+  },
+  openGraph: {
+    title: 'Handle — Luxury Medical Concierge',
+    description: 'Healthcare in Vietnam. Handled.',
+    url: siteUrl,
+    siteName: 'Handle',
+    locale: 'vi_VN',
+    alternateLocale: ['en_US'],
+    type: 'website',
+  },
+};
 
 const playfair = Playfair_Display({
   subsets: ["latin", "vietnamese"],
@@ -85,19 +114,19 @@ export async function generateMetadata({
     keywords:
       locale === "vi"
         ? [
-            "điều trị tại Việt Nam",
-            "du lịch y tế Việt Nam",
-            "chi phí y tế Việt Nam",
-            "concierge y tế",
-            "bệnh viện quốc tế Việt Nam",
-          ]
+          "điều trị tại Việt Nam",
+          "du lịch y tế Việt Nam",
+          "chi phí y tế Việt Nam",
+          "concierge y tế",
+          "bệnh viện quốc tế Việt Nam",
+        ]
         : [
-            "medical tourism Vietnam",
-            "healthcare in Vietnam",
-            "medical concierge",
-            "treatment abroad",
-            "international hospitals Vietnam",
-          ],
+          "medical tourism Vietnam",
+          "healthcare in Vietnam",
+          "medical concierge",
+          "treatment abroad",
+          "international hospitals Vietnam",
+        ],
     alternates: {
       canonical: `/${locale}`,
       languages: {
@@ -157,6 +186,12 @@ export default async function LocaleLayout({
             __html: `try{if(sessionStorage.getItem(${JSON.stringify(
               INTRO_SESSION_KEY,
             )})==="1")document.documentElement.classList.add("intro-played")}catch(e){}`,
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(generateMedicalOrganizationSchema(locale as Locale, content)),
           }}
         />
         <noscript>
