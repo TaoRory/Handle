@@ -1,5 +1,25 @@
 import { toDialString } from "@/lib/utils";
 
+const DOMAIN = "handlevietnam.com";
+
+/**
+ * The canonical origin — hardcoded, and deliberately not read from
+ * `NEXT_PUBLIC_SITE_URL`.
+ *
+ * That variable was still set to `https://handle.vn` in Vercel after the domain
+ * moved, and `handle.vn` does not resolve at all. Every canonical, `hreflang`,
+ * `og:url`, sitemap entry and JSON-LD `@id` on the live site therefore named a
+ * non-existent origin — and a canonical naming another origin is an instruction
+ * to index *that* one instead. The production site was telling Google to drop
+ * it, which no amount of schema or copy can compensate for.
+ *
+ * The canonical domain is a fact about the business, not a property of a
+ * deployment, so it belongs in a reviewed file rather than a dashboard field
+ * nobody reads twice. Previews are `noindex` regardless (`IS_INDEXABLE`), so a
+ * canonical pointing at production is the correct answer there too.
+ */
+export const SITE_URL = `https://${DOMAIN}`;
+
 /**
  * Single source of truth for anything that is the same in every language:
  * URLs, phone numbers, section anchors.
@@ -8,9 +28,12 @@ import { toDialString } from "@/lib/utils";
  */
 export const siteConfig = {
   name: "Handle",
+  /* Branded searches arrive as both. Declared to schema.org so the two resolve
+     to one entity instead of competing for the same result. */
+  alternateName: "Handle Vietnam",
   wordmark: "HANDLE",
-  domain: "handlevietnam.com",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://handlevietnam.com",
+  domain: DOMAIN,
+  url: SITE_URL,
   email: "contact@handle.vn",
   phone: "+84 28 1234 5678",
   whatsapp: "+84 28 1234 5678",

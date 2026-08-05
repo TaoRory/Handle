@@ -1,4 +1,5 @@
 import { getFaqs, getServices } from "@/data";
+import { getKeywords } from "@/lib/seo";
 import { SECTION_IDS, siteConfig } from "@/lib/site-config";
 
 import type { Locale, SiteContent } from "@/types";
@@ -37,12 +38,23 @@ export function generateMedicalOrganizationSchema(
         "@type": "Organization",
         "@id": `${baseUrl}/#organization`,
         name: siteConfig.name,
+        // "Handle" alone is an English verb and a hopeless branded query. The
+        // alternate is what people actually type, and declaring it here binds
+        // the two to one entity rather than leaving them to compete.
+        alternateName: siteConfig.alternateName,
         url: baseUrl,
         // A real raster, not the .ico: Google reads this field as an image and
         // does not reliably decode favicons.
         logo: `${baseUrl}/og.jpg`,
         email: siteConfig.email,
         telephone: siteConfig.phone,
+        // The topics this entity is *about*. Nothing here is a claim about
+        // outcomes — it is the subject matter of the page, stated in the terms
+        // a query would use, which is what an answer engine matches against
+        // when deciding whether this organisation is relevant at all.
+        knowsAbout: getKeywords(locale),
+        knowsLanguage: ["vi", "en"],
+        areaServed: { "@type": "Country", name: "Vietnam" },
         sameAs: Object.values(siteConfig.socials),
         address: {
           "@type": "PostalAddress",

@@ -17,6 +17,7 @@ import {
   getKeywords,
   getLocalePageTitle,
   getMetaDescription,
+  getVerification,
 } from "@/lib/seo";
 import { sectionStep, siteConfig } from "@/lib/site-config";
 import { generateMedicalOrganizationSchema } from "@/lib/json-ld";
@@ -124,6 +125,7 @@ export async function generateMetadata({
       images: [OG_IMAGE],
     },
     robots: ROBOTS,
+    verification: getVerification(),
     // No `icons` here on purpose: `app/icon.svg`, `app/apple-icon.png` and
     // `app/favicon.ico` are picked up by the file convention, and declaring the
     // field manually would override all three with whatever it lists.

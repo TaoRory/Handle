@@ -176,12 +176,14 @@ npm run dev                   # http://localhost:3000  →  redirects to /vi
 1. Push the repository to GitHub, GitLab or Bitbucket.
 2. In Vercel, **Add New → Project** and import it. The Next.js preset is detected automatically;
    build command `npm run build`, output handled for you. No overrides needed.
-3. Add `NEXT_PUBLIC_SITE_URL` under **Settings → Environment Variables** for Production, Preview
-   and Development (see below). Without it, canonical URLs, `sitemap.xml`, `robots.txt` and the
-   JSON-LD graph fall back to `https://handle.vn`.
-4. Deploy. `proxy.ts` handles the locale redirect on the request path — nothing to configure.
-5. After attaching a custom domain, set `NEXT_PUBLIC_SITE_URL` to match it exactly (protocol
-   included, no trailing slash) and redeploy so the canonical tags follow.
+3. Deploy. `proxy.ts` handles the locale redirect on the request path — nothing to configure.
+4. After attaching a custom domain, edit `SITE_URL` in `lib/site-config.ts` to match it and
+   redeploy so the canonical tags follow. It is code and not an environment variable on purpose:
+   the previous arrangement left `NEXT_PUBLIC_SITE_URL` set to a domain that had stopped
+   resolving, and every canonical, `hreflang` and sitemap entry on the live site pointed there —
+   which reads to a crawler as "index that origin instead of this one".
+5. Point the `www` host at the apex as a redirect. Two hosts serving the same site split its
+   signals; one host that does not resolve at all loses whatever links reach it.
 
 Any Node host works too: `npm run build && npm start`. There is no database, no API and no runtime
 secret — the site is static apart from the locale redirect and the 404 catch-all.
@@ -190,11 +192,15 @@ secret — the site is static apart from the locale redirect and the 404 catch-a
 
 ## Environment Variables
 
-| Variable                        | Required | Default             | Used by                                                                      |
-| ------------------------------- | -------- | ------------------- | ---------------------------------------------------------------------------- |
-| `NEXT_PUBLIC_SITE_URL`          | No       | `https://handle.vn` | `metadataBase`, canonical + `hreflang`, `sitemap.xml`, `robots.txt`, JSON-LD |
-| `NEXT_PUBLIC_SUPABASE_URL`      | No       | —                   | Consultation form writes, Supabase session refresh in `proxy.ts`             |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | No       | —                   | As above                                                                     |
+| Variable                               | Required | Default | Used by                                                          |
+| -------------------------------------- | -------- | ------- | ---------------------------------------------------------------- |
+| `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | No       | —       | Search Console ownership `<meta>`, omitted entirely when unset   |
+| `NEXT_PUBLIC_BING_SITE_VERIFICATION`   | No       | —       | Bing Webmaster ownership `<meta>`, same                          |
+| `NEXT_PUBLIC_SUPABASE_URL`             | No       | —       | Consultation form writes, Supabase session refresh in `proxy.ts` |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY`        | No       | —       | As above                                                         |
+
+The canonical origin is **not** here — it is `SITE_URL` in `lib/site-config.ts`. See step 4 above
+for why.
 
 Copy `.env.example` to `.env.local` for local overrides. Nothing here is secret — every value is
 public by design, hence the `NEXT_PUBLIC_` prefix.
