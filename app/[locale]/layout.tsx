@@ -10,7 +10,7 @@ import { ScrollProgress } from "@/components/layout/ScrollProgress";
 import { SectionNav } from "@/components/layout/SectionNav";
 import { SkipLink } from "@/components/layout/SkipLink";
 import { getContent, isLocale } from "@/content";
-import { getLocalePageTitle } from "@/lib/seo";
+import { OG_IMAGE, ROBOTS, getLocalePageTitle } from "@/lib/seo";
 import { sectionStep, siteConfig } from "@/lib/site-config";
 import { generateMedicalOrganizationSchema } from "@/lib/json-ld";
 
@@ -24,8 +24,6 @@ import type { ReactNode } from "react";
 /* ------------------------------------------------------------------ *
  *  Fonts — self-hosted by next/font, no request ever leaves the origin.
  * ------------------------------------------------------------------ */
-
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://handlevietnam.com";
 
 const beVietnam = Be_Vietnam_Pro({
   subsets: ["latin", "vietnamese"],
@@ -59,18 +57,6 @@ export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }));
 }
 
-/**
- * The share card. Rendered from the real page at 1200x630 so the wordmark and
- * both display faces are the ones the site actually ships, not a rasteriser's
- * substitutes. Regenerate it if the hero photograph or the headline changes.
- */
-const OG_IMAGE = {
-  url: "/og.jpg",
-  width: 1200,
-  height: 630,
-  alt: "Handle — Chăm sóc sức khỏe tại Việt Nam. Handled.",
-};
-
 export const viewport: Viewport = {
   themeColor: "#F6F3EE",
   colorScheme: "light",
@@ -85,7 +71,6 @@ export async function generateMetadata({
   if (!isLocale(locale)) return {};
 
   const content = getContent(locale);
-  const isProduction = process.env.VERCEL_ENV === "production";
   const title = getLocalePageTitle(locale as Locale, "section");
   const description =
     locale === "vi"
@@ -93,7 +78,7 @@ export async function generateMetadata({
       : "Healthcare in Vietnam with Handle: consultation, scheduling, interpreting, transfers and follow-up for international patients.";
 
   return {
-    metadataBase: new URL(siteConfig.url || siteUrl),
+    metadataBase: new URL(siteConfig.url),
     title: {
       template: `%s · ${siteConfig.name}`,
       default: `${title} | ${siteConfig.name}`,
@@ -103,21 +88,21 @@ export async function generateMetadata({
     keywords:
       locale === "vi"
         ? [
-          "chăm sóc sức khỏe",
-          "chăm sóc sức khỏe tại Việt Nam",
-          "điều trị tại Việt Nam",
-          "du lịch y tế Việt Nam",
-          "chi phí y tế Việt Nam",
-          "concierge y tế",
-          "bệnh viện quốc tế Việt Nam",
-        ]
+            "chăm sóc sức khỏe",
+            "chăm sóc sức khỏe tại Việt Nam",
+            "điều trị tại Việt Nam",
+            "du lịch y tế Việt Nam",
+            "chi phí y tế Việt Nam",
+            "concierge y tế",
+            "bệnh viện quốc tế Việt Nam",
+          ]
         : [
-          "medical tourism Vietnam",
-          "healthcare in Vietnam",
-          "medical concierge",
-          "treatment abroad",
-          "international hospitals Vietnam",
-        ],
+            "medical tourism Vietnam",
+            "healthcare in Vietnam",
+            "medical concierge",
+            "treatment abroad",
+            "international hospitals Vietnam",
+          ],
     alternates: {
       canonical: `/${locale}`,
       languages: {
@@ -146,15 +131,7 @@ export async function generateMetadata({
       description,
       images: [OG_IMAGE],
     },
-    robots: {
-      index: isProduction,
-      follow: isProduction,
-      googleBot: {
-        index: isProduction,
-        follow: isProduction,
-        "max-image-preview": "large",
-      },
-    },
+    robots: ROBOTS,
     // No `icons` here on purpose: `app/icon.svg`, `app/apple-icon.png` and
     // `app/favicon.ico` are picked up by the file convention, and declaring the
     // field manually would override all three with whatever it lists.
@@ -195,7 +172,9 @@ export default async function LocaleLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(generateMedicalOrganizationSchema(locale as Locale, content)),
+            __html: JSON.stringify(
+              generateMedicalOrganizationSchema(locale as Locale, content),
+            ),
           }}
         />
         <noscript>

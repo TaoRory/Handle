@@ -9,7 +9,7 @@ import { PartnerCarousel } from "@/components/sections/PartnerCarousel";
 import { WhyChooseUs } from "@/components/sections/WhyChooseUs";
 import { WhyVietnam } from "@/components/sections/WhyVietnam";
 import { getContent, isLocale } from "@/content";
-import { getLocalePageTitle } from "@/lib/seo";
+import { OG_IMAGE, ROBOTS, getLocalePageTitle } from "@/lib/seo";
 import {
   getAdvantages,
   getExperiences,
@@ -21,7 +21,6 @@ import {
   getStats,
   getTestimonials,
 } from "@/data";
-import { buildJsonLd } from "@/lib/seo";
 import { SECTION_IDS, siteConfig } from "@/lib/site-config";
 
 import type { Locale } from "@/types";
@@ -91,21 +90,21 @@ export async function generateMetadata({
     keywords:
       locale === "vi"
         ? [
-          "chăm sóc sức khỏe",
-          "chăm sóc sức khỏe tại Việt Nam",
-          "điều trị tại Việt Nam",
-          "du lịch y tế Việt Nam",
-          "chi phí y tế Việt Nam",
-          "concierge y tế",
-          "bệnh viện quốc tế Việt Nam",
-        ]
+            "chăm sóc sức khỏe",
+            "chăm sóc sức khỏe tại Việt Nam",
+            "điều trị tại Việt Nam",
+            "du lịch y tế Việt Nam",
+            "chi phí y tế Việt Nam",
+            "concierge y tế",
+            "bệnh viện quốc tế Việt Nam",
+          ]
         : [
-          "medical tourism Vietnam",
-          "healthcare in Vietnam",
-          "medical concierge",
-          "treatment abroad",
-          "international hospitals Vietnam",
-        ],
+            "medical tourism Vietnam",
+            "healthcare in Vietnam",
+            "medical concierge",
+            "treatment abroad",
+            "international hospitals Vietnam",
+          ],
     alternates: {
       canonical: `/${locale}`,
       languages: {
@@ -121,17 +120,20 @@ export async function generateMetadata({
       url: `${siteConfig.url}/${locale}`,
       title: `${titleBase} | ${siteConfig.name}`,
       description,
+      // Metadata merges shallowly, so redeclaring `openGraph` here dropped the
+      // layout's images and left the homepage — the page people actually share
+      // — with a blank preview card.
+      images: [OG_IMAGE],
     },
     twitter: {
       card: "summary_large_image",
       title: `${titleBase} | ${siteConfig.name}`,
       description,
+      images: [OG_IMAGE],
     },
-    robots: {
-      index: true,
-      follow: true,
-      googleBot: { index: true, follow: true, "max-image-preview": "large" },
-    },
+    // Shared with the layout: the page-level object used to hard-code
+    // `index: true`, which silently cancelled the preview guard above it.
+    robots: ROBOTS,
   };
 }
 
@@ -148,14 +150,10 @@ export default async function HomePage({
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        // Static, build-time JSON from our own data — no user input reaches it.
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(buildJsonLd(locale, content)),
-        }}
-      />
-
+      {/* No JSON-LD here. The layout emits the graph, and a second one on the
+          same page declared `#organization` and `#website` a second time with a
+          different body — two contradictory definitions of the same @id, which
+          is worse for a search engine than having none. */}
       <Hero copy={content.hero} />
 
       <PartnerCarousel copy={content.partners} partners={getPartners(locale)} />
