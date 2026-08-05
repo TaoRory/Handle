@@ -1,4 +1,5 @@
 import { advantages } from "@/data/advantages";
+import { costFactors, costInclusions, costItems } from "@/data/costs";
 import { experiences } from "@/data/experiences";
 import { faqs } from "@/data/faqs";
 import { journeySteps } from "@/data/journey";
@@ -10,6 +11,9 @@ import { testimonials } from "@/data/testimonials";
 
 import type {
   Advantage,
+  CostFactor,
+  CostInclusion,
+  CostItem,
   Experience,
   Faq,
   JourneyStep,
@@ -37,6 +41,10 @@ export const getPartners = (locale: Locale): Partner[] => partners[locale];
 export const getTestimonials = (locale: Locale): Testimonial[] => testimonials[locale];
 export const getStats = (locale: Locale): Stat[] => stats[locale];
 export const getFaqs = (locale: Locale): Faq[] => faqs[locale];
+export const getCostItems = (locale: Locale): CostItem[] => costItems[locale];
+export const getCostInclusions = (locale: Locale): CostInclusion[] =>
+  costInclusions[locale];
+export const getCostFactors = (locale: Locale): CostFactor[] => costFactors[locale];
 
 /**
  * The review average, kept but not published.

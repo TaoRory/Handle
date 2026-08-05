@@ -9,6 +9,7 @@ import { ConsultationLink } from "@/components/layout/ConsultationLink";
 import { ArrowTrail } from "@/components/ui/icon";
 import { Logo } from "@/components/ui/logo";
 import { useScrollSpy } from "@/hooks/use-scroll-spy";
+import { resolveHref } from "@/lib/site-config";
 import { cn } from "@/lib/utils";
 
 import type { Locale, NavLink } from "@/types";
@@ -86,7 +87,7 @@ export function Navbar({
               return (
                 <li key={link.id}>
                   <Link
-                    href={link.href}
+                    href={resolveHref(link.href, locale)}
                     aria-current={isActive ? "true" : undefined}
                     className={cn(
                       "rounded-pill relative inline-flex h-11 items-center px-2.5 text-[0.8125rem] font-medium whitespace-nowrap transition-colors duration-200 xl:px-3.5 xl:text-sm",
@@ -116,6 +117,7 @@ export function Navbar({
 
           <ConsultationLink
             size="sm"
+            locale={locale}
             className="hidden h-11 rounded-sm px-5 sm:inline-flex"
           >
             {ctaLabel}
@@ -124,6 +126,7 @@ export function Navbar({
 
           <MobileNav
             links={links}
+            locale={locale}
             ctaLabel={ctaLabel}
             menuLabel={menuLabel}
             closeLabel={closeLabel}

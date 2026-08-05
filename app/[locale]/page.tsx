@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 import { notFound } from "next/navigation";
 
+import { SectionNav } from "@/components/layout/SectionNav";
 import { AboutHandle } from "@/components/sections/AboutHandle";
 import { CtaBanner } from "@/components/sections/CtaBanner";
 import { Hero } from "@/components/sections/Hero";
@@ -9,6 +10,7 @@ import { PartnerCarousel } from "@/components/sections/PartnerCarousel";
 import { WhyChooseUs } from "@/components/sections/WhyChooseUs";
 import { WhyVietnam } from "@/components/sections/WhyVietnam";
 import { getContent, isLocale } from "@/content";
+import { generateHomeSchema } from "@/lib/json-ld";
 import { OG_IMAGE, ROBOTS, getLocalePageTitle, getMetaDescription } from "@/lib/seo";
 import {
   getAdvantages,
@@ -21,7 +23,7 @@ import {
   getStats,
   getTestimonials,
 } from "@/data";
-import { SECTION_IDS, siteConfig } from "@/lib/site-config";
+import { SECTION_IDS, sectionStep, siteConfig } from "@/lib/site-config";
 
 import type { Locale } from "@/types";
 
@@ -118,11 +120,25 @@ export default async function HomePage({
 
   return (
     <>
-      {/* No JSON-LD here. The layout emits the graph, and a second one on the
-          same page declared `#organization` and `#website` a second time with a
-          different body — two contradictory definitions of the same @id, which
-          is worse for a search engine than having none. */}
-      <Hero copy={content.hero} />
+      {/* This page's own nodes only. The organisation, the business and the
+          website come from the layout with `@id`s of their own; restating any
+          of them here is what put two different bodies behind `#organization`
+          once already. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(generateHomeSchema(locale, content)),
+        }}
+      />
+      <SectionNav
+        label={content.sectionNav.label}
+        items={content.sectionNav.items.map((item) => ({
+          ...item,
+          step: sectionStep(item.id),
+        }))}
+      />
+
+      <Hero copy={content.hero} locale={locale} />
 
       <PartnerCarousel copy={content.partners} partners={getPartners(locale)} />
 

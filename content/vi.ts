@@ -1,4 +1,4 @@
-import { SECTION_IDS, siteConfig } from "@/lib/site-config";
+import { ROUTES, SECTION_IDS, siteConfig } from "@/lib/site-config";
 
 import type { SiteContent } from "@/types";
 
@@ -17,8 +17,10 @@ export const vi: SiteContent = {
       { id: "home", label: "Trang chủ", href: `#${SECTION_IDS.hero}` },
       { id: "about", label: "Giới thiệu", href: `#${SECTION_IDS.about}` },
       { id: "services", label: "Dịch vụ", href: `#${SECTION_IDS.services}` },
+      /* A real route, not an anchor — and the one nav item that answers a
+         question rather than naming a part of the site. */
+      { id: "cost", label: "Chi phí", href: ROUTES.cost },
       { id: "journey", label: "Hành trình", href: `#${SECTION_IDS.journey}` },
-      { id: "partners", label: "Đối tác", href: `#${SECTION_IDS.partners}` },
       { id: "stories", label: "Khách hàng", href: `#${SECTION_IDS.testimonials}` },
     ],
     cta: "Tư vấn miễn phí",
@@ -281,6 +283,7 @@ export const vi: SiteContent = {
         id: "support",
         title: "Hỗ trợ",
         links: [
+          { id: "cost", label: "Chi phí điều trị", href: ROUTES.cost },
           { id: "faq", label: "Câu hỏi thường gặp", href: `#${SECTION_IDS.faq}` },
           { id: "payment", label: "Hướng dẫn thanh toán", href: `#${SECTION_IDS.cta}` },
           { id: "terms", label: "Điều khoản sử dụng", href: `#${SECTION_IDS.cta}` },

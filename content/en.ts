@@ -1,4 +1,4 @@
-import { SECTION_IDS, siteConfig } from "@/lib/site-config";
+import { ROUTES, SECTION_IDS, siteConfig } from "@/lib/site-config";
 
 import type { SiteContent } from "@/types";
 
@@ -17,8 +17,10 @@ export const en: SiteContent = {
       { id: "home", label: "Home", href: `#${SECTION_IDS.hero}` },
       { id: "about", label: "About", href: `#${SECTION_IDS.about}` },
       { id: "services", label: "Services", href: `#${SECTION_IDS.services}` },
+      /* A real route, not an anchor — and the one nav item that answers a
+         question rather than naming a part of the site. */
+      { id: "cost", label: "Cost", href: ROUTES.cost },
       { id: "journey", label: "Journey", href: `#${SECTION_IDS.journey}` },
-      { id: "partners", label: "Partners", href: `#${SECTION_IDS.partners}` },
       { id: "stories", label: "Stories", href: `#${SECTION_IDS.testimonials}` },
     ],
     cta: "Free consultation",
@@ -281,6 +283,7 @@ export const en: SiteContent = {
         id: "support",
         title: "Support",
         links: [
+          { id: "cost", label: "Treatment costs", href: ROUTES.cost },
           {
             id: "faq",
             label: "Frequently asked questions",

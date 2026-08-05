@@ -10,7 +10,7 @@ import { Media } from "@/components/ui/media";
 import { Reveal } from "@/components/ui/reveal";
 import { SECTION_IDS } from "@/lib/site-config";
 
-import type { HeroCopy } from "@/types";
+import type { HeroCopy, Locale } from "@/types";
 
 /** Shared by both hero placements so they resolve to one download. */
 const HERO_SIZES = "(max-width: 1023px) 100vw, 58vw";
@@ -31,7 +31,7 @@ const HERO_SIZES = "(max-width: 1023px) 100vw, 58vw";
  * Server-rendered apart from `HeroDecor` and the `Reveal` wrappers, so the LCP
  * headline is in the initial HTML rather than waiting on hydration.
  */
-export function Hero({ copy }: { copy: HeroCopy }) {
+export function Hero({ copy, locale }: { copy: HeroCopy; locale: Locale }) {
   const [titleLine1, titleLine2] = copy.titleLead.split("\n");
 
   return (
@@ -95,7 +95,7 @@ export function Hero({ copy }: { copy: HeroCopy }) {
 
           <Reveal index={2}>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <ConsultationLink size="lg" className="rounded-sm">
+              <ConsultationLink size="lg" locale={locale} className="rounded-sm">
                 {copy.primaryCta}
                 <ArrowTrail />
               </ConsultationLink>

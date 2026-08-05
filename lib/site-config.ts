@@ -79,6 +79,53 @@ export const SECTION_IDS = {
 export type SectionId = (typeof SECTION_IDS)[keyof typeof SECTION_IDS];
 
 /**
+ * Real routes, below the locale segment.
+ *
+ * The path segments are shared across locales, matching what `SECTION_IDS`
+ * already does for anchors — `/en/dich-vu/...` rather than a parallel English
+ * tree. A per-locale segment map would mean two URLs per page for a crawler to
+ * reconcile, and `hreflang` already tells it which language it is looking at.
+ *
+ * Leaf slugs *are* localized, because `services.ts` carries a slug per locale
+ * and a Vietnamese reader searching "nha khoa" should land on a URL that says
+ * so. Segments shared, leaves localized.
+ */
+export const ROUTES = {
+  cost: "chi-phi",
+  services: "dich-vu",
+} as const;
+
+/** `("en", "dich-vu", "dental-care")` → `"/en/dich-vu/dental-care"`. */
+export function routePath(locale: string, ...segments: string[]): string {
+  return `/${[locale, ...segments].filter(Boolean).join("/")}`;
+}
+
+/**
+ * Resolve a stored href against the current locale.
+ *
+ * Three forms, and the distinction is the leading character:
+ *
+ *   `"#gioi-thieu"`      → `/vi#gioi-thieu`      a band of the homepage
+ *   `"chi-phi"`          → `/vi/chi-phi`         a route below the locale
+ *   `"https://…"`, `"tel:…"`                     left exactly as written
+ *
+ * Anchors need resolving because the nav and footer stored them while there was
+ * only one page to anchor into. From any second route a bare `#gioi-thieu`
+ * matches nothing and the link silently does nothing — the reader clicks and
+ * stays where they were.
+ *
+ * Route links are stored without the locale for the same reason they are stored
+ * without the origin: a record that names its own language cannot be reused by
+ * the other one, and a CMS should never have to know which locale it is being
+ * read in.
+ */
+export function resolveHref(href: string, locale: string): string {
+  if (href.startsWith("#")) return `${routePath(locale)}${href}`;
+  if (/^([a-z]+:|\/)/i.test(href)) return href;
+  return routePath(locale, href);
+}
+
+/**
  * Reading order of the numbered bands.
  *
  * Since the eyebrow chips were removed, the only consumer is the fixed

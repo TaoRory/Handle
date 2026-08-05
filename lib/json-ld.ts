@@ -2,21 +2,26 @@ import { getFaqs, getServices } from "@/data";
 import { getKeywords } from "@/lib/seo";
 import { SECTION_IDS, siteConfig } from "@/lib/site-config";
 
-import type { Locale, SiteContent } from "@/types";
+import type { Faq, Locale, SiteContent } from "@/types";
 
 /**
- * The page's structured data, as one graph.
+ * The site-wide graph: who this business is. Emitted by the layout, so it is
+ * on every route.
  *
- * One graph and not several scripts: every node carries an `@id`, and the
- * cross-references between them (`publisher`, `provider`, `isPartOf`) are what
- * turn a pile of types into a description of a single business. Two scripts
- * declaring the same `@id` with different bodies is worse than none, which is
- * the state this replaced.
+ * Nodes are grouped by lifetime, not crammed into one script. The rule the
+ * earlier fix established was never "one script per page" — it was that one
+ * `@id` must never carry two different bodies, which is what happened when the
+ * layout and the homepage each defined `#organization` their own way. These
+ * nodes describe the organisation and are identical everywhere; the ones that
+ * describe a particular URL live with that URL and use `@id`s of their own.
+ * Disjoint identifiers across two scripts is exactly what schema.org's `@id`
+ * mechanism is for, and it stops every sub-page from restating the homepage's
+ * `WebPage` node as though it were its own.
  *
- * The `FAQPage` and `Service` nodes exist for answer engines rather than for a
- * rich result. A model summarising "medical concierge Vietnam" can lift a
- * question-and-answer pair or a named specialty straight out of this; it cannot
- * reliably lift the same thing out of an accordion built from `div`s.
+ * The `MedicalProcedure` catalogue exists for answer engines rather than for a
+ * rich result. A model summarising "medical concierge Vietnam" can lift a named
+ * specialty straight out of this; it cannot reliably lift the same thing out of
+ * a grid of `div`s.
  *
  * Deliberately absent: `AggregateRating`. The testimonials behind it are
  * placeholder copy, and publishing a review score that no real patient gave is
@@ -24,10 +29,7 @@ import type { Locale, SiteContent } from "@/types";
  * Restore it when the reviews are real — the average is already computed by
  * `getAggregateRating`.
  */
-export function generateMedicalOrganizationSchema(
-  locale: Locale,
-  content: SiteContent,
-) {
+export function generateSiteSchema(locale: Locale, content: SiteContent) {
   const baseUrl = siteConfig.url;
   const pageUrl = `${baseUrl}/${locale}`;
 
@@ -106,17 +108,6 @@ export function generateMedicalOrganizationSchema(
         },
       },
       {
-        "@type": "FAQPage",
-        "@id": `${pageUrl}#faq`,
-        inLanguage: content.htmlLang,
-        isPartOf: { "@id": `${baseUrl}/#website` },
-        mainEntity: getFaqs(locale).map((faq) => ({
-          "@type": "Question",
-          name: faq.question,
-          acceptedAnswer: { "@type": "Answer", text: faq.answer },
-        })),
-      },
-      {
         "@type": "WebSite",
         "@id": `${baseUrl}/#website`,
         url: baseUrl,
@@ -124,6 +115,26 @@ export function generateMedicalOrganizationSchema(
         inLanguage: content.htmlLang,
         publisher: { "@id": `${baseUrl}/#organization` },
       },
+    ],
+  };
+}
+
+/**
+ * The homepage's own nodes: what this particular URL is.
+ *
+ * Split out of the site graph above because it was travelling with it. Every
+ * route rendered the layout, so `/vi/chi-phi` was serving a `WebPage` node
+ * whose `@id` and `url` were the homepage's, alongside the homepage's seven
+ * FAQ answers — telling a crawler that the cost page is the homepage, and
+ * putting the same questions on every URL of the site.
+ */
+export function generateHomeSchema(locale: Locale, content: SiteContent) {
+  const baseUrl = siteConfig.url;
+  const pageUrl = `${baseUrl}/${locale}`;
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
       {
         "@type": "WebPage",
         "@id": `${pageUrl}#webpage`,
@@ -135,6 +146,96 @@ export function generateMedicalOrganizationSchema(
         about: { "@id": `${baseUrl}/#medical-business` },
         primaryImageOfPage: `${baseUrl}/og.jpg`,
       },
+      {
+        "@type": "FAQPage",
+        "@id": `${pageUrl}#faq`,
+        inLanguage: content.htmlLang,
+        isPartOf: { "@id": `${baseUrl}/#website` },
+        mainEntity: getFaqs(locale).map((faq) => ({
+          "@type": "Question",
+          name: faq.question,
+          acceptedAnswer: { "@type": "Answer", text: faq.answer },
+        })),
+      },
     ],
   };
+}
+
+/**
+ * The graph for a standalone page.
+ *
+ * Deliberately smaller than the homepage's. `Organization`, `MedicalBusiness`
+ * and `WebSite` are already defined, with `@id`s, on a page a crawler has
+ * almost certainly already fetched; restating them here in an abbreviated form
+ * would put two different bodies behind one identifier, which is the exact
+ * failure that collapsed the two homepage scripts into one. These nodes point
+ * at those instead.
+ *
+ * `BreadcrumbList` earns its place now that there is a hierarchy to describe —
+ * on a one-page site it was a fabricated trail, which is why it was skipped.
+ *
+ * `faqs` is optional, and when it is passed the questions are the same ones
+ * rendered on the page. There is no second copy of this content anywhere.
+ */
+export function generatePageSchema({
+  locale,
+  htmlLang,
+  path,
+  name,
+  description,
+  trail,
+  faqs,
+}: {
+  locale: Locale;
+  htmlLang: string;
+  /** Segments below the locale, e.g. `["dich-vu", "nha-khoa"]`. */
+  path: string[];
+  name: string;
+  description: string;
+  /** Visible breadcrumb labels, root first, including the current page. */
+  trail: { label: string; path: string[] }[];
+  faqs?: Faq[];
+}) {
+  const baseUrl = siteConfig.url;
+  const pageUrl = [baseUrl, locale, ...path].join("/");
+
+  const graph: Record<string, unknown>[] = [
+    {
+      "@type": "WebPage",
+      "@id": `${pageUrl}#webpage`,
+      url: pageUrl,
+      name,
+      description,
+      inLanguage: htmlLang,
+      isPartOf: { "@id": `${baseUrl}/#website` },
+      about: { "@id": `${baseUrl}/#medical-business` },
+      breadcrumb: { "@id": `${pageUrl}#breadcrumb` },
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${pageUrl}#breadcrumb`,
+      itemListElement: trail.map((crumb, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: crumb.label,
+        item: [baseUrl, locale, ...crumb.path].join("/"),
+      })),
+    },
+  ];
+
+  if (faqs?.length) {
+    graph.push({
+      "@type": "FAQPage",
+      "@id": `${pageUrl}#faq`,
+      inLanguage: htmlLang,
+      isPartOf: { "@id": `${baseUrl}/#website` },
+      mainEntity: faqs.map((faq) => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: { "@type": "Answer", text: faq.answer },
+      })),
+    });
+  }
+
+  return { "@context": "https://schema.org", "@graph": graph };
 }

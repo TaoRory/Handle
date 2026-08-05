@@ -20,7 +20,7 @@ import {
   getVerification,
 } from "@/lib/seo";
 import { sectionStep, siteConfig } from "@/lib/site-config";
-import { generateMedicalOrganizationSchema } from "@/lib/json-ld";
+import { generateSiteSchema } from "@/lib/json-ld";
 
 import { LOCALES, type Locale } from "@/types";
 
@@ -166,9 +166,7 @@ export default async function LocaleLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(
-              generateMedicalOrganizationSchema(locale as Locale, content),
-            ),
+            __html: JSON.stringify(generateSiteSchema(locale as Locale, content)),
           }}
         />
         <noscript>
@@ -196,17 +194,14 @@ export default async function LocaleLayout({
             localeLabel={content.nav.localeLabel}
           />
 
-          <SectionNav
-            label={content.sectionNav.label}
-            items={content.sectionNav.items.map((item) => ({
-              ...item,
-              step: sectionStep(item.id),
-            }))}
-          />
+          {/* `SectionNav` is not here. It indexes the homepage's eight bands by
+              anchor, and on any other route every dot points at an id that is
+              not in the document — a reading-position indicator that cannot
+              read the position. It is rendered by the homepage instead. */}
 
           <main id="main">{children}</main>
 
-          <Footer content={content} />
+          <Footer content={content} locale={locale as Locale} />
 
           <FloatingContact copy={content.floatingContact} />
         </MotionProvider>

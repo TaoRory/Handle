@@ -8,12 +8,13 @@ import { useState } from "react";
 import { ConsultationLink } from "@/components/layout/ConsultationLink";
 import { ArrowTrail } from "@/components/ui/icon";
 import { Logo } from "@/components/ui/logo";
-import { contactLinks, siteConfig } from "@/lib/site-config";
+import { contactLinks, resolveHref, siteConfig } from "@/lib/site-config";
 
-import type { NavLink } from "@/types";
+import type { Locale, NavLink } from "@/types";
 
 interface MobileNavProps {
   links: NavLink[];
+  locale: Locale;
   ctaLabel: string;
   menuLabel: string;
   closeLabel: string;
@@ -25,7 +26,13 @@ interface MobileNavProps {
  * Radix Dialog gives us the focus trap, the `Esc` handler, scroll lock and the
  * `aria-modal` wiring for free — all things a hand-rolled drawer gets wrong.
  */
-export function MobileNav({ links, ctaLabel, menuLabel, closeLabel }: MobileNavProps) {
+export function MobileNav({
+  links,
+  locale,
+  ctaLabel,
+  menuLabel,
+  closeLabel,
+}: MobileNavProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -68,7 +75,7 @@ export function MobileNav({ links, ctaLabel, menuLabel, closeLabel }: MobileNavP
                 <li key={link.id} className="border-line/70 border-b last:border-b-0">
                   <Dialog.Close asChild>
                     <Link
-                      href={link.href}
+                      href={resolveHref(link.href, locale)}
                       className="group/link text-ink hover:text-gold-600 flex items-center justify-between gap-4 py-4 text-xl font-medium transition-colors duration-200"
                     >
                       <span className="flex items-baseline gap-4">
@@ -90,6 +97,7 @@ export function MobileNav({ links, ctaLabel, menuLabel, closeLabel }: MobileNavP
                 panel that is still covering it. */}
             <ConsultationLink
               size="lg"
+              locale={locale}
               className="w-full"
               onNavigate={() => setIsOpen(false)}
             >

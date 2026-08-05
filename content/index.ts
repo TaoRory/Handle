@@ -1,7 +1,8 @@
 import { en } from "@/content/en";
+import { pages } from "@/content/pages";
 import { vi } from "@/content/vi";
 
-import { LOCALES, type Locale, type SiteContent } from "@/types";
+import { LOCALES, type Locale, type PagesContent, type SiteContent } from "@/types";
 
 export const DEFAULT_LOCALE: Locale = "vi";
 
@@ -10,6 +11,11 @@ const dictionaries: Record<Locale, SiteContent> = { vi, en };
 /** The one accessor components use. Swap the body for a CMS fetch later. */
 export function getContent(locale: Locale): SiteContent {
   return dictionaries[locale] ?? dictionaries[DEFAULT_LOCALE];
+}
+
+/** The same, for the routes that are not the homepage. */
+export function getPageContent(locale: Locale): PagesContent {
+  return pages[locale] ?? pages[DEFAULT_LOCALE];
 }
 
 export function isLocale(value: string): value is Locale {

@@ -3,14 +3,14 @@ import { Mail, MapPin, Phone } from "lucide-react";
 
 import { Logo } from "@/components/ui/logo";
 import { SocialIcon } from "@/components/ui/social-icon";
-import { contactLinks, siteConfig } from "@/lib/site-config";
+import { contactLinks, resolveHref, siteConfig } from "@/lib/site-config";
 
-import type { SiteContent } from "@/types";
+import type { Locale, SiteContent } from "@/types";
 
 /**
  * Site footer. A server component — nothing here is interactive beyond links.
  */
-export function Footer({ content }: { content: SiteContent }) {
+export function Footer({ content, locale }: { content: SiteContent; locale: Locale }) {
   const { footer } = content;
 
   return (
@@ -56,7 +56,7 @@ export function Footer({ content }: { content: SiteContent }) {
                 {column.links.map((link) => (
                   <li key={link.id}>
                     <Link
-                      href={link.href}
+                      href={resolveHref(link.href, locale)}
                       className="text-ink-600 hover:text-gold-700 inline-flex min-h-11 items-center text-sm transition-colors duration-200"
                     >
                       {link.label}

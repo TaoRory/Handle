@@ -221,6 +221,114 @@ export interface TrustBadge {
 }
 
 /* ------------------------------------------------------------------ *
+ *  Cost
+ *
+ *  The single most-searched thing about treatment abroad, and the thing
+ *  every competitor answers with "contact us". Publishing bands is the
+ *  whole argument of the page.
+ *
+ *  Bands, never point prices, and stored as numbers rather than
+ *  pre-formatted strings: a price is arithmetic — it gets compared,
+ *  converted and rounded — and the moment it is a string, the comparison
+ *  column has to be written out by hand and can drift from the row beside
+ *  it. `Stat` stores strings because a stat is only ever printed.
+ * ------------------------------------------------------------------ */
+
+/** An inclusive lower and upper bound in one currency. */
+export interface PriceBand {
+  from: number;
+  to: number;
+}
+
+/**
+ * One procedure's reference cost.
+ *
+ * `vnd` is carried alongside `usd` rather than derived from it. A single
+ * exchange-rate constant would be wrong the week after it was written and
+ * wrong silently, and the reader who thinks in đồng is the one least served
+ * by a stale conversion.
+ */
+export interface CostItem {
+  id: string;
+  /** Matches a `Service.id`, so a row can link through to its specialty. */
+  serviceId: string;
+  procedure: string;
+  /** What the band covers — "per implant", "full cycle", "per eye". */
+  unit: string;
+  /** Reference band in Vietnam, US dollars. */
+  usd: PriceBand;
+  /** The same band in Vietnamese đồng, millions. */
+  vnd: PriceBand;
+  /** The same procedure in a high-cost system, US dollars. */
+  abroad: PriceBand;
+  /** Which system `abroad` describes — "abroad" on its own means nothing. */
+  abroadRegion: string;
+  note?: string;
+}
+
+/** A line in the "what the number covers" list. */
+export interface CostInclusion {
+  id: string;
+  icon: IconName;
+  label: string;
+  /** False renders the line as explicitly excluded, not merely absent. */
+  isIncluded: boolean;
+}
+
+/** Something that moves a quote up or down. */
+export interface CostFactor {
+  id: string;
+  icon: IconName;
+  title: string;
+  body: string;
+}
+
+/* ------------------------------------------------------------------ *
+ *  Standalone pages
+ *
+ *  `SiteContent` is the homepage's contract and stays that way — it is
+ *  already four hundred lines, and threading a second page through it
+ *  would make every route pay for every other route's copy. Routes added
+ *  from here on get their own dictionary under `content/pages.ts`, keyed
+ *  by locale exactly the same way.
+ * ------------------------------------------------------------------ */
+
+/** Title, lead and the accent word, for a band on a standalone page. */
+export interface PageBandCopy {
+  title: string;
+  accent?: string;
+  lead?: string;
+}
+
+export interface CostPageContent {
+  /** `<title>`, written to the ~60 characters a result renders. */
+  metaTitle: string;
+  metaDescription: string;
+  /** Leaf label in the breadcrumb, and the nav/footer link text. */
+  breadcrumb: string;
+  hero: PageBandCopy & { primaryCta: string; secondaryCta: string };
+  table: PageBandCopy & {
+    colProcedure: string;
+    colVietnam: string;
+    colAbroad: string;
+    colSaving: string;
+    /** Screen-reader caption for the table element. */
+    caption: string;
+    /** Sits under the table: what these numbers are, and are not. */
+    disclaimer: string;
+  };
+  inclusions: PageBandCopy & { includedLabel: string; excludedLabel: string };
+  factors: PageBandCopy;
+  faq: PageBandCopy & { items: Faq[] };
+  closing: PageBandCopy & { action: string };
+}
+
+/** Everything the non-homepage routes render, in one language. */
+export interface PagesContent {
+  cost: CostPageContent;
+}
+
+/* ------------------------------------------------------------------ *
  *  Navigation
  * ------------------------------------------------------------------ */
 
