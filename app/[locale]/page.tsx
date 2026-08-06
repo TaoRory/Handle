@@ -173,6 +173,7 @@ export default async function HomePage({
         experiencesCopy={content.experiences}
         services={getServices(locale)}
         experiences={getExperiences(locale)}
+        locale={locale}
       />
 
       <Testimonials

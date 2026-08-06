@@ -3,17 +3,32 @@ import Link from "next/link";
 import { ArrowTrail, Icon } from "@/components/ui/icon";
 import { Media } from "@/components/ui/media";
 import { Reveal } from "@/components/ui/reveal";
-import { SECTION_IDS } from "@/lib/site-config";
+import { ROUTES, routePath } from "@/lib/site-config";
 import { cn } from "@/lib/utils";
 
-import type { SectionCopy, Service } from "@/types";
+import type { Locale, SectionCopy, Service } from "@/types";
 
-/** One specialty card. Hover zooms the media and slides the label forward. */
-function ServiceCard({ service, index }: { service: Service; index: number }) {
+/**
+ * One specialty card. Hover zooms the media and slides the label forward.
+ *
+ * It links to that specialty's page now. Every card used to point at the
+ * contact form, so six cards offering six different things all did the same
+ * thing — and the reader who wanted to know about implants was asked for their
+ * email instead of being told about implants.
+ */
+function ServiceCard({
+  service,
+  locale,
+  index,
+}: {
+  service: Service;
+  locale: Locale;
+  index: number;
+}) {
   return (
     <Reveal index={index} className="h-full">
       <Link
-        href={`#${SECTION_IDS.cta}`}
+        href={routePath(locale, ROUTES.services, service.slug)}
         className={cn(
           "group/card border-line bg-surface relative flex h-full flex-col overflow-hidden rounded-lg border",
           "transition-[transform,box-shadow,border-color] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]",
@@ -50,6 +65,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
 interface MedicalServicesProps {
   copy: SectionCopy;
   services: Service[];
+  locale: Locale;
 }
 
 /**
@@ -58,7 +74,7 @@ interface MedicalServicesProps {
  * Renders as a `<section>` nested inside `ServicesAndLifestyle`, which owns the
  * landmark and the shared vertical rhythm.
  */
-export function MedicalServices({ copy, services }: MedicalServicesProps) {
+export function MedicalServices({ copy, services, locale }: MedicalServicesProps) {
   return (
     <section aria-labelledby="services-title" className="flex flex-col">
       <Reveal index={1}>
@@ -89,14 +105,19 @@ export function MedicalServices({ copy, services }: MedicalServicesProps) {
       >
         {services.map((service, index) => (
           <li key={service.id} className="h-full">
-            <ServiceCard service={service} index={index} />
+            <ServiceCard service={service} locale={locale} index={index} />
           </li>
         ))}
       </ul>
 
+      {/* "Xem tất cả dịch vụ" goes to the services listing, which is what it
+          says. It pointed at the contact form for as long as there was no
+          listing to point at — a label promising one thing and delivering
+          another, and the kind of mismatch a reader reads as a sales trick
+          rather than a missing page. */}
       <Reveal index={copy.lead ? 4 : 3} className="mt-7">
         <Link
-          href={`#${SECTION_IDS.cta}`}
+          href={routePath(locale, ROUTES.services)}
           className="group/link border-line hover:border-gold hover:text-gold-700 text-ink-600 rounded-pill inline-flex items-center gap-2 border px-5 py-3 text-sm font-medium transition-colors duration-200"
         >
           {copy.action}

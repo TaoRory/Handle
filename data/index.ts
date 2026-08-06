@@ -5,9 +5,11 @@ import { faqs } from "@/data/faqs";
 import { journeySteps } from "@/data/journey";
 import { partners } from "@/data/partners";
 import { reasons } from "@/data/reasons";
+import { serviceDetails } from "@/data/service-details";
 import { services } from "@/data/services";
 import { stats } from "@/data/stats";
 import { testimonials } from "@/data/testimonials";
+import { ROUTES } from "@/lib/site-config";
 
 import type {
   Advantage,
@@ -21,6 +23,7 @@ import type {
   Partner,
   Reason,
   Service,
+  ServiceDetail,
   Stat,
   Testimonial,
 } from "@/types";
@@ -45,6 +48,43 @@ export const getCostItems = (locale: Locale): CostItem[] => costItems[locale];
 export const getCostInclusions = (locale: Locale): CostInclusion[] =>
   costInclusions[locale];
 export const getCostFactors = (locale: Locale): CostFactor[] => costFactors[locale];
+
+/**
+ * Specialty page lookups.
+ *
+ * The slug lives on `Service` and the long-form copy lives on `ServiceDetail`,
+ * joined on `id`. Two collections rather than one because the homepage grid
+ * needs the card and nothing else — folding a page's worth of prose into the
+ * record the grid maps over would ship all six pages' content on the homepage.
+ */
+export const getServiceDetails = (locale: Locale): ServiceDetail[] =>
+  serviceDetails[locale];
+
+export const getServiceBySlug = (locale: Locale, slug: string): Service | undefined =>
+  services[locale].find((service) => service.slug === slug);
+
+export const getServiceDetail = (
+  locale: Locale,
+  id: string,
+): ServiceDetail | undefined => serviceDetails[locale].find((detail) => detail.id === id);
+
+/** The rows of the cost table that belong to one specialty. Often empty. */
+export const getCostItemsForService = (locale: Locale, serviceId: string): CostItem[] =>
+  costItems[locale].filter((item) => item.serviceId === serviceId);
+
+/**
+ * A specialty's path, for the content dictionaries to store as a link.
+ *
+ * Locale-relative (`dich-vu/nha-khoa`), because `resolveHref` adds the locale
+ * at render. Written as a lookup rather than letting the footer repeat the six
+ * slugs as literals: a slug edited in `services.ts` would then change the page
+ * but not the link to it, and the footer would quietly start pointing at a 404
+ * on every page of the site.
+ */
+export const serviceHref = (locale: Locale, id: string): string => {
+  const slug = services[locale].find((service) => service.id === id)?.slug;
+  return slug ? `${ROUTES.services}/${slug}` : ROUTES.services;
+};
 
 /**
  * The review average, kept but not published.

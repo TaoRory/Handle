@@ -1,3 +1,4 @@
+import { serviceHref } from "@/data";
 import { ROUTES, SECTION_IDS, siteConfig } from "@/lib/site-config";
 
 import type { SiteContent } from "@/types";
@@ -16,7 +17,7 @@ export const vi: SiteContent = {
     links: [
       { id: "home", label: "Trang chủ", href: `#${SECTION_IDS.hero}` },
       { id: "about", label: "Giới thiệu", href: `#${SECTION_IDS.about}` },
-      { id: "services", label: "Dịch vụ", href: `#${SECTION_IDS.services}` },
+      { id: "services", label: "Dịch vụ", href: ROUTES.services },
       /* A real route, not an anchor — and the one nav item that answers a
          question rather than naming a part of the site. */
       { id: "cost", label: "Chi phí", href: ROUTES.cost },
@@ -266,17 +267,17 @@ export const vi: SiteContent = {
           {
             id: "checkup",
             label: "Kiểm tra sức khỏe tổng quát",
-            href: `#${SECTION_IDS.services}`,
+            href: serviceHref("vi", "checkup"),
           },
           {
             id: "ivf",
             label: "Hỗ trợ sinh sản (IVF)",
-            href: `#${SECTION_IDS.services}`,
+            href: serviceHref("vi", "fertility"),
           },
-          { id: "eye", label: "Điều trị mắt", href: `#${SECTION_IDS.services}` },
-          { id: "dental", label: "Nha khoa", href: `#${SECTION_IDS.services}` },
-          { id: "aesthetic", label: "Thẩm mỹ", href: `#${SECTION_IDS.services}` },
-          { id: "cardio", label: "Tim mạch", href: `#${SECTION_IDS.services}` },
+          { id: "eye", label: "Điều trị mắt", href: serviceHref("vi", "eye") },
+          { id: "dental", label: "Nha khoa", href: serviceHref("vi", "dental") },
+          { id: "aesthetic", label: "Thẩm mỹ", href: serviceHref("vi", "aesthetic") },
+          { id: "cardio", label: "Tim mạch", href: serviceHref("vi", "cardio") },
         ],
       },
       {

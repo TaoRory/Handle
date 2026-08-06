@@ -323,9 +323,73 @@ export interface CostPageContent {
   closing: PageBandCopy & { action: string };
 }
 
+/**
+ * The chrome shared by all six specialty pages.
+ *
+ * Band headings live here rather than in each `ServiceDetail`, because they are
+ * the same sentence six times over — repeating them per record is six places to
+ * fix a typo and six chances for one page to drift out of the set.
+ */
+export interface ServicePageContent {
+  /** Parent crumb: "Dịch vụ" / "Services". */
+  breadcrumbRoot: string;
+  /**
+   * The listing at `/dich-vu`.
+   *
+   * A real page and not a bare path segment: the six specialty pages need a
+   * parent that exists, or the middle breadcrumb crumb is either a link to a
+   * 404 or a `ListItem` with no `item`. It also gives the set a hub, which is
+   * the difference between six pages and a section.
+   */
+  index: PageBandCopy & {
+    metaTitle: string;
+    metaDescription: string;
+    /** Label on each card. Its own string: the homepage's "see all services"
+        was reused here and appeared on six cards that each lead to one. */
+    cardAction: string;
+  };
+  includes: PageBandCopy;
+  facts: PageBandCopy;
+  suitedFor: PageBandCopy;
+  cost: PageBandCopy & { action: string; empty: string };
+  faq: PageBandCopy;
+  related: PageBandCopy;
+  closing: PageBandCopy & { action: string };
+}
+
 /** Everything the non-homepage routes render, in one language. */
 export interface PagesContent {
   cost: CostPageContent;
+  service: ServicePageContent;
+}
+
+/**
+ * The long-form content behind one specialty page.
+ *
+ * Keyed to a `Service.id`, not carrying its own slug: `services.ts` already
+ * owns the slug per locale and the router reads it from there. Two records
+ * naming the same URL is how one of them quietly stops being reachable.
+ */
+export interface ServiceDetail {
+  /** Matches `Service.id`. */
+  id: string;
+  /** Sized to the ~60 characters a search result renders. */
+  metaTitle: string;
+  metaDescription: string;
+  /**
+   * The `h1`. Deliberately not `Service.title` — that is a card label
+   * ("Nha khoa"), and a heading has to carry the query as well as the name.
+   */
+  heading: string;
+  headingAccent: string;
+  intro: string[];
+  /** What Handle coordinates for this specialty specifically. */
+  includes: { id: string; icon: IconName; title: string; body: string }[];
+  /** Practical planning facts — days in country, stay, when you can fly. */
+  facts: { id: string; icon: IconName; label: string; value: string }[];
+  /** Who the specialty suits, in the reader's own terms. */
+  suitedFor: string[];
+  faqs: Faq[];
 }
 
 /* ------------------------------------------------------------------ *

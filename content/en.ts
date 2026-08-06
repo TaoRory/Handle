@@ -1,3 +1,4 @@
+import { serviceHref } from "@/data";
 import { ROUTES, SECTION_IDS, siteConfig } from "@/lib/site-config";
 
 import type { SiteContent } from "@/types";
@@ -16,7 +17,7 @@ export const en: SiteContent = {
     links: [
       { id: "home", label: "Home", href: `#${SECTION_IDS.hero}` },
       { id: "about", label: "About", href: `#${SECTION_IDS.about}` },
-      { id: "services", label: "Services", href: `#${SECTION_IDS.services}` },
+      { id: "services", label: "Services", href: ROUTES.services },
       /* A real route, not an anchor — and the one nav item that answers a
          question rather than naming a part of the site. */
       { id: "cost", label: "Cost", href: ROUTES.cost },
@@ -270,13 +271,13 @@ export const en: SiteContent = {
           {
             id: "checkup",
             label: "Executive health screening",
-            href: `#${SECTION_IDS.services}`,
+            href: serviceHref("en", "checkup"),
           },
-          { id: "ivf", label: "Fertility & IVF", href: `#${SECTION_IDS.services}` },
-          { id: "eye", label: "Ophthalmology", href: `#${SECTION_IDS.services}` },
-          { id: "dental", label: "Dental care", href: `#${SECTION_IDS.services}` },
-          { id: "aesthetic", label: "Aesthetics", href: `#${SECTION_IDS.services}` },
-          { id: "cardio", label: "Cardiology", href: `#${SECTION_IDS.services}` },
+          { id: "ivf", label: "Fertility & IVF", href: serviceHref("en", "fertility") },
+          { id: "eye", label: "Ophthalmology", href: serviceHref("en", "eye") },
+          { id: "dental", label: "Dental care", href: serviceHref("en", "dental") },
+          { id: "aesthetic", label: "Aesthetics", href: serviceHref("en", "aesthetic") },
+          { id: "cardio", label: "Cardiology", href: serviceHref("en", "cardio") },
         ],
       },
       {

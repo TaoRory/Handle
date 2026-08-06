@@ -107,6 +107,53 @@ export const pages: Localized<PagesContent> = {
         action: "Tư vấn miễn phí",
       },
     },
+
+    service: {
+      breadcrumbRoot: "Dịch vụ",
+      index: {
+        metaTitle: "Dịch vụ y tế tại Việt Nam cho khách quốc tế",
+        metaDescription:
+          "Sáu chuyên khoa Handle điều phối tại Việt Nam: tầm soát sức khỏe, IVF, mắt, nha khoa, thẩm mỹ và tim mạch. Thời gian, chi phí tham khảo và cách chúng tôi hỗ trợ.",
+        title: "Chuyên khoa chúng tôi",
+        accent: "điều phối.",
+        lead: "Với mỗi chuyên khoa, bạn cần biết ba điều trước khi đặt vé: mất bao lâu, tốn khoảng bao nhiêu, và ai chịu trách nhiệm khi có việc phát sinh. Mỗi trang dưới đây trả lời cả ba.",
+        cardAction: "Xem chi tiết",
+      },
+      includes: {
+        title: "Chúng tôi lo phần",
+        accent: "hậu cần.",
+        lead: "Phần y khoa thuộc về bác sĩ. Phần còn lại — vốn là phần khiến người ta bỏ cuộc — thuộc về chúng tôi.",
+      },
+      facts: {
+        title: "Những con số bạn cần để lên",
+        accent: "kế hoạch.",
+      },
+      suitedFor: {
+        title: "Phù hợp với",
+        accent: "ai.",
+      },
+      cost: {
+        title: "Khoảng chi phí",
+        accent: "tham khảo.",
+        lead: "Khoảng giá theo mặt bằng thị trường, không phải báo giá của Handle. Chi phí thực tế xác định sau khi bác sĩ đọc hồ sơ của bạn.",
+        action: "Xem toàn bộ bảng giá",
+        empty: "Chuyên khoa này được báo giá theo từng ca. Gửi hồ sơ để nhận khoảng chi phí cụ thể.",
+      },
+      faq: {
+        title: "Câu hỏi thường",
+        accent: "gặp.",
+      },
+      related: {
+        title: "Chuyên khoa",
+        accent: "khác.",
+      },
+      closing: {
+        title: "Gửi hồ sơ, nhận kế hoạch điều trị trong",
+        accent: "48 giờ.",
+        lead: "Không mất phí, không ràng buộc. Bạn nhận được tên bác sĩ, lịch dự kiến và khoảng chi phí cho đúng ca của mình.",
+        action: "Tư vấn miễn phí",
+      },
+    },
   },
 
   en: {
@@ -200,6 +247,53 @@ export const pages: Localized<PagesContent> = {
         title: "Send your records, get a written quote within",
         accent: "48 hours.",
         lead: "Free, and no obligation. You get a band for your case rather than a general price list.",
+        action: "Free consultation",
+      },
+    },
+
+    service: {
+      breadcrumbRoot: "Services",
+      index: {
+        metaTitle: "Medical Services in Vietnam for International Patients",
+        metaDescription:
+          "The six specialties Handle coordinates in Vietnam: health screening, IVF, eye surgery, dental, cosmetic surgery and cardiology. Timings, reference costs and what we handle.",
+        title: "The specialties we",
+        accent: "coordinate.",
+        lead: "For any specialty you need three things settled before booking a flight: how long it takes, roughly what it costs, and who is accountable when something changes. Each page below answers all three.",
+        cardAction: "Read more",
+      },
+      includes: {
+        title: "We handle the",
+        accent: "logistics.",
+        lead: "The medicine belongs to the surgeon. Everything around it — the part that makes people give up — belongs to us.",
+      },
+      facts: {
+        title: "The numbers you need to",
+        accent: "plan.",
+      },
+      suitedFor: {
+        title: "Who this",
+        accent: "suits.",
+      },
+      cost: {
+        title: "Reference",
+        accent: "cost.",
+        lead: "Market reference bands, not a Handle quote. Your actual cost is settled once a surgeon has read your records.",
+        action: "See the full price guide",
+        empty: "This specialty is quoted case by case. Send your records for a band on yours.",
+      },
+      faq: {
+        title: "Common",
+        accent: "questions.",
+      },
+      related: {
+        title: "Other",
+        accent: "specialties.",
+      },
+      closing: {
+        title: "Send your records, get a treatment plan within",
+        accent: "48 hours.",
+        lead: "Free, and no obligation. You get a named surgeon, an expected schedule and a cost band for your case.",
         action: "Free consultation",
       },
     },

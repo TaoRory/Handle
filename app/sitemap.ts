@@ -7,8 +7,6 @@ import type { MetadataRoute } from "next";
 
 export const revalidate = 3600;
 
-/** Flipped on when `app/[locale]/dich-vu/[slug]` ships. */
-const SERVICE_PAGES_LIVE = false;
 
 /**
  * Every indexable URL, with its alternates.
@@ -66,10 +64,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
       },
     });
 
-    /* Specialty pages are not listed yet — the route does not exist, and a
-       sitemap that advertises 404s costs crawl budget and trust on a domain
-       that has neither to spare. Re-enable with `/dich-vu/[slug]`. */
-    for (const service of SERVICE_PAGES_LIVE ? getServices(locale) : []) {
+    entries.push({
+      url: absolute(routePath(locale, ROUTES.services)),
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.9,
+      alternates: {
+        languages: languages({
+          vi: routePath("vi", ROUTES.services),
+          en: routePath("en", ROUTES.services),
+        }),
+      },
+    });
+
+    for (const service of getServices(locale)) {
       const viSlug = serviceSlug("vi", service.id);
       const enSlug = serviceSlug("en", service.id);
 

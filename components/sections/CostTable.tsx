@@ -1,16 +1,21 @@
+import Link from "next/link";
+
 import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { formatUsdBand, formatVndBand, savingPercent } from "@/lib/price";
+import { ROUTES, routePath } from "@/lib/site-config";
 
-import type { CostItem, CostPageContent, Locale } from "@/types";
+import type { CostItem, CostPageContent, Locale, Service } from "@/types";
 
 interface CostTableProps {
   id: string;
   copy: CostPageContent["table"];
   items: CostItem[];
   locale: Locale;
+  /** Used to link each row through to the specialty that performs it. */
+  services: Service[];
 }
 
 /**
@@ -29,8 +34,10 @@ interface CostTableProps {
  * by keyboard, and without them the only way to see the comparison column on a
  * phone is a gesture a keyboard user does not have.
  */
-export function CostTable({ id, copy, items, locale }: CostTableProps) {
+export function CostTable({ id, copy, items, locale, services }: CostTableProps) {
   const headingId = `${id}-title`;
+  const slugFor = (serviceId: string) =>
+    services.find((service) => service.id === serviceId)?.slug;
 
   /* Pinned column: the same background and inset shadow on header and body
      cells, so the seam reads as one edge while the rest slides under it. */
@@ -93,9 +100,26 @@ export function CostTable({ id, copy, items, locale }: CostTableProps) {
                     className="border-line/70 last:border-0 border-b align-top"
                   >
                     <th scope="row" className={`px-5 py-5 font-normal ${pinned}`}>
-                      <span className="text-ink block text-[0.9375rem] font-medium">
-                        {item.procedure}
-                      </span>
+                      {/* Linked to the specialty that performs it, where one
+                          exists. A price with no route to what it buys leaves
+                          the reader to search again for the thing this site
+                          already has a page about. */}
+                      {slugFor(item.serviceId) ? (
+                        <Link
+                          href={routePath(
+                            locale,
+                            ROUTES.services,
+                            slugFor(item.serviceId)!,
+                          )}
+                          className="text-ink hover:text-gold-700 focus-visible:outline-gold-700 block rounded-sm text-[0.9375rem] font-medium transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2"
+                        >
+                          {item.procedure}
+                        </Link>
+                      ) : (
+                        <span className="text-ink block text-[0.9375rem] font-medium">
+                          {item.procedure}
+                        </span>
+                      )}
                       <span className="text-ink-400 mt-1 block text-sm">{item.unit}</span>
                       {item.note ? (
                         <span className="text-ink-400 mt-2 block max-w-[34ch] text-sm">

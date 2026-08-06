@@ -2,7 +2,7 @@ import { LifestyleExperience } from "@/components/sections/LifestyleExperience";
 import { MedicalServices } from "@/components/sections/MedicalServices";
 import { Container } from "@/components/ui/container";
 
-import type { Experience, SectionCopy, Service } from "@/types";
+import type { Experience, Locale, SectionCopy, Service } from "@/types";
 
 interface ServicesAndLifestyleProps {
   servicesId: string;
@@ -11,6 +11,7 @@ interface ServicesAndLifestyleProps {
   experiencesCopy: SectionCopy;
   services: Service[];
   experiences: Experience[];
+  locale: Locale;
 }
 
 /**
@@ -27,13 +28,18 @@ export function ServicesAndLifestyle({
   experiencesCopy,
   services,
   experiences,
+  locale,
 }: ServicesAndLifestyleProps) {
   return (
     <div className="bg-surface relative">
       <Container>
         <div className="section-y grid gap-16 xl:grid-cols-2 xl:gap-14">
           <div id={servicesId}>
-            <MedicalServices copy={servicesCopy} services={services} />
+            <MedicalServices
+              copy={servicesCopy}
+              services={services}
+              locale={locale}
+            />
           </div>
 
           <div id={experiencesId} className="border-line xl:border-l xl:pl-14">

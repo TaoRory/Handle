@@ -1,15 +1,15 @@
 import { notFound } from "next/navigation";
 
 import { CostFactors } from "@/components/sections/CostFactors";
-import { CostFaq } from "@/components/sections/CostFaq";
 import { CostHero } from "@/components/sections/CostHero";
 import { CostInclusions } from "@/components/sections/CostInclusions";
 import { CostTable } from "@/components/sections/CostTable";
+import { FaqBand } from "@/components/sections/FaqBand";
 import { PageClosing } from "@/components/sections/PageClosing";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Container } from "@/components/ui/container";
 import { getContent, getPageContent, isLocale } from "@/content";
-import { getCostFactors, getCostInclusions, getCostItems } from "@/data";
+import { getCostFactors, getCostInclusions, getCostItems, getServices } from "@/data";
 import { generatePageSchema } from "@/lib/json-ld";
 import { OG_IMAGE, ROBOTS } from "@/lib/seo";
 import { ROUTES, routePath, siteConfig } from "@/lib/site-config";
@@ -155,6 +155,7 @@ export default async function CostPage({
         copy={cost.table}
         items={getCostItems(locale)}
         locale={locale}
+        services={getServices(locale)}
       />
 
       <CostInclusions
@@ -169,7 +170,7 @@ export default async function CostPage({
         factors={getCostFactors(locale)}
       />
 
-      <CostFaq id={BANDS.faq} copy={cost.faq} />
+      <FaqBand id={BANDS.faq} copy={cost.faq} items={cost.faq.items} />
 
       <PageClosing id={BANDS.closing} copy={cost.closing} locale={locale} />
     </>
