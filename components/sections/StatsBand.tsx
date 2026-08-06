@@ -70,8 +70,12 @@ export function StatsBand({ id, copy, stats }: StatsBandProps) {
 
                   <span className="font-brand text-ink text-[2.25rem] leading-none sm:text-[2.75rem]">
                     <StatCounter value={stat.value} />
+                    {/* `ink/65`: at /50 the suffix measured 2.92:1 on gold,
+                        just under the 3:1 floor large text still has to clear.
+                        It is a unit attached to a number, so losing it loses
+                        what the number means. */}
                     {stat.suffix ? (
-                      <span className="text-ink/50">{stat.suffix}</span>
+                      <span className="text-ink/65">{stat.suffix}</span>
                     ) : null}
                   </span>
 

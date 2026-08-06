@@ -18,7 +18,10 @@ import type { Partner, SectionCopy } from "@/types";
 function PartnerLogo({ partner }: { partner: Partner }) {
   return (
     <div className="group/partner flex shrink-0 items-center gap-2.5 px-4 py-2 sm:gap-3.5 sm:px-9">
-      <span className="text-stone group-hover/partner:text-gold-600 font-brand flex size-9 items-center justify-center rounded-md text-sm tracking-[0.08em] transition-colors duration-300 sm:size-11">
+      {/* `ink-400`, not `stone`. The monogram is the only thing naming the
+          partner, and stone on white measured 2.53:1 — the mark was decorative
+          in weight while carrying the whole label. */}
+      <span className="text-ink-400 group-hover/partner:text-gold-700 font-brand flex size-9 items-center justify-center rounded-md text-sm tracking-[0.08em] transition-colors duration-300 sm:size-11">
         {partner.logo ? (
           <img src={partner.logo} alt={`${partner.name} logo`} className="h-6 w-auto" />
         ) : (

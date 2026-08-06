@@ -99,7 +99,10 @@ export function JourneyRail({ steps }: { steps: JourneyStep[] }) {
               <Icon name={step.icon} className="size-[22px]" strokeWidth={1.4} />
             </span>
 
-            <span className="font-brand text-gold-600 mt-0 block text-[0.6875rem] tracking-[0.18em] lg:mt-4">
+            {/* `gold-700`, not `gold-600`. Measured 2.76:1 on cream at 11px —
+                the exact failure CLAUDE.md documents for gold-600, and the
+                lighter shades are for fills and hairlines, never for type. */}
+            <span className="font-brand text-gold-700 mt-0 block text-[0.6875rem] tracking-[0.18em] lg:mt-4">
               {step.step}
             </span>
 

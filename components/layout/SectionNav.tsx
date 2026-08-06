@@ -59,7 +59,12 @@ export function SectionNav({
                     "bg-ink text-cream-100 shadow-sm",
                   )}
                 >
-                  <span className="text-gold-700 mr-1.5">{item.step}</span>
+                  {/* `gold`, not `gold-700`. The rule that gold carrying words
+                      must be `gold-700` is a rule about gold on *cream*; this
+                      pill is ink, where the dark shade drops to 3.65:1 and the
+                      base gold clears comfortably. The shade follows the
+                      surface, not the element. */}
+                  <span className="text-gold mr-1.5">{item.step}</span>
                   {item.label}
                 </span>
 
