@@ -60,40 +60,40 @@ export const services: Localized<Service[]> = {
         tone: "dusk",
       },
     },
-    {
-      id: "dental",
-      slug: "nha-khoa",
-      icon: "smile",
-      title: "Nha khoa",
-      body: "Cấy ghép implant, chỉnh nha trong suốt và phục hình thẩm mỹ toàn hàm.",
-      media: {
-        alt: "Ghế nha khoa và khay dụng cụ trong phòng điều trị sáng",
-        src: "/images/photos/service-dental.jpg",
-        width: 1080,
-        height: 810,
-        blurDataURL:
-          "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADwAQCdASoMAAkAA4BaJaQAAuyRpFpGEgAA/sRrRLC5E9Z+J+NNaD3YJG6EBkEe0GWqp0SJI/LO2RUX/IlfBUV5RsAAAA==",
-        glyph: "smile",
-        tone: "sage",
-      },
-    },
-    {
-      id: "aesthetic",
-      slug: "tham-my",
-      icon: "sparkles",
-      title: "Thẩm mỹ",
-      body: "Phẫu thuật thẩm mỹ và trẻ hóa da, thực hiện bởi bác sĩ được cấp chứng chỉ hành nghề.",
-      media: {
-        alt: "Khách hàng nhỏ tinh chất dưỡng da trên nền màu cát",
-        src: "/images/photos/service-aesthetic.jpg",
-        width: 1080,
-        height: 810,
-        blurDataURL:
-          "data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAADwAQCdASoMAAkAA4BaJQBOgCPqVgJFxAAA/uBy+9wamv5cya9PMhLJ2skHy6YR2MJj+qrSV+AAAA==",
-        glyph: "sparkles",
-        tone: "gold",
-      },
-    },
+    // {
+    //   id: "dental",
+    //   slug: "nha-khoa",
+    //   icon: "smile",
+    //   title: "Nha khoa",
+    //   body: "Cấy ghép implant, chỉnh nha trong suốt và phục hình thẩm mỹ toàn hàm.",
+    //   media: {
+    //     alt: "Ghế nha khoa và khay dụng cụ trong phòng điều trị sáng",
+    //     src: "/images/photos/service-dental.jpg",
+    //     width: 1080,
+    //     height: 810,
+    //     blurDataURL:
+    //       "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADwAQCdASoMAAkAA4BaJaQAAuyRpFpGEgAA/sRrRLC5E9Z+J+NNaD3YJG6EBkEe0GWqp0SJI/LO2RUX/IlfBUV5RsAAAA==",
+    //     glyph: "smile",
+    //     tone: "sage",
+    //   },
+    // },
+    // {
+    //   id: "aesthetic",
+    //   slug: "tham-my",
+    //   icon: "sparkles",
+    //   title: "Thẩm mỹ",
+    //   body: "Phẫu thuật thẩm mỹ và trẻ hóa da, thực hiện bởi bác sĩ được cấp chứng chỉ hành nghề.",
+    //   media: {
+    //     alt: "Khách hàng nhỏ tinh chất dưỡng da trên nền màu cát",
+    //     src: "/images/photos/service-aesthetic.jpg",
+    //     width: 1080,
+    //     height: 810,
+    //     blurDataURL:
+    //       "data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAADwAQCdASoMAAkAA4BaJQBOgCPqVgJFxAAA/uBy+9wamv5cya9PMhLJ2skHy6YR2MJj+qrSV+AAAA==",
+    //     glyph: "sparkles",
+    //     tone: "gold",
+    //   },
+    // },
     {
       id: "cardio",
       slug: "tim-mach",
@@ -103,6 +103,23 @@ export const services: Localized<Service[]> = {
       media: {
         alt: "Màn hình siêu âm trong phòng chẩn đoán hình ảnh",
         src: "/images/photos/service-cardio.jpg",
+        width: 1080,
+        height: 810,
+        blurDataURL:
+          "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADwAQCdASoMAAkAA4BaJZQCw7D2OC7TBAAA/uftQx5Na1JRtqN81vxkWd7VdeZd63SmaZ9UqxejcHNEAGFNtQkm7c4AAA==",
+        glyph: "heart-pulse",
+        tone: "clay",
+      },
+    },
+    {
+      id: "digestive",
+      slug: "tieu-hoa",
+      icon: "salad",
+      title: "Tiêu hóa",
+      body: "Điều trị viêm loét, trào ngược dạ dày, tầm soát ung thư đường tiêu hóa và nội soi không đau.",
+      media: {
+        alt: "Màn hình siêu âm trong phòng chẩn đoán hình ảnh",
+        src: "/images/photos/tieu-hoa.png",
         width: 1080,
         height: 810,
         blurDataURL:
@@ -165,40 +182,40 @@ export const services: Localized<Service[]> = {
         tone: "dusk",
       },
     },
-    {
-      id: "dental",
-      slug: "dental-care",
-      icon: "smile",
-      title: "Dental care",
-      body: "Implants, clear aligners and full-arch aesthetic restoration.",
-      media: {
-        alt: "A dental chair and instrument tray in a bright treatment room",
-        src: "/images/photos/service-dental.jpg",
-        width: 1080,
-        height: 810,
-        blurDataURL:
-          "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADwAQCdASoMAAkAA4BaJaQAAuyRpFpGEgAA/sRrRLC5E9Z+J+NNaD3YJG6EBkEe0GWqp0SJI/LO2RUX/IlfBUV5RsAAAA==",
-        glyph: "smile",
-        tone: "sage",
-      },
-    },
-    {
-      id: "aesthetic",
-      slug: "aesthetics",
-      icon: "sparkles",
-      title: "Aesthetics",
-      body: "Cosmetic surgery and skin rejuvenation, performed only by board-certified surgeons.",
-      media: {
-        alt: "A client applying a skincare serum against a sand-toned backdrop",
-        src: "/images/photos/service-aesthetic.jpg",
-        width: 1080,
-        height: 810,
-        blurDataURL:
-          "data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAADwAQCdASoMAAkAA4BaJQBOgCPqVgJFxAAA/uBy+9wamv5cya9PMhLJ2skHy6YR2MJj+qrSV+AAAA==",
-        glyph: "sparkles",
-        tone: "gold",
-      },
-    },
+    // {
+    //   id: "dental",
+    //   slug: "dental-care",
+    //   icon: "smile",
+    //   title: "Dental care",
+    //   body: "Implants, clear aligners and full-arch aesthetic restoration.",
+    //   media: {
+    //     alt: "A dental chair and instrument tray in a bright treatment room",
+    //     src: "/images/photos/service-dental.jpg",
+    //     width: 1080,
+    //     height: 810,
+    //     blurDataURL:
+    //       "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADwAQCdASoMAAkAA4BaJaQAAuyRpFpGEgAA/sRrRLC5E9Z+J+NNaD3YJG6EBkEe0GWqp0SJI/LO2RUX/IlfBUV5RsAAAA==",
+    //     glyph: "smile",
+    //     tone: "sage",
+    //   },
+    // },
+    // {
+    //   id: "aesthetic",
+    //   slug: "aesthetics",
+    //   icon: "sparkles",
+    //   title: "Aesthetics",
+    //   body: "Cosmetic surgery and skin rejuvenation, performed only by board-certified surgeons.",
+    //   media: {
+    //     alt: "A client applying a skincare serum against a sand-toned backdrop",
+    //     src: "/images/photos/service-aesthetic.jpg",
+    //     width: 1080,
+    //     height: 810,
+    //     blurDataURL:
+    //       "data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAADwAQCdASoMAAkAA4BaJQBOgCPqVgJFxAAA/uBy+9wamv5cya9PMhLJ2skHy6YR2MJj+qrSV+AAAA==",
+    //     glyph: "sparkles",
+    //     tone: "gold",
+    //   },
+    // },
     {
       id: "cardio",
       slug: "cardiology",
@@ -208,6 +225,23 @@ export const services: Localized<Service[]> = {
       media: {
         alt: "An ultrasound monitor in a diagnostic imaging room",
         src: "/images/photos/service-cardio.jpg",
+        width: 1080,
+        height: 810,
+        blurDataURL:
+          "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADwAQCdASoMAAkAA4BaJZQCw7D2OC7TBAAA/uftQx5Na1JRtqN81vxkWd7VdeZd63SmaZ9UqxejcHNEAGFNtQkm7c4AAA==",
+        glyph: "heart-pulse",
+        tone: "clay",
+      },
+    },
+    {
+      id: "digestive",
+      slug: "tieu-hoa",
+      icon: "salad",
+      title: "Digestive",
+      body: "Treatment for ulcers and GERD, gastrointestinal cancer screening, and painless endoscopy.",
+      media: {
+        alt: "Màn hình siêu âm trong phòng chẩn đoán hình ảnh",
+        src: "/images/photos/tieu-hoa.png",
         width: 1080,
         height: 810,
         blurDataURL:

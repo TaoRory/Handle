@@ -41,7 +41,11 @@ function ServiceCard({
           ratio="landscape"
           rounded="none"
           hasHoverZoom
-          sizes="(max-width: 640px) 45vw, (max-width: 1280px) 30vw, 200px"
+          sizes={
+            service.isFeatured
+              ? "(max-width: 640px) 100vw, (max-width: 1024px) 100vw, (max-width: 1280px) 66vw, 420px"
+              : "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 240px"
+          }
         />
 
         <div className="flex flex-1 flex-col gap-1.5 px-4 py-4">
@@ -99,12 +103,18 @@ export function MedicalServices({ copy, services, locale }: MedicalServicesProps
       <ul
         className={
           copy.lead
-            ? "mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3"
-            : "mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3"
+            ? "mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3"
+            : "mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3"
         }
       >
         {services.map((service, index) => (
-          <li key={service.id} className="h-full">
+          <li
+            key={service.id}
+            className={cn(
+              "h-full",
+              service.isFeatured && "sm:col-span-2 lg:col-span-2",
+            )}
+          >
             <ServiceCard service={service} locale={locale} index={index} />
           </li>
         ))}

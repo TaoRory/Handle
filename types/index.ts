@@ -77,7 +77,8 @@ export type IconName =
   | "users-round"
   | "utensils"
   | "wallet"
-  | "waves";
+  | "waves"
+  | "salad";
 
 /* ------------------------------------------------------------------ *
  *  Media
