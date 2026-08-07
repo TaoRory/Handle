@@ -66,7 +66,7 @@ export const vi: SiteContent = {
   whyVietnam: {
     title: "Vì sao ngày càng nhiều người chọn điều trị tại",
     accent: "Việt Nam?",
-    lead: "Không phải vì họ muốn đi xa. Mà vì họ muốn được điều trị sớm hơn và hợp lý hơn.",
+    lead: "Vì y tế Việt Nam giờ đây đã phát triển vượt bậc, với vô vàn lựa chọn và dịch vụ chăm sóc tối ưu.",
   },
 
   about: {
@@ -99,7 +99,7 @@ export const vi: SiteContent = {
   whyUs: {
     title: "Một đầu mối duy nhất cho toàn bộ",
     accent: "hành trình.",
-    lead: "Sáu cam kết định hình cách chúng tôi làm việc với mỗi khách hàng, từ lúc đọc hồ sơ cho tới khi bạn đã trở về nhà và cần theo dõi lại từ xa.",
+    lead: "Sáu cam kết định hình cách chúng tôi làm việc với mỗi khách hàng. Bằng cái tâm trong từng dịch vụ và sự chuyên nghiệp xuyên suốt hành trình, Handle luôn đặt sự an tâm của khách hàng lên hàng đầu.",
   },
 
   journey: {

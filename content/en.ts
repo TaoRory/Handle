@@ -70,7 +70,7 @@ export const en: SiteContent = {
   whyVietnam: {
     title: "Why are more patients choosing treatment in",
     accent: "Vietnam?",
-    lead: "Not because they want to travel. Because they want to be treated sooner, and at a price that makes sense.",
+    lead: "Because Vietnam's healthcare system has now developed by leaps and bounds, offering countless choices and optimal care services",
   },
 
   about: {
@@ -103,7 +103,7 @@ export const en: SiteContent = {
   whyUs: {
     title: "One point of contact for the whole",
     accent: "journey.",
-    lead: "Six commitments that shape how we work with every patient, from record review to remote follow-up after you are home again.",
+    lead: "Six commitments shape how we work with every client. With heart in every service and professionalism throughout the journey, Handle always puts clients' peace of mind first.",
   },
 
   journey: {

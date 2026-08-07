@@ -21,9 +21,13 @@ function PartnerLogo({ partner }: { partner: Partner }) {
       {/* `ink-400`, not `stone`. The monogram is the only thing naming the
           partner, and stone on white measured 2.53:1 — the mark was decorative
           in weight while carrying the whole label. */}
-      <span className="text-ink-400 group-hover/partner:text-gold-700 font-brand flex size-9 items-center justify-center rounded-md text-sm tracking-[0.08em] transition-colors duration-300 sm:size-11">
+      <span className="text-ink-400 group-hover/partner:text-gold-700 font-brand flex size-14 items-center justify-center text-base leading-none tracking-[0.08em] transition-colors duration-300 sm:size-14">
         {partner.logo ? (
-          <img src={partner.logo} alt={`${partner.name} logo`} className="h-6 w-auto" />
+          <img
+            src={partner.logo}
+            alt={`${partner.name} logo`}
+            className="h-8 w-8 object-contain"
+          />
         ) : (
           partner.monogram
         )}

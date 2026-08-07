@@ -7,7 +7,7 @@ export const advantages: Localized<Advantage[]> = {
       id: "single-contact",
       icon: "user-round-check",
       title: "Một đầu mối duy nhất",
-      body: "Một điều phối viên chịu trách nhiệm làm việc với bệnh viện, bác sĩ, khách sạn và nhà cung cấp dịch vụ — bạn chỉ cần nói chuyện với một người.",
+      body: "Một điều phối viên chịu trách nhiệm làm việc với bệnh viện, bác sĩ, khách sạn và nhà cung cấp dịch vụ — khách hàng chỉ cần liên hệ qua 1 trợ lý cá nhân duy nhất để hành trình trải nghiệm được xuyên suốt và bảo mật.",
     },
     {
       id: "care-plan",
@@ -19,7 +19,7 @@ export const advantages: Localized<Advantage[]> = {
       id: "transparent",
       icon: "receipt",
       title: "Minh bạch chi phí",
-      body: "Báo giá chi tiết, không phí ẩn. Bạn biết trước từng khoản trước khi đưa ra bất kỳ quyết định tài chính nào.",
+      body: "Báo giá chi tiết, không phí ẩn. Bạn biết trước từng khoản chi phí và hoàn toàn chủ động, tự do quyết định cho các dịnh vụ.",
     },
     {
       id: "network",
@@ -45,7 +45,7 @@ export const advantages: Localized<Advantage[]> = {
       id: "single-contact",
       icon: "user-round-check",
       title: "One point of contact",
-      body: "A single coordinator deals with the hospital, the surgeon, the hotel and every supplier — you only ever speak to one person.",
+      body: "A single coordinator manages all interactions with hospitals, doctors, hotels, and service providers — clients only need to contact one dedicated medical assistant for a seamless and confidential journey.",
     },
     {
       id: "care-plan",
@@ -57,7 +57,7 @@ export const advantages: Localized<Advantage[]> = {
       id: "transparent",
       icon: "receipt",
       title: "Transparent pricing",
-      body: "An itemised quote with no hidden fees. You see every line before you commit to anything financially.",
+      body: "Detailed quotes, no hidden fees. You know every cost upfront, giving you complete control and the freedom to decide on services.",
     },
     {
       id: "network",

@@ -176,12 +176,12 @@ export default async function HomePage({
         locale={locale}
       />
 
-      <Testimonials
+      {/* <Testimonials
         id={SECTION_IDS.testimonials}
         copy={content.testimonials}
         testimonials={getTestimonials(locale)}
         labels={content.a11y}
-      />
+      /> */}
 
       <Faq
         id={SECTION_IDS.faq}
