@@ -46,12 +46,32 @@ const markSizes = {
   lockup: "h-8 sm:h-9",
 } as const;
 
+/**
+ * The mark is gold; the wordmark beside it stays ink.
+ *
+ * `gold-600` rather than the base `gold`: the header already carries a solid
+ * `gold` CTA a few hundred pixels away, and two elements in the same strip at
+ * the identical value read as one thing broken into pieces. The deeper shade
+ * separates them while staying the same colour family, and it holds up better
+ * where the mark sits over the hero's pale photography.
+ *
+ * This is the one place gold carries no words, so the rule that gold type must
+ * be `gold-700` does not apply — and a logotype is exempt from contrast minimums
+ * in any case. The wordmark, which *is* text, is unchanged at `ink`.
+ */
+const MARK_TONE = {
+  ink: "text-gold-600",
+  /* On an ink surface the base gold is the brand's own pairing (7.3:1) and the
+     deeper shade would go muddy. */
+  cream: "text-gold",
+} as const;
+
 export function Logo({ variant = "wordmark", className, tone = "ink" }: LogoProps) {
   const color = tone === "cream" ? "text-cream-100" : "text-ink";
 
   if (variant === "icon") {
     return (
-      <span className={cn("inline-flex", markSizes.icon, color, className)}>
+      <span className={cn("inline-flex", markSizes.icon, MARK_TONE[tone], className)}>
         <HandleMark />
         <span className="sr-only">Handle</span>
       </span>
@@ -60,7 +80,7 @@ export function Logo({ variant = "wordmark", className, tone = "ink" }: LogoProp
 
   return (
     <span className={cn("inline-flex items-center gap-3", color, className)}>
-      <span className={cn("inline-flex shrink-0", markSizes[variant])}>
+      <span className={cn("inline-flex shrink-0", markSizes[variant], MARK_TONE[tone])}>
         <HandleMark />
       </span>
 
