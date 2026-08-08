@@ -61,6 +61,9 @@ export const vi: SiteContent = {
     eyebrow: "Đối tác y tế uy tín",
     title: "Chúng tôi làm việc cùng các cơ sở y tế hàng đầu",
     action: "Xem tất cả đối tác",
+    dialogLead:
+      "Bệnh viện, phòng khám và trung tâm chuyên khoa Handle phối hợp để đặt lịch và đưa bạn đến đúng nơi.",
+    closeLabel: "Đóng danh sách đối tác",
   },
 
   whyVietnam: {

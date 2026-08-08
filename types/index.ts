@@ -523,7 +523,17 @@ export interface SiteContent {
     localeLabel: string;
   };
   hero: HeroCopy;
-  partners: SectionCopy;
+  /**
+   * The trust band, plus the full list behind it.
+   *
+   * `title` is the dialog's heading — the band itself is labelled by `eyebrow`,
+   * so the longer sentence had been sitting unused in both dictionaries.
+   */
+  partners: SectionCopy & {
+    /** One line under the dialog heading. */
+    dialogLead: string;
+    closeLabel: string;
+  };
   whyVietnam: SectionCopy;
   about: SectionCopy & {
     body: string[];

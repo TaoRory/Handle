@@ -1,12 +1,10 @@
-import Link from "next/link";
-
+import { PartnerDialog } from "@/components/sections/PartnerDialog";
 import { Container } from "@/components/ui/container";
-import { ArrowTrail } from "@/components/ui/icon";
 import { Marquee } from "@/components/ui/marquee";
 import { Reveal } from "@/components/ui/reveal";
 import { SECTION_IDS } from "@/lib/site-config";
 
-import type { Partner, SectionCopy } from "@/types";
+import type { Partner, SiteContent } from "@/types";
 
 /**
  * One partner mark.
@@ -53,7 +51,7 @@ function PartnerLogo({ partner }: { partner: Partner }) {
 }
 
 interface PartnerCarouselProps {
-  copy: SectionCopy;
+  copy: SiteContent["partners"];
   partners: Partner[];
 }
 
@@ -88,15 +86,10 @@ export function PartnerCarousel({ copy, partners }: PartnerCarouselProps) {
                 {copy.eyebrow}
               </h2>
 
-              {copy.action ? (
-                <Link
-                  href={`#${SECTION_IDS.about}`}
-                  className="group/link text-gold-700 hover:text-ink inline-flex min-h-11 items-center gap-2 text-sm font-medium transition-colors duration-200"
-                >
-                  {copy.action}
-                  <ArrowTrail />
-                </Link>
-              ) : null}
+              {/* Was a link to `#gioi-thieu` — "see all partners" landing on
+                  the About band, which is neither all the partners nor any of
+                  them. It opens the full list instead. */}
+              {copy.action ? <PartnerDialog copy={copy} partners={partners} /> : null}
             </div>
 
             {/* No `durationSeconds`: the speed is a breakpoint decision, so it

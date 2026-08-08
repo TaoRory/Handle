@@ -65,6 +65,9 @@ export const en: SiteContent = {
     eyebrow: "Trusted medical partners",
     title: "We work alongside leading facilities",
     action: "See all partners",
+    dialogLead:
+      "The hospitals, clinics and specialist centres Handle books with and takes you to.",
+    closeLabel: "Close the partner list",
   },
 
   whyVietnam: {

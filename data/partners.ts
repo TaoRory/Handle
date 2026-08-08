@@ -131,7 +131,10 @@ export const partners: Localized<Partner[]> = {
       id: "diag",
       name: "Trung tâm xét nghiệm Y Khoa DIAG",
       monogram: "DIAG",
-      kind: kinds.vi.rehab,
+      /* Was `rehab` — "Trung tâm phục hồi chức năng" beside a named testing
+         laboratory. These are real companies now, so a wrong category is a
+         wrong statement about someone else's business. */
+      kind: kinds.vi.diagnostics,
       city: cities.vi.hcmc,
       logo: "/images/partners/diag.png",
     },
@@ -214,7 +217,7 @@ export const partners: Localized<Partner[]> = {
       id: "diag",
       name: "DIAG Medical Center",
       monogram: "DIAG",
-      kind: kinds.en.rehab,
+      kind: kinds.en.diagnostics,
       city: cities.en.hcmc,
       logo: "/images/partners/diag.png",
     },
