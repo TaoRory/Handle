@@ -87,12 +87,12 @@ export const vi: SiteContent = {
       { id: "quote", icon: "receipt", label: "Báo giá trọn gói" },
     ],
     media: {
-      alt: "Nhóm bác sĩ cùng xem hồ sơ bên cửa sổ phòng hội chẩn",
+      alt: "Bốn nhân viên y tế mặc áo blouse và đồ scrubs cùng xem một bản ghi trên clipboard, bên cửa sổ phòng làm việc",
       src: "/images/photos/about.jpg",
       width: 1440,
       height: 900,
       blurDataURL:
-        "data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAADQAQCdASoMAAcAA4BaJZwAAl2+hWhggAD+6zYcCrD8aiK7IuywZ9j7ZWNbq/7F6UI6RfkigAA=",
+        "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADwAQCdASoMAAgAA4BaJZQAAsaZk0e7OAAA/uesJ/Lj+eoW+sSrvctTm4sI9JLxlnOXCR6/DN/LSSrpycsQAA==",
       glyph: "notebook-pen",
       tone: "linen",
       seed: "handle-about-consult",

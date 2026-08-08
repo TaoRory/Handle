@@ -91,12 +91,12 @@ export const en: SiteContent = {
       { id: "quote", icon: "receipt", label: "One itemised quote" },
     ],
     media: {
-      alt: "Clinicians reviewing a chart together by a consulting-room window",
+      alt: "Four clinicians in white coats and scrubs reading notes on a clipboard together by an office window",
       src: "/images/photos/about.jpg",
       width: 1440,
       height: 900,
       blurDataURL:
-        "data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAADQAQCdASoMAAcAA4BaJZwAAl2+hWhggAD+6zYcCrD8aiK7IuywZ9j7ZWNbq/7F6UI6RfkigAA=",
+        "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADwAQCdASoMAAgAA4BaJZQAAsaZk0e7OAAA/uesJ/Lj+eoW+sSrvctTm4sI9JLxlnOXCR6/DN/LSSrpycsQAA==",
       glyph: "notebook-pen",
       tone: "linen",
       seed: "handle-about-consult",
