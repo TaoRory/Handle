@@ -124,7 +124,7 @@ export const en: SiteContent = {
 
   services: {
     title: "Medical services we coordinate",
-    lead: "From screening and IVF to cardiology and aesthetics, we help you choose the right specialty and the right hospital from the start.",
+    lead: "From screening and IVF to cardiology and digestive care, we help you choose the right specialty and the right hospital from the start.",
     action: "See all services",
   },
 
@@ -278,9 +278,16 @@ export const en: SiteContent = {
           },
           { id: "ivf", label: "Fertility & IVF", href: serviceHref("en", "fertility") },
           { id: "eye", label: "Ophthalmology", href: serviceHref("en", "eye") },
-          { id: "dental", label: "Dental care", href: serviceHref("en", "dental") },
-          { id: "aesthetic", label: "Aesthetics", href: serviceHref("en", "aesthetic") },
+          {
+            id: "digestive",
+            label: "Digestive & gastrointestinal",
+            href: serviceHref("en", "digestive"),
+          },
           { id: "cardio", label: "Cardiology", href: serviceHref("en", "cardio") },
+          /* Dental and Aesthetics are gone from `services.ts`, so `serviceHref`
+             was falling back to the listing — two footer rows naming
+             specialties this site no longer offers, on every page. They come
+             back with the records. */
         ],
       },
       {

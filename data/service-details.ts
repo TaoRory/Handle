@@ -371,6 +371,76 @@ export const serviceDetails: Localized<ServiceDetail[]> = {
     },
 
     {
+      id: "digestive",
+      metaTitle: "Nội soi và điều trị tiêu hóa tại Việt Nam",
+      metaDescription:
+        "Nội soi dạ dày, đại tràng không đau và tầm soát ung thư đường tiêu hóa tại Việt Nam. Thời gian, chuẩn bị trước nội soi và những gì Handle điều phối.",
+      heading: "Tiêu hóa và nội soi",
+      headingAccent: "tại Việt Nam.",
+      intro: [
+        "Nội soi tiêu hóa là nhóm thủ thuật hiếm hoi có thể hoàn tất trong một buổi sáng, và cũng là nhóm mà nhiều người trì hoãn lâu nhất — phần lớn vì ngại, chứ không vì chi phí.",
+        "Điều đáng nói: tầm soát sớm là nơi chênh lệch giữa phát hiện kịp và phát hiện muộn lớn nhất. Nếu bạn đã về Việt Nam vì việc khác, đây là thứ đáng ghép vào cùng chuyến.",
+      ],
+      includes: [
+        {
+          id: "prep",
+          icon: "clipboard-list",
+          title: "Hướng dẫn chuẩn bị bằng ngôn ngữ của bạn",
+          body: "Nhịn ăn, thuốc làm sạch ruột và các thuốc đang dùng cần ngưng — sai một bước là phải hoãn buổi nội soi.",
+        },
+        {
+          id: "sedation",
+          icon: "shield-check",
+          title: "Nói rõ lựa chọn gây mê",
+          body: "Nội soi không đau cần tiền mê, nghĩa là bạn không tự lái xe về và nên có người đi cùng.",
+        },
+        {
+          id: "biopsy",
+          icon: "microscope",
+          title: "Theo dõi kết quả sinh thiết",
+          body: "Nếu có mẫu được lấy, kết quả giải phẫu bệnh mất thêm vài ngày. Chúng tôi nhận và gửi bạn bản dịch, kể cả khi bạn đã về nước.",
+        },
+        {
+          id: "records",
+          icon: "file-text",
+          title: "Hình ảnh và kết luận bàn giao được",
+          body: "Bạn về nước với hình nội soi và kết luận ở định dạng bác sĩ tại nước sở tại đọc được.",
+        },
+      ],
+      facts: [
+        { id: "procedure", icon: "clock", label: "Thời gian nội soi", value: "15–30 phút" },
+        { id: "stay", icon: "bed-double", label: "Cần ở lại Việt Nam", value: "2–3 ngày" },
+        { id: "biopsy", icon: "file-check", label: "Kết quả sinh thiết", value: "3–7 ngày" },
+        { id: "fasting", icon: "utensils", label: "Chuẩn bị", value: "Nhịn ăn 6–8 tiếng" },
+      ],
+      suitedFor: [
+        "Người trên 45 tuổi chưa từng tầm soát đại trực tràng",
+        "Người có triệu chứng trào ngược hoặc đau dạ dày kéo dài chưa được nội soi",
+        "Người có tiền sử gia đình ung thư đường tiêu hóa cần theo dõi định kỳ",
+      ],
+      faqs: [
+        {
+          id: "how-long",
+          question: "Nội soi dạ dày và đại tràng ở Việt Nam mất bao lâu?",
+          answer:
+            "Bản thân thủ thuật thường mười lăm đến ba mươi phút. Cộng thời gian chuẩn bị, hồi tỉnh sau tiền mê và nghe bác sĩ đọc kết quả, bạn nên dành trọn một buổi. Nếu có lấy mẫu sinh thiết, kết quả giải phẫu bệnh mất thêm ba đến bảy ngày — phần này chúng tôi nhận thay và gửi bạn kể cả khi bạn đã về nước.",
+        },
+        {
+          id: "sedation",
+          question: "Nội soi không đau có an toàn không, và tôi cần chuẩn bị gì?",
+          answer:
+            "Nội soi không đau dùng tiền mê chứ không phải gây mê toàn thân, và được thực hiện với theo dõi liên tục. Bạn cần nhịn ăn sáu đến tám tiếng, ngưng một số thuốc theo chỉ định, và với nội soi đại tràng thì phải uống thuốc làm sạch ruột từ hôm trước. Sau thủ thuật bạn không nên tự lái xe, nên hãy sắp xếp có người đi cùng.",
+        },
+        {
+          id: "combine",
+          question: "Tôi có thể ghép nội soi vào gói khám tổng quát không?",
+          answer:
+            "Có, và phần lớn người chọn cách này vì cùng một lần nhịn ăn. Nội soi thường được xếp vào buổi sáng đầu tiên của gói tầm soát, trước các hạng mục khác. Chúng tôi xếp lịch theo thứ tự đó ngay khi đặt, thay vì để bạn phải quay lại một buổi riêng.",
+        },
+      ],
+    },
+
+    {
       id: "cardio",
       metaTitle: "Điều trị tim mạch tại Việt Nam cho bệnh nhân quốc tế",
       metaDescription:
@@ -788,6 +858,76 @@ export const serviceDetails: Localized<ServiceDetail[]> = {
           question: "What happens if I am unhappy with the result?",
           answer:
             "Cosmetic results take three to six months to settle, so judging one earlier usually means judging it wrong. After that point, if revision is still warranted, the terms and cost depend on the operating facility's policy — which is something to ask about and get in writing before surgery, not after. We put that question into the pre-trip consultation.",
+        },
+      ],
+    },
+
+    {
+      id: "digestive",
+      metaTitle: "Endoscopy and Digestive Care in Vietnam",
+      metaDescription:
+        "Painless gastroscopy, colonoscopy and gastrointestinal cancer screening in Vietnam. Timings, how to prepare, and what Handle coordinates around it.",
+      heading: "Digestive care and endoscopy",
+      headingAccent: "in Vietnam.",
+      intro: [
+        "Endoscopy is one of the few procedures that fits into a single morning, and one of the most postponed — usually out of reluctance rather than cost.",
+        "It is also where the gap between catching something early and catching it late is widest. If you are already travelling to Vietnam for something else, this is worth attaching to the same trip.",
+      ],
+      includes: [
+        {
+          id: "prep",
+          icon: "clipboard-list",
+          title: "Preparation instructions in your language",
+          body: "Fasting, bowel prep and which of your current medications to pause — one step missed and the appointment is postponed.",
+        },
+        {
+          id: "sedation",
+          icon: "shield-check",
+          title: "The sedation choice explained",
+          body: "Painless endoscopy means sedation, which means you are not driving yourself home and should have someone with you.",
+        },
+        {
+          id: "biopsy",
+          icon: "microscope",
+          title: "Biopsy results chased on your behalf",
+          body: "If samples are taken, pathology adds a few days. We collect the report and send it translated, including after you have flown home.",
+        },
+        {
+          id: "records",
+          icon: "file-text",
+          title: "Images and findings you can hand over",
+          body: "You leave with the endoscopy images and findings in a format your own doctor can read.",
+        },
+      ],
+      facts: [
+        { id: "procedure", icon: "clock", label: "Procedure time", value: "15–30 minutes" },
+        { id: "stay", icon: "bed-double", label: "Days in Vietnam", value: "2–3 days" },
+        { id: "biopsy", icon: "file-check", label: "Biopsy results", value: "3–7 days" },
+        { id: "fasting", icon: "utensils", label: "Preparation", value: "Fast 6–8 hours" },
+      ],
+      suitedFor: [
+        "Anyone over 45 who has never been screened for colorectal cancer",
+        "Anyone with persistent reflux or stomach pain who has never had it scoped",
+        "Anyone with a family history of gastrointestinal cancer needing regular monitoring",
+      ],
+      faqs: [
+        {
+          id: "how-long",
+          question: "How long does a gastroscopy or colonoscopy in Vietnam take?",
+          answer:
+            "The procedure itself is usually fifteen to thirty minutes. Allow a full morning once preparation, recovery from sedation and the results consultation are counted. If samples are taken, pathology adds three to seven days — we collect that report on your behalf and send it on, including after you have flown home.",
+        },
+        {
+          id: "sedation",
+          question: "Is painless endoscopy safe, and how do I prepare?",
+          answer:
+            "Painless endoscopy uses sedation rather than general anaesthesia, with continuous monitoring throughout. You will need to fast for six to eight hours, pause certain medications on advice, and for a colonoscopy take bowel preparation the day before. You should not drive afterwards, so arrange for someone to be with you.",
+        },
+        {
+          id: "combine",
+          question: "Can I add endoscopy to a general health screening package?",
+          answer:
+            "Yes, and most people do, because it shares the same fast. Endoscopy is normally scheduled first thing on the opening morning of the screening package, ahead of the other items. We sequence it that way at the point of booking rather than leaving you to come back for a separate visit.",
         },
       ],
     },

@@ -120,7 +120,10 @@ export const vi: SiteContent = {
 
   services: {
     title: "Dịch vụ y tế chúng tôi hỗ trợ",
-    lead: "Từ tầm soát, IVF đến tim mạch và thẩm mỹ, chúng tôi giúp bạn chọn đúng chuyên khoa và đúng bệnh viện ngay từ đầu.",
+    /* Named "thẩm mỹ" until now — a specialty the site stopped offering when
+       the record was commented out, still being promised in the sentence
+       directly above the grid that no longer contains it. */
+    lead: "Từ tầm soát, IVF đến tim mạch và tiêu hóa, chúng tôi giúp bạn chọn đúng chuyên khoa và đúng bệnh viện ngay từ đầu.",
     action: "Xem tất cả dịch vụ",
   },
 
@@ -278,9 +281,13 @@ export const vi: SiteContent = {
             href: serviceHref("vi", "fertility"),
           },
           { id: "eye", label: "Điều trị mắt", href: serviceHref("vi", "eye") },
-          // { id: "dental", label: "Nha khoa", href: serviceHref("vi", "dental") },
-          { id: "digestive ", label: "Tiêu hóa - Dạ dày - Đại trực tràng", href: serviceHref("vi", "cardio") },
-          // { id: "aesthetic", label: "Thẩm mỹ", href: serviceHref("vi", "aesthetic") },
+          // The digestive link pointed at `cardio` — a footer row promising one
+          // specialty and opening another. Its id also carried a trailing space.
+          {
+            id: "digestive",
+            label: "Tiêu hóa - Dạ dày - Đại trực tràng",
+            href: serviceHref("vi", "digestive"),
+          },
           { id: "cardio", label: "Tim mạch", href: serviceHref("vi", "cardio") },
         ],
       },
