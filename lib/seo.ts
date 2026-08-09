@@ -12,7 +12,7 @@ export const OG_IMAGE = {
   url: "/og.jpg",
   width: 1200,
   height: 630,
-  alt: "Handle — Chăm sóc sức khỏe tại Việt Nam. Handled.",
+  alt: "Handle — Chăm sóc sức khỏe tại Việt Nam, đã có chúng tôi lo.",
 };
 
 /**

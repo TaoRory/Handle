@@ -33,9 +33,12 @@ export const vi: SiteContent = {
   },
 
   hero: {
-    titleLead: "Chăm sóc sức khỏe\ntại Việt Nam.",
-    titleAccent: "Handled.",
-    lead: "Từ tư vấn, đặt lịch, phiên dịch, di chuyển đến phục hồi — chúng tôi lo trọn phần hậu cần để bạn chỉ cần tập trung vào việc hồi phục.",
+    /* The em dash closes line two rather than opening the accent: a display
+       serif set in italic starting on punctuation reads as a fragment, and the
+       dash at the line end is what signals the turn into the gold phrase. */
+    titleLead: "Chăm sóc sức khỏe\ntại Việt Nam —",
+    titleAccent: "đã có chúng tôi lo.",
+    lead: "Tư vấn, đặt lịch, phiên dịch, di chuyển — trọn gói hậu cần, để bạn chỉ việc tận hưởng dịch vụ y tế cao cấp.",
     primaryCta: "Tư vấn miễn phí",
     secondaryCta: "Xem video giới thiệu",
     badges: [

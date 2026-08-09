@@ -139,7 +139,11 @@ export function generateHomeSchema(locale: Locale, content: SiteContent) {
         "@type": "WebPage",
         "@id": `${pageUrl}#webpage`,
         url: pageUrl,
-        name: content.hero.titleLead.replace("\n", " "),
+        /* The whole h1, accent included. It used to be `titleLead` alone, which
+           was harmless while the accent was a separate word ("Handled.") and
+           became a dangling em dash the moment the headline turned into one
+           sentence broken across the two fields. */
+        name: `${content.hero.titleLead.replace("\n", " ")} ${content.hero.titleAccent}`,
         description: content.hero.lead,
         inLanguage: content.htmlLang,
         isPartOf: { "@id": `${baseUrl}/#website` },
