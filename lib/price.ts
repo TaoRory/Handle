@@ -17,8 +17,15 @@ const usd = new Intl.NumberFormat("en-US", {
   maximumFractionDigits: 0,
 });
 
+const aud = new Intl.NumberFormat("en-AU", {
+  style: "currency",
+  currency: "AUD",
+  maximumFractionDigits: 0,
+});
+
 /** `{ from: 300, to: 1200 }` → `"$300 – $1,200"`. */
 export function formatUsdBand(band: PriceBand): string {
+  if (band.from === 0 && band.to === 0) return "—";
   return `${usd.format(band.from)}${RANGE}${usd.format(band.to)}`;
 }
 
@@ -31,9 +38,15 @@ export function formatUsdBand(band: PriceBand): string {
  * would be guesswork for a reader who has never seen it.
  */
 export function formatVndBand(band: PriceBand, locale: Locale): string {
+  if (band.from === 0 && band.to === 0) return "—";
   const unit = locale === "vi" ? "triệu ₫" : "million ₫";
   const format = (value: number) => value.toLocaleString(locale === "vi" ? "vi-VN" : "en-US");
   return `${format(band.from)}${RANGE}${format(band.to)} ${unit}`;
+}
+
+export function formatAudBand(band: PriceBand): string {
+  if (band.from === 0 && band.to === 0) return "—";
+  return `${aud.format(band.from)}${RANGE}${aud.format(band.to)}`;
 }
 
 /**
@@ -46,6 +59,7 @@ export function formatVndBand(band: PriceBand, locale: Locale): string {
  * the figure does not imply a precision the underlying bands do not have.
  */
 export function savingPercent(vietnam: PriceBand, abroad: PriceBand): number {
+  if (vietnam.from === 0 && vietnam.to === 0) return 0;
   const mid = (band: PriceBand) => (band.from + band.to) / 2;
   const ratio = 1 - mid(vietnam) / mid(abroad);
   return Math.round((ratio * 100) / 5) * 5;
