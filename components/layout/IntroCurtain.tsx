@@ -4,9 +4,12 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useState } from "react";
 
 import { IntroMark } from "@/components/layout/IntroMark";
+import { INTRO_SESSION_KEY } from "@/lib/intro";
 import { EASE_EXPO } from "@/lib/motion";
 
-export const INTRO_SESSION_KEY = "handle:intro-played";
+/* Re-exported so existing imports keep working; the value itself lives in a
+   non-client module — see the note there. */
+export { INTRO_SESSION_KEY } from "@/lib/intro";
 
 /**
  * Intro timeline, in seconds. Kept in one place because the steps have to stay

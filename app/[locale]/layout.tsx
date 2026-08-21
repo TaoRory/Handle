@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 
 import { FloatingContact } from "@/components/layout/FloatingContact";
 import { Footer } from "@/components/layout/Footer";
-import { INTRO_SESSION_KEY, IntroCurtain } from "@/components/layout/IntroCurtain";
+import { IntroCurtain } from "@/components/layout/IntroCurtain";
 import { MotionProvider } from "@/components/layout/MotionProvider";
 import { Navbar } from "@/components/layout/Navbar";
 import { ScrollProgress } from "@/components/layout/ScrollProgress";
@@ -20,6 +20,7 @@ import {
   getVerification,
 } from "@/lib/seo";
 import { sectionStep, siteConfig } from "@/lib/site-config";
+import { INTRO_SESSION_KEY } from "@/lib/intro";
 import { generateSiteSchema } from "@/lib/json-ld";
 
 import { LOCALES, type Locale } from "@/types";
@@ -152,6 +153,35 @@ export default async function LocaleLayout({
       suppressHydrationWarning
     >
       <body className="min-h-dvh antialiased">
+        {/* These three came back out of `app/[locale]/head.tsx`, which is not a
+            Next 16 file convention — `head` was an App Router experiment
+            removed when the Metadata API landed, and it is absent from the
+            file-conventions list that ships in `node_modules/next/dist/docs`.
+            The file rendered nothing, so moving them there silently deleted
+            the site's entire structured-data graph, let the curtain flash for
+            returning visitors, and left it stuck for anyone without
+            JavaScript. */}
+
+        {/* Runs before first paint: if the intro already played this session,
+            flag the document so CSS hides the curtain and no frame of it can
+            flash while React hydrates. Paired with the `<noscript>` rule below
+            so a visitor without JavaScript never sees a curtain at all. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{if(sessionStorage.getItem(${JSON.stringify(
+              INTRO_SESSION_KEY,
+            )})==="1")document.documentElement.classList.add("intro-played")}catch(e){}`,
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(generateSiteSchema(locale as Locale, content)),
+          }}
+        />
+        <noscript>
+          <style>{`#intro-curtain{display:none !important}`}</style>
+        </noscript>
 
         <MotionProvider>
           <IntroCurtain
