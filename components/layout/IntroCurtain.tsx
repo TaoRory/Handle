@@ -17,7 +17,7 @@ export { INTRO_SESSION_KEY } from "@/lib/intro";
  * intro ends up feeling ragged.
  *
  *   0.00  the mark fades in                      (0.70s)
- *   0.12  two dashes on the centre line extend into the stems (0.62s, done 0.74)
+ *   0.12  the stems draw outward from the centre line (0.62s, done 0.74)
  *   0.80  the crossbar draws left to right       (0.90s, lands at 1.70)
  *   0.90  the skip control fades up
  *   1.90  HANDLE and the tagline fade up together (0.40s, ends 2.30)
@@ -91,10 +91,10 @@ function FadeIn({
 /**
  * Brand intro.
  *
- * Two dashes appear on the centre line and extend into the stems, then the
- * crossbar draws across between them, left to right, bridging the two into an
- * H. The wordmark and tagline fade up together beneath it afterwards: the mark
- * completing itself is the thing to watch, the words only need to arrive.
+ * The two stems draw outward from the centre line, then the crossbar draws
+ * across between them, left to right, bridging the two into an H. The wordmark
+ * and tagline fade up together beneath it afterwards: the mark completing
+ * itself is the thing to watch, the words only need to arrive.
  *
  * Constraints this respects:
  * - **Once per session.** An intro you cannot get past is a toll booth. The
@@ -187,22 +187,26 @@ export function IntroCurtain({ skipLabel, loadingLabel }: IntroCurtainProps) {
           exit={{ opacity: 0, y: "-4%" }}
           transition={{ duration: TIMING.exit.duration, ease: EASE_EXPO }}
         >
-          {/* Still a flat field. The reason changed — the hand cut-out that
-              carried a baked-in cream knockout ring is gone — but the mark is
-              two flat tones on cream, and a bloom or gradient behind it turns
-              the lighter tone muddy at the edges. Nothing needs to be back
-              there. */}
+          {/* A flat field, and now simply because nothing needs to be behind a
+              thin gold stroke on cream. The original reason — a hand cut-out
+              carrying a baked-in cream knockout ring that any tint would expose
+              as an outline — went with the hand. */}
           <div className="relative flex flex-col items-center">
             <IntroMark markDuration={TIMING.mark.duration} />
 
-            {/* Type sizes are derived from the supplied artwork rather than
-                picked: there the wordmark's cap height is 0.32 of the H's, and
-                the word runs about 2.5x the H's width. `leading-[0.74]` crops
-                the line box to the caps so the gaps below match too. */}
+            {/* Wordmark and tagline take the header lockup's colours now that
+                the mark does: gold mark, ink word, `ink-400` tagline. They were
+                the old artwork's taupe and tan, which read as a third palette
+                the moment the mark stopped being that drawing.
+
+                Sizes still come from the artwork's proportions rather than
+                being picked — cap height 0.32 of the H's, the word about 2.5x
+                its width. `leading-[0.74]` crops the line box to the caps so
+                the gaps below match too. */}
             <FadeIn
               delay={TIMING.type.delay}
               duration={TIMING.type.duration}
-              className="font-brand mt-[30px] text-[clamp(2.25rem,12vw,4.25rem)] leading-[0.74] font-medium tracking-[0.12em] text-[#9F8772] sm:mt-[38px] sm:text-[5.4rem]"
+              className="font-brand text-ink mt-[30px] text-[clamp(2.25rem,12vw,4.25rem)] leading-[0.74] font-medium tracking-[0.12em] sm:mt-[38px] sm:text-[5.4rem]"
             >
               HANDLE
             </FadeIn>
@@ -210,7 +214,7 @@ export function IntroCurtain({ skipLabel, loadingLabel }: IntroCurtainProps) {
             <FadeIn
               delay={TIMING.type.delay}
               duration={TIMING.type.duration}
-              className="font-brand mt-[11px] text-[clamp(0.6rem,3.1vw,0.95rem)] leading-[0.74] tracking-[0.15em] text-[#C4B2A0] uppercase sm:mt-[14px] sm:text-[1.2rem]"
+              className="font-brand text-ink-400 mt-[11px] text-[clamp(0.6rem,3.1vw,0.95rem)] leading-[0.74] tracking-[0.15em] uppercase sm:mt-[14px] sm:text-[1.2rem]"
             >
               You heal. We handle the rest.
             </FadeIn>

@@ -416,29 +416,41 @@ at `xl`, which part am I in, labels on hover/focus, `aria-current` for assistive
 `FloatingContact` (a persistent way to reach a human).
 
 **`IntroCurtain` + `IntroMark`** — the brand intro, and the one piece of theatre on the site. The
-H settles in, the open hand flies in from the left and completes the mark, then the wordmark and
-tagline fade up quickly beneath it. The whole timeline lives in one `TIMING` object; edit the steps
-together, because nudging a single delay in isolation is how an intro ends up ragged.
+two stems draw outward from the centre line, the crossbar then draws across between them left to
+right, and the wordmark and tagline fade up beneath. The whole timeline lives in one `TIMING`
+object; edit the steps together, because nudging a single delay in isolation is how an intro ends
+up ragged.
 
-`IntroMark` rebuilds the supplied artwork (`Intro/logo intro.png`) so its parts can move: the bars
-are vector paths measured off the original (76 × 361 units, outer corners `r=30`, inner square) and
-alternate across `TONE_SPLIT` — left bar dark above and light below, right bar light above and dark
-below, with the hand crossing on the line where the tones swap. Each bar **grows out of that same
-line**: it opens squashed to a sliver about its own centre, reads for a beat as two horizontal
-dashes, then extends to full height before the hand arrives. That growth is a CSS animation
-(`--animate-intro-bar`) and not a Motion one, for the reason below — a withheld Motion transform
-would leave the H as two slivers and nothing else. Its delay and duration are what `TIMING.hand` is
-set against, so `globals.css` and `IntroCurtain` have to move together. The hand cut-out is at
-`public/intro/hand.png`,
-the hand is a transparent cut-out at `public/intro/hand.png` carrying the logo's cream knockout
-ring, and the type is sized from the artwork's own ratios. Two constraints follow:
+`IntroMark` is **the same drawing as `ui/logo.tsx`** — the thin-stroke H from the brand sheet, in
+the same `gold-600`, with the wordmark in ink beside it exactly as the header sets it. There is one
+Handle mark. It used to be a second one: the solid two-tone slabs rebuilt from
+`Intro/logo intro.png` with a hand cut-out flying in to form the crossbar, in that artwork's taupe
+and tan. Both the raster and its palette are gone; nothing in the intro is a bitmap now.
 
-- **The curtain background stays a flat field.** The knockout ring is baked into the PNG as flat
-  cream, so any tint behind the mark — a bloom, a gradient — turns it into a visible outline.
+Every stroke is drawn with `stroke-dashoffset`, not scaled — scaling a stroked path squashes its
+round caps into ellipses on the way. Two details make the draw behave:
+
+- **Each stem is two paths**, both starting on the centre line and running opposite ways, because a
+  dash offset can only start at one end of a path. That is what gives the opening beat: two dashes
+  on the middle line that extend into stems.
+- **`stroke-dasharray` is `"1 2"`, not `1`.** With `pathLength: 1` a dash-1/gap-1 pattern repeats
+  inside the path, and at either extreme of the offset a zero-length dash lands under a round cap —
+  which Chrome paints as a stray dot beside the mark. A gap twice the dash leaves the whole path
+  inside one gap at offset 1 and inside one dash at 0.
+
+Timings live in `globals.css` (`--animate-intro-stem`, `--animate-intro-bridge`) rather than in
+`TIMING`, so those two files have to move together.
+
+Two constraints follow:
+
+- **The curtain background stays a flat field.** Nothing needs to be behind a thin gold stroke on
+  cream, and the original reason — a hand cut-out whose baked-in cream knockout ring any tint would
+  expose as an outline — went with the hand.
 - **The type reveals with opacity and nothing else.** A sliding cover, a clip-path wipe, a
   translate: all of them are withheld by `MotionProvider` under reduced motion, which would leave
   the words hidden for exactly the users that setting protects. A fade is the one reveal that
-  cannot fail that way.
+  cannot fail that way. The stroke draw is CSS for the same reason — a withheld Motion animation
+  would leave the offset at 1 and the screen blank where the logo should be.
 
 Rules the curtain must keep: once per session (`sessionStorage`, read by an inline script before
 first paint so a returning visitor never catches a frame), skippable by any click or key, hidden
@@ -446,16 +458,12 @@ entirely without JavaScript (`<noscript>` rule), and bypassable with `?intro=off
 end-to-end runners capture the page rather than whichever frame they landed on. It covers content,
 it never gates it — the page is fully rendered underneath the whole time.
 
-Note the mark here is **not** the same drawing as `ui/logo.tsx`, which the header and footer use:
-that one is the thin-stroke H from the brand sheet, this one is the solid-slab H with the hand.
-They are two different logos in two different palettes; unify them before launch.
-
 **Component tree**
 
 ```
 <RootLayout>
  ├ MotionProvider ──────── reducedMotion="user" for the whole tree
- ├ IntroCurtain ───────── IntroMark (hand flies in) · type fades up · curtain rises
+ ├ IntroCurtain ───────── IntroMark (H draws itself) · type fades up · curtain rises
  ├ SkipLink
  ├ ScrollProgress ──────── gold rule, scroll-linked
  ├ Navbar ── Logo · NavLinks · LocaleSwitcher · ConsultationLink · MobileNav(Dialog)

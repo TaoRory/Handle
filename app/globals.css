@@ -92,15 +92,13 @@
   --animate-accordion-down: accordion-down 0.28s var(--ease-expo);
   --animate-accordion-up: accordion-up 0.24s var(--ease-expo);
 
-  /* The intro's two bars growing out of their centre line. Held back far enough
-     that the curtain has faded in first, and finished before the crossbar starts
-     to draw — `IntroCurtain`'s TIMING owns the rest of that sequence. */
-  --animate-intro-bar: intro-bar 0.62s var(--ease-expo) 0.12s backwards;
-
-  /* The crossbar drawing itself left to right, bridging the two stems into an H.
-     Starts once the stems are at full height (0.74s), so it spans something
-     rather than reaching into empty space. */
-  --animate-intro-bridge: intro-bridge 0.9s var(--ease-expo) 0.8s backwards;
+  /* The intro mark, drawn rather than faded: the stems grow out of the centre
+     line first, then the crossbar bridges them. Both use the same keyframe and
+     differ only in timing — `IntroCurtain`'s TIMING owns the rest of the
+     sequence, and the crossbar's delay is set so the stems have finished
+     (0.74s) before it reaches out to something that is not there yet. */
+  --animate-intro-stem: intro-draw 0.62s var(--ease-expo) 0.12s backwards;
+  --animate-intro-bridge: intro-draw 0.9s var(--ease-expo) 0.8s backwards;
 
   /* The consultation seal. CSS rather than Framer Motion on purpose — see the
      keyframes below for why. The three steps are one gesture, so their delays
@@ -206,33 +204,32 @@
    the sliver is already in place during the delay rather than flashing at full
    height first; under the reduced-motion block the whole thing collapses to the
    final frame, which is the complete bar. */
-@keyframes intro-bar {
-  from {
-    transform: scaleY(0.028);
-  }
-
-  to {
-    transform: scaleY(1);
-  }
-}
-
 /*
- * The crossbar, drawn from the left stem to the right one.
+ * One keyframe for every stroke in the intro mark.
  *
- * A stroke-dash draw rather than a width or a clip, so the line arrives the way
- * a bridge is built — from one side to the other — instead of growing out of
- * its own middle. The path carries `pathLength="1"`, so the offset is a
- * fraction and nothing here has to know the curve's real length.
+ * A stroke-dash draw rather than a scale or a clip: the mark is thin-stroke now,
+ * and scaling a stroked path squashes its round caps into ellipses on the way.
+ * Drawing it leaves the geometry untouched at every frame. Each path carries
+ * `pathLength="1"`, so the offset is a fraction and nothing here has to know a
+ * curve's real length.
  *
- * CSS and not Framer Motion, for the same reason the bars above are:
- * `MotionConfig reducedMotion="user"` withholds a Motion animation's target,
- * which for a dash draw means an offset stuck at 1 and no crossbar at all — an
- * H missing its middle for exactly the people that preference protects. The
- * reduce block below collapses this to its final frame instead, and the element
- * carries `stroke-dashoffset: 0` as its resting attribute so the fully drawn
- * bar is what it falls back to.
+ * CSS and not Framer Motion. `MotionConfig reducedMotion="user"` withholds a
+ * Motion animation's target, which for a dash draw means an offset stuck at 1
+ * and no mark at all — a blank screen where the logo should be, for exactly the
+ * people that preference protects. The reduce block below collapses this to its
+ * final frame instead, and every path carries `stroke-dashoffset: 0` as its
+ * resting attribute so a fully drawn stroke is what it falls back to.
  */
-@keyframes intro-bridge {
+@keyframes intro-draw {
+  /* Paired with `stroke-dasharray: 1 2` on the paths, which is what makes the
+     endpoints behave. `stroke-dasharray: 1` gives a dash-1/gap-1 pattern, and
+     with a path normalised to `pathLength: 1` an offset of exactly 1 lands on
+     the dash/gap boundary: a zero-length dash, which Chrome paints as a dot
+     under a round cap. The mark opened with a stray gold spot beside the stems.
+     Nudging the offset past 1 only moved the spot to the other end of the path,
+     where the pattern repeats. A gap twice the dash means the whole path sits
+     inside one gap at offset 1 and inside one dash at 0 — nothing to repeat,
+     nothing to round off. */
   from {
     stroke-dashoffset: 1;
   }
