@@ -1,10 +1,11 @@
 import Link from "next/link";
+import { Fragment } from "react";
 
 import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { formatUsdBand, formatVndBand, savingPercent } from "@/lib/price";
+import { formatAudBand } from "@/lib/price";
 import { ROUTES, routePath } from "@/lib/site-config";
 
 import type { CostItem, CostPageContent, Locale, Service } from "@/types";
@@ -44,6 +45,12 @@ export function CostTable({ id, copy, items, locale, services }: CostTableProps)
   const pinned =
     "sticky left-0 z-10 bg-surface shadow-[1px_0_0_0_var(--color-line)] lg:shadow-none";
 
+  const groupedItems = items.reduce<Record<string, typeof items>>((acc, item) => {
+    const category = item.category ?? "General";
+    acc[category] = [...(acc[category] ?? []), item];
+    return acc;
+  }, {});
+
   return (
     <Section id={id} labelledBy={headingId} tone="surface">
       <Container>
@@ -70,85 +77,81 @@ export function CostTable({ id, copy, items, locale, services }: CostTableProps)
                     scope="col"
                     className={`text-ink-400 px-5 py-4 text-xs font-medium tracking-[0.14em] uppercase ${pinned}`}
                   >
-                    {copy.colProcedure}
+                    {copy.colService || copy.colProcedure}
                   </th>
                   <th
                     scope="col"
                     className="text-ink-400 px-5 py-4 text-xs font-medium tracking-[0.14em] uppercase"
                   >
-                    {copy.colVietnam}
+                    {copy.colCovers || "What it covers / What it is for"}
                   </th>
                   <th
                     scope="col"
-                    className="text-ink-400 px-5 py-4 text-xs font-medium tracking-[0.14em] uppercase"
+                    className="text-ink-400 px-5 py-4 text-xs font-medium tracking-[0.14em] uppercase text-right"
                   >
-                    {copy.colAbroad}
-                  </th>
-                  <th
-                    scope="col"
-                    className="text-ink-400 px-5 py-4 text-right text-xs font-medium tracking-[0.14em] uppercase"
-                  >
-                    {copy.colSaving}
+                    {copy.colEstimated || "Estimated cost (AUD)"}
                   </th>
                 </tr>
               </thead>
 
               <tbody>
-                {items.map((item) => (
-                  <tr
-                    key={item.id}
-                    className="border-line/70 last:border-0 border-b align-top"
-                  >
-                    <th scope="row" className={`px-5 py-5 font-normal ${pinned}`}>
-                      {/* Linked to the specialty that performs it, where one
-                          exists. A price with no route to what it buys leaves
-                          the reader to search again for the thing this site
-                          already has a page about. */}
-                      {slugFor(item.serviceId) ? (
-                        <Link
-                          href={routePath(
-                            locale,
-                            ROUTES.services,
-                            slugFor(item.serviceId)!,
-                          )}
-                          className="text-ink hover:text-gold-700 focus-visible:outline-gold-700 block rounded-sm text-[0.9375rem] font-medium transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2"
+                {Object.entries(groupedItems).map(([category, rows]) => (
+                  <Fragment key={category}>
+                    <tr className="bg-cream-100/80">
+                      <th
+                          scope="colgroup"
+                          colSpan={3}
+                          className="text-ink px-5 py-4 text-left text-sm font-semibold uppercase tracking-[0.14em]"
                         >
-                          {item.procedure}
-                        </Link>
-                      ) : (
-                        <span className="text-ink block text-[0.9375rem] font-medium">
-                          {item.procedure}
-                        </span>
-                      )}
-                      <span className="text-ink-400 mt-1 block text-sm">{item.unit}</span>
-                      {item.note ? (
-                        <span className="text-ink-400 mt-2 block max-w-[34ch] text-sm">
-                          {item.note}
-                        </span>
-                      ) : null}
-                    </th>
+                        {category}
+                      </th>
+                    </tr>
 
-                    <td className="px-5 py-5">
-                      <span className="text-ink block text-[0.9375rem] font-medium">
-                        {formatUsdBand(item.usd)}
-                      </span>
-                      <span className="text-ink-400 mt-1 block text-sm">
-                        {formatVndBand(item.vnd, locale)}
-                      </span>
-                    </td>
+                    {rows.map((item) => (
+                      <tr
+                        key={item.id}
+                        className="border-line/70 last:border-0 border-b align-top"
+                      >
+                        <th scope="row" className={`px-5 py-5 font-normal ${pinned}`}>
+                          {slugFor(item.serviceId) ? (
+                            <Link
+                              href={routePath(
+                                locale,
+                                ROUTES.services,
+                                slugFor(item.serviceId)!,
+                              )}
+                              className="text-ink hover:text-gold-700 focus-visible:outline-gold-700 block rounded-sm text-[0.9375rem] font-medium transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2"
+                            >
+                              {item.procedure}
+                            </Link>
+                          ) : (
+                            <span className="text-ink block text-[0.9375rem] font-medium">
+                              {item.procedure}
+                            </span>
+                          )}
+                          <span className="text-ink-400 mt-1 block text-sm">{item.unit}</span>
+                          {item.note ? (
+                            <span className="text-ink-400 mt-2 block max-w-[34ch] text-sm">
+                              {item.note}
+                            </span>
+                          ) : null}
+                        </th>
 
-                    <td className="text-ink-400 px-5 py-5 text-[0.9375rem]">
-                      {formatUsdBand(item.abroad)}
-                    </td>
+                        <td className="px-5 py-5 align-top">
+                          <div className="text-ink block text-[0.9375rem] font-medium">
+                            {item.note || "—"}
+                          </div>
+                          <div className="text-ink-400 mt-1 block text-sm">{item.unit}</div>
+                        </td>
 
-                    <td className="px-5 py-5 text-right">
-                      {/* The one gold element in this band — and the number the
-                          whole page exists to state. */}
-                      <span className="text-gold-700 font-brand text-lg tracking-tight">
-                        −{savingPercent(item.usd, item.abroad)}%
-                      </span>
-                    </td>
-                  </tr>
+                        <td className="px-5 py-5 text-right align-top">
+                          <span className="text-gold-700 font-brand text-lg tracking-tight">
+                            {formatAudBand(item.aud ?? { from: 0, to: 0 })}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </Fragment>
                 ))}
               </tbody>
             </table>

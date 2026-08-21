@@ -30,17 +30,16 @@ export const pages: Localized<PagesContent> = {
       },
 
       table: {
-        title: "Khoảng giá theo",
-        accent: "thủ thuật.",
-        lead: "Cột so sánh là mặt bằng tại Mỹ, dùng thống nhất cho mọi dòng. Chọn nước nào có lợi nhất cho từng dòng thì bảng này sẽ đẹp hơn và vô nghĩa hơn.",
-        colProcedure: "Thủ thuật",
-        colVietnam: "Tại Việt Nam",
-        colAbroad: "Tại Mỹ",
-        colSaving: "Chênh lệch",
+        title: "Bảng giá theo",
+        accent: "chuyên khoa.",
+        lead: "Mẫu bảng này đang chờ bạn điền tên dịch vụ và chi phí thực tế cho từng chuyên khoa. Mỗi nhóm có mục lớn riêng để dễ cập nhật cho khách hàng.",
+        colService: "Dịch vụ",
+        colCovers: "Bao gồm",
+        colEstimated: "Chi phí ước tính (AUD)",
         caption:
-          "Khoảng chi phí tham khảo theo thủ thuật tại Việt Nam, so sánh với mặt bằng tại Mỹ",
+          "Mẫu bảng chi phí theo chuyên khoa điều trị tại Việt Nam, chờ điền dịch vụ và giá thực tế",
         disclaimer:
-          "Đây là khoảng giá tham khảo theo mặt bằng thị trường, không phải báo giá của Handle. Chi phí thực tế chỉ xác định được sau khi bác sĩ đọc hồ sơ của bạn. Chúng tôi gửi báo giá bằng văn bản trước khi bạn đặt vé.",
+          "Đây là bảng mẫu để điền dữ liệu thực tế. Bạn có thể thay tên dịch vụ, khoảng giá và mô tả từng gói sau khi có thông tin từ bệnh viện hoặc bác sĩ.",
       },
 
       inclusions: {
@@ -173,17 +172,16 @@ export const pages: Localized<PagesContent> = {
       },
 
       table: {
-        title: "Bands by",
-        accent: "procedure.",
-        lead: "The comparison column is the United States for every row. Picking whichever country flattered each row would make this table look better and mean nothing.",
-        colProcedure: "Procedure",
-        colVietnam: "In Vietnam",
-        colAbroad: "In the US",
-        colSaving: "Difference",
+        title: "Price template by",
+        accent: "specialty.",
+        lead: "This table is a working template for you to enter each service name and price band by specialty. The five groups below make it easier to manage and update later.",
+        colService: "Service",
+        colCovers: "What it covers",
+        colEstimated: "Estimated cost (AUD)",
         caption:
-          "Reference cost bands by procedure in Vietnam, compared with United States pricing",
+          "Price template by specialty for Vietnam treatment services, ready for final service and pricing entries",
         disclaimer:
-          "These are market reference bands, not a Handle quote. Your actual cost is settled once a surgeon has read your records. We send that quote in writing before you book a flight.",
+          "This is a draft pricing template. Replace the placeholder service names and pricing ranges with the final quotes from the hospital or physician once they are confirmed.",
       },
 
       inclusions: {

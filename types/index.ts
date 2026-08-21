@@ -257,11 +257,15 @@ export interface CostItem {
   /** What the band covers — "per implant", "full cycle", "per eye". */
   unit: string;
   /** Reference band in Vietnam, US dollars. */
-  usd: PriceBand;
+  usd?: PriceBand;
   /** The same band in Vietnamese đồng, millions. */
-  vnd: PriceBand;
+  vnd?: PriceBand;
   /** The same procedure in a high-cost system, US dollars. */
-  abroad: PriceBand;
+  abroad?: PriceBand;
+  /** Reference band in Australian dollars. */
+  aud?: PriceBand;
+  /** Optional category for the cost item. */
+  category?: string;
   /** Which system `abroad` describes — "abroad" on its own means nothing. */
   abroadRegion: string;
   note?: string;
@@ -309,10 +313,13 @@ export interface CostPageContent {
   breadcrumb: string;
   hero: PageBandCopy & { primaryCta: string; secondaryCta: string };
   table: PageBandCopy & {
-    colProcedure: string;
-    colVietnam: string;
-    colAbroad: string;
-    colSaving: string;
+    colProcedure?: string;
+    colVietnam?: string;
+    colAbroad?: string;
+    colSaving?: string;
+    colService?: string;
+    colCovers?: string;
+    colEstimated?: string;
     /** Screen-reader caption for the table element. */
     caption: string;
     /** Sits under the table: what these numbers are, and are not. */

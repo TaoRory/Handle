@@ -152,26 +152,6 @@ export default async function LocaleLayout({
       suppressHydrationWarning
     >
       <body className="min-h-dvh antialiased">
-        {/* Runs before first paint: if the intro already played this session,
-            flag the document so CSS hides the curtain and no frame of it can
-            flash while React hydrates. Paired with the `<noscript>` rule below
-            so a visitor without JavaScript never sees a curtain at all. */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `try{if(sessionStorage.getItem(${JSON.stringify(
-              INTRO_SESSION_KEY,
-            )})==="1")document.documentElement.classList.add("intro-played")}catch(e){}`,
-          }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(generateSiteSchema(locale as Locale, content)),
-          }}
-        />
-        <noscript>
-          <style>{`#intro-curtain{display:none !important}`}</style>
-        </noscript>
 
         <MotionProvider>
           <IntroCurtain
