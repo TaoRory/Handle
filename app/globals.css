@@ -93,9 +93,14 @@
   --animate-accordion-up: accordion-up 0.24s var(--ease-expo);
 
   /* The intro's two bars growing out of their centre line. Held back far enough
-     that the curtain has faded in first, and finished before the hand arrives —
-     `IntroCurtain`'s TIMING owns the rest of that sequence. */
+     that the curtain has faded in first, and finished before the crossbar starts
+     to draw — `IntroCurtain`'s TIMING owns the rest of that sequence. */
   --animate-intro-bar: intro-bar 0.62s var(--ease-expo) 0.12s backwards;
+
+  /* The crossbar drawing itself left to right, bridging the two stems into an H.
+     Starts once the stems are at full height (0.74s), so it spans something
+     rather than reaching into empty space. */
+  --animate-intro-bridge: intro-bridge 0.9s var(--ease-expo) 0.8s backwards;
 
   /* The consultation seal. CSS rather than Framer Motion on purpose — see the
      keyframes below for why. The three steps are one gesture, so their delays
@@ -208,6 +213,32 @@
 
   to {
     transform: scaleY(1);
+  }
+}
+
+/*
+ * The crossbar, drawn from the left stem to the right one.
+ *
+ * A stroke-dash draw rather than a width or a clip, so the line arrives the way
+ * a bridge is built — from one side to the other — instead of growing out of
+ * its own middle. The path carries `pathLength="1"`, so the offset is a
+ * fraction and nothing here has to know the curve's real length.
+ *
+ * CSS and not Framer Motion, for the same reason the bars above are:
+ * `MotionConfig reducedMotion="user"` withholds a Motion animation's target,
+ * which for a dash draw means an offset stuck at 1 and no crossbar at all — an
+ * H missing its middle for exactly the people that preference protects. The
+ * reduce block below collapses this to its final frame instead, and the element
+ * carries `stroke-dashoffset: 0` as its resting attribute so the fully drawn
+ * bar is what it falls back to.
+ */
+@keyframes intro-bridge {
+  from {
+    stroke-dashoffset: 1;
+  }
+
+  to {
+    stroke-dashoffset: 0;
   }
 }
 

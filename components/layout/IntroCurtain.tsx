@@ -15,27 +15,26 @@ export const INTRO_SESSION_KEY = "handle:intro-played";
  *
  *   0.00  the mark fades in                      (0.70s)
  *   0.12  two dashes on the centre line extend into the stems (0.62s, done 0.74)
- *   0.80  the hand flies in from the left        (1.05s, lands at 1.85)
+ *   0.80  the crossbar draws left to right       (0.90s, lands at 1.70)
  *   0.90  the skip control fades up
  *   1.90  HANDLE and the tagline fade up together (0.40s, ends 2.30)
  *   2.30  ── one full second of stillness, so the lockup can be read ──
  *   3.30  the curtain lifts                      (0.65s)
  *
- * The bar growth is the one step not declared here: it is a CSS animation in
- * `globals.css` (`--animate-intro-bar`), because a Motion transform would be
- * withheld under reduced motion and leave the H as two slivers. Its 0.12s delay
- * and 0.62s duration are the numbers the hand's delay is set against, so the two
- * files have to move together.
+ * Two steps are not declared here. The bar growth and the crossbar draw are both
+ * CSS animations in `globals.css` (`--animate-intro-bar`,
+ * `--animate-intro-bridge`), because Motion withholds its animations under
+ * reduced motion and would leave the H as two slivers with no middle. Their
+ * delays and durations are the numbers the rest of this sequence is set against,
+ * so the two files have to move together.
  *
  * The two lines of type share one delay on purpose: they are one lockup, and
  * staggering them made the tagline read as an afterthought rather than part of
- * the mark. The type still runs quicker than the hand — that is the thing to
- * watch.
+ * the mark. The type still arrives after the crossbar has landed — the mark
+ * completing itself is the thing to watch.
  */
 const TIMING = {
   mark: { duration: 0.7 },
-  /** Starts once the stems are at full height, so the hand completes a real H. */
-  hand: { delay: 0.8, duration: 1.05 },
   skip: { delay: 0.9 },
   /** Shared by both lines of type. Keep them equal. */
   type: { delay: 1.9, duration: 0.4 },
@@ -52,8 +51,6 @@ interface IntroCurtainProps {
   skipLabel: string;
   /** Announced to screen readers while the curtain holds the viewport. */
   loadingLabel: string;
-  /** Alt text for the hand mark. */
-  markLabel: string;
 }
 
 /**
@@ -91,10 +88,10 @@ function FadeIn({
 /**
  * Brand intro.
  *
- * The H stands, then the hand flies in from the left and completes it — the
- * mark assembling itself around the gesture the brand is named for. The
- * wordmark and tagline then fade up together beneath it, quicker than the mark:
- * the hand is the thing to watch, the words only need to arrive.
+ * Two dashes appear on the centre line and extend into the stems, then the
+ * crossbar draws across between them, left to right, bridging the two into an
+ * H. The wordmark and tagline fade up together beneath it afterwards: the mark
+ * completing itself is the thing to watch, the words only need to arrive.
  *
  * Constraints this respects:
  * - **Once per session.** An intro you cannot get past is a toll booth. The
@@ -109,11 +106,7 @@ function FadeIn({
  *   is a cover, not a gate, so crawlers are unaffected and the `<noscript>`
  *   rule in globals.css removes it entirely without JavaScript.
  */
-export function IntroCurtain({
-  skipLabel,
-  loadingLabel,
-  markLabel,
-}: IntroCurtainProps) {
+export function IntroCurtain({ skipLabel, loadingLabel }: IntroCurtainProps) {
   const [isPlaying, setIsPlaying] = useState(true);
 
   const dismiss = useCallback(() => {
@@ -191,17 +184,13 @@ export function IntroCurtain({
           exit={{ opacity: 0, y: "-4%" }}
           transition={{ duration: TIMING.exit.duration, ease: EASE_EXPO }}
         >
-          {/* Deliberately a flat field. The hand cut-out carries the logo's
-              cream knockout ring baked into the PNG, so anything that tints the
-              background behind the mark — a bloom, a gradient — makes that ring
-              read as a visible outline instead of disappearing into the page. */}
+          {/* Still a flat field. The reason changed — the hand cut-out that
+              carried a baked-in cream knockout ring is gone — but the mark is
+              two flat tones on cream, and a bloom or gradient behind it turns
+              the lighter tone muddy at the edges. Nothing needs to be back
+              there. */}
           <div className="relative flex flex-col items-center">
-            <IntroMark
-              altText={markLabel}
-              markDuration={TIMING.mark.duration}
-              handDelay={TIMING.hand.delay}
-              handDuration={TIMING.hand.duration}
-            />
+            <IntroMark markDuration={TIMING.mark.duration} />
 
             {/* Type sizes are derived from the supplied artwork rather than
                 picked: there the wordmark's cap height is 0.32 of the H's, and

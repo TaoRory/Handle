@@ -569,7 +569,12 @@ export interface SiteContent {
     closeLabel: string;
     channels: { id: string; icon: IconName; name: string; hint: string }[];
   };
-  intro: { skip: string; loading: string; mark: string };
+  /**
+   * The brand intro. No `mark` string any more: it described the hand that used
+   * to form the crossbar, and the crossbar is drawn now — the sentence was both
+   * unused and wrong.
+   */
+  intro: { skip: string; loading: string };
   footer: {
     tagline: string;
     columns: FooterColumn[];
