@@ -16,8 +16,8 @@ import {
   getServiceDetail,
   getServices,
 } from "@/data";
-import { generatePageSchema } from "@/lib/json-ld";
-import { OG_IMAGE, ROBOTS } from "@/lib/seo";
+import { generatePageSchema, serializeJsonLd } from "@/lib/json-ld";
+import { ROBOTS, getOgImage, getOpenGraphLocale } from "@/lib/seo";
 import { ROUTES, routePath, siteConfig } from "@/lib/site-config";
 
 import { LOCALES, type Locale } from "@/types";
@@ -94,13 +94,13 @@ export async function generateMetadata({
   if (!resolved) return {};
 
   const { locale, detail } = resolved;
-  const { htmlLang } = getContent(locale);
   const path = routePath(locale, ROUTES.services, slug);
 
   /* The layout's `%s · Handle` template applies to this child segment, so the
      brand is not written in by hand — see the note on the cost page. Social
      titles do not inherit the template and carry it explicitly. */
   const socialTitle = `${detail.metaTitle} · ${siteConfig.name}`;
+  const ogImage = getOgImage(locale);
 
   /* Alternates resolve through each locale's own record: the slugs differ, so
      substituting the locale segment would point `hreflang` at a 404. */
@@ -124,17 +124,18 @@ export async function generateMetadata({
     openGraph: {
       type: "article",
       siteName: siteConfig.name,
-      locale: htmlLang.replace("-", "_"),
+      locale: getOpenGraphLocale(locale),
       url: `${siteConfig.url}${path}`,
       title: socialTitle,
       description: detail.metaDescription,
-      images: [OG_IMAGE],
+      alternateLocale: locale === "vi" ? ["en_US"] : ["vi_VN"],
+      images: [ogImage],
     },
     twitter: {
       card: "summary_large_image",
       title: socialTitle,
       description: detail.metaDescription,
-      images: [OG_IMAGE],
+      images: [ogImage],
     },
     robots: ROBOTS,
   };
@@ -174,7 +175,7 @@ export default async function ServicePage({
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(schema) }}
       />
 
       <ServiceHero

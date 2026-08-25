@@ -5,8 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 
 import { IntroMark } from "@/components/layout/IntroMark";
 import { EASE_EXPO } from "@/lib/motion";
-
-export const INTRO_SESSION_KEY = "handle:intro-played";
+import { INTRO_SESSION_KEY } from "@/lib/site-config";
 
 /**
  * Intro timeline, in seconds. Kept in one place because the steps have to stay

@@ -19,6 +19,9 @@ interface ServiceCostProps {
   costHref: string;
 }
 
+type PricedCostItem = CostItem &
+  Required<Pick<CostItem, "usd" | "vnd" | "abroad">>;
+
 /**
  * This specialty's rows from the cost table.
  *
@@ -33,6 +36,10 @@ interface ServiceCostProps {
  */
 export function ServiceCost({ id, copy, items, locale, costHref }: ServiceCostProps) {
   const headingId = `${id}-title`;
+  const pricedItems = items.filter(
+    (item): item is PricedCostItem =>
+      Boolean(item.usd && item.vnd && item.abroad),
+  );
 
   return (
     <Section id={id} labelledBy={headingId} tone="surface">
@@ -41,7 +48,7 @@ export function ServiceCost({ id, copy, items, locale, costHref }: ServiceCostPr
           id={headingId}
           title={copy.title}
           accent={copy.accent}
-          lead={items.length ? copy.lead : undefined}
+          lead={pricedItems.length ? copy.lead : undefined}
           action={
             <Button asChild variant="outline" size="md" className="rounded-sm">
               <Link href={costHref} className="group/link">
@@ -52,9 +59,9 @@ export function ServiceCost({ id, copy, items, locale, costHref }: ServiceCostPr
           }
         />
 
-        {items.length ? (
+        {pricedItems.length ? (
           <ul className="mt-12 grid gap-[var(--gap-card)] lg:mt-14 lg:grid-cols-2">
-            {items.map((item, index) => (
+            {pricedItems.map((item, index) => (
               <li key={item.id}>
                 <Reveal index={index}>
                   <div className="border-line bg-cream-100 flex h-full flex-col gap-5 rounded-lg border p-7">

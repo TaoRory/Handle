@@ -20,6 +20,9 @@ const DOMAIN = "handlevietnam.com";
  */
 export const SITE_URL = `https://${DOMAIN}`;
 
+/** Shared by the server-rendered bootstrap and the client intro component. */
+export const INTRO_SESSION_KEY = "handle:intro-played";
+
 /**
  * Single source of truth for anything that is the same in every language:
  * URLs, phone numbers, section anchors.

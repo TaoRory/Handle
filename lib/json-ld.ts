@@ -1,6 +1,6 @@
 import { getFaqs, getServices } from "@/data";
 import { getKeywords } from "@/lib/seo";
-import { SECTION_IDS, siteConfig } from "@/lib/site-config";
+import { ROUTES, routePath, siteConfig } from "@/lib/site-config";
 
 import type { Faq, Locale, SiteContent } from "@/types";
 
@@ -18,20 +18,20 @@ import type { Faq, Locale, SiteContent } from "@/types";
  * mechanism is for, and it stops every sub-page from restating the homepage's
  * `WebPage` node as though it were its own.
  *
- * The `MedicalProcedure` catalogue exists for answer engines rather than for a
- * rich result. A model summarising "medical concierge Vietnam" can lift a named
- * specialty straight out of this; it cannot reliably lift the same thing out of
- * a grid of `div`s.
- *
  * Deliberately absent: `AggregateRating`. The testimonials behind it are
  * placeholder copy, and publishing a review score that no real patient gave is
  * a policy violation with a manual action attached, not a small exaggeration.
  * Restore it when the reviews are real — the average is already computed by
  * `getAggregateRating`.
  */
-export function generateSiteSchema(locale: Locale, content: SiteContent) {
+/** Prevent user- or CMS-authored text from closing the JSON-LD script tag. */
+export function serializeJsonLd(value: unknown) {
+  return JSON.stringify(value).replace(/</g, "\\u003c");
+}
+
+export function generateSiteSchema() {
   const baseUrl = siteConfig.url;
-  const pageUrl = `${baseUrl}/${locale}`;
+  const topics = [...new Set([...getKeywords("vi"), ...getKeywords("en")])];
 
   return {
     "@context": "https://schema.org",
@@ -54,7 +54,7 @@ export function generateSiteSchema(locale: Locale, content: SiteContent) {
         // outcomes — it is the subject matter of the page, stated in the terms
         // a query would use, which is what an answer engine matches against
         // when deciding whether this organisation is relevant at all.
-        knowsAbout: getKeywords(locale),
+        knowsAbout: topics,
         knowsLanguage: ["vi", "en"],
         areaServed: { "@type": "Country", name: "Vietnam" },
         sameAs: Object.values(siteConfig.socials),
@@ -69,8 +69,7 @@ export function generateSiteSchema(locale: Locale, content: SiteContent) {
         "@type": "MedicalBusiness",
         "@id": `${baseUrl}/#medical-business`,
         name: siteConfig.name,
-        url: pageUrl,
-        description: content.hero.lead,
+        url: baseUrl,
         parentOrganization: { "@id": `${baseUrl}/#organization` },
         medicalSpecialty: [
           "Medical Concierge",
@@ -81,7 +80,6 @@ export function generateSiteSchema(locale: Locale, content: SiteContent) {
           { "@type": "Country", name: "Vietnam" },
           { "@type": "Place", name: "International" },
         ],
-        availableLanguage: ["vi", "en"],
         priceRange: "$$",
         contactPoint: {
           "@type": "ContactPoint",
@@ -89,30 +87,13 @@ export function generateSiteSchema(locale: Locale, content: SiteContent) {
           contactType: "customer service",
           availableLanguage: ["Vietnamese", "English"],
         },
-        // The specialties Handle coordinates, each pointing at the anchor that
-        // describes it. This is the list an answer engine reads when asked what
-        // the business actually does.
-        hasOfferCatalog: {
-          "@type": "OfferCatalog",
-          name: content.services.title,
-          itemListElement: getServices(locale).map((service) => ({
-            "@type": "Offer",
-            itemOffered: {
-              "@type": "MedicalProcedure",
-              "@id": `${pageUrl}#${service.slug}`,
-              name: service.title,
-              description: service.body,
-              url: `${pageUrl}#${SECTION_IDS.services}`,
-            },
-          })),
-        },
       },
       {
         "@type": "WebSite",
         "@id": `${baseUrl}/#website`,
         url: baseUrl,
         name: siteConfig.name,
-        inLanguage: content.htmlLang,
+        inLanguage: ["vi-VN", "en"],
         publisher: { "@id": `${baseUrl}/#organization` },
       },
     ],
@@ -149,6 +130,30 @@ export function generateHomeSchema(locale: Locale, content: SiteContent) {
         isPartOf: { "@id": `${baseUrl}/#website` },
         about: { "@id": `${baseUrl}/#medical-business` },
         primaryImageOfPage: `${baseUrl}/og.jpg`,
+        mainEntity: { "@id": `${pageUrl}#services` },
+      },
+      {
+        "@type": "OfferCatalog",
+        "@id": `${pageUrl}#services`,
+        name: content.services.title,
+        itemListElement: getServices(locale).map((service) => {
+          const serviceUrl = `${baseUrl}${routePath(
+            locale,
+            ROUTES.services,
+            service.slug,
+          )}`;
+
+          return {
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "MedicalProcedure",
+              "@id": `${serviceUrl}#procedure`,
+              name: service.title,
+              description: service.body,
+              url: serviceUrl,
+            },
+          };
+        }),
       },
       {
         "@type": "FAQPage",

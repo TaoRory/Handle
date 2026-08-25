@@ -10,8 +10,14 @@ import { PartnerCarousel } from "@/components/sections/PartnerCarousel";
 import { WhyChooseUs } from "@/components/sections/WhyChooseUs";
 import { WhyVietnam } from "@/components/sections/WhyVietnam";
 import { getContent, isLocale } from "@/content";
-import { generateHomeSchema } from "@/lib/json-ld";
-import { OG_IMAGE, ROBOTS, getLocalePageTitle, getMetaDescription } from "@/lib/seo";
+import { generateHomeSchema, serializeJsonLd } from "@/lib/json-ld";
+import {
+  ROBOTS,
+  getLocalePageTitle,
+  getMetaDescription,
+  getOgImage,
+  getOpenGraphLocale,
+} from "@/lib/seo";
 import {
   getAdvantages,
   getExperiences,
@@ -21,7 +27,6 @@ import {
   getReasons,
   getServices,
   getStats,
-  getTestimonials,
 } from "@/data";
 import { SECTION_IDS, sectionStep, siteConfig } from "@/lib/site-config";
 
@@ -41,9 +46,6 @@ const ServicesAndLifestyle = dynamic(() =>
   import("@/components/sections/ServicesAndLifestyle").then(
     (m) => m.ServicesAndLifestyle,
   ),
-);
-const Testimonials = dynamic(() =>
-  import("@/components/sections/Testimonials").then((m) => m.Testimonials),
 );
 const Faq = dynamic(() => import("@/components/sections/Faq").then((m) => m.Faq));
 
@@ -75,8 +77,8 @@ export async function generateMetadata({
   }
 
   const locale = raw as Locale;
-  const content = getContent(locale);
   const title = `${getLocalePageTitle(locale, "home")} | ${siteConfig.name}`;
+  const ogImage = getOgImage(locale);
 
   /*
    * Only what differs from the layout.
@@ -91,17 +93,18 @@ export async function generateMetadata({
     openGraph: {
       type: "website",
       siteName: siteConfig.name,
-      locale: content.htmlLang.replace("-", "_"),
+      locale: getOpenGraphLocale(locale),
       url: `${siteConfig.url}/${locale}`,
       title,
       description: getMetaDescription(locale),
-      images: [OG_IMAGE],
+      alternateLocale: locale === "vi" ? ["en_US"] : ["vi_VN"],
+      images: [ogImage],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description: getMetaDescription(locale),
-      images: [OG_IMAGE],
+      images: [ogImage],
     },
     robots: ROBOTS,
   };
@@ -127,7 +130,7 @@ export default async function HomePage({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(generateHomeSchema(locale, content)),
+          __html: serializeJsonLd(generateHomeSchema(locale, content)),
         }}
       />
       <SectionNav
