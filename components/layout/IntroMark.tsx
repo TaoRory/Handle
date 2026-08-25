@@ -1,163 +1,85 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
 
 import { EASE_EXPO } from "@/lib/motion";
 
 /**
- * The intro logo, rebuilt so the hand can move independently of the H.
+ * The intro mark: the site's own H, drawn.
  *
- * Source of truth is `Intro/logo intro.png` in the repo root. That file is a
- * flat raster, so nothing in it can be animated on its own — the two slabs of
- * the H are redrawn here as vector paths (measured off the original: bars 76
- * units wide, 361 tall, outer corners r=30, inner corners square), and the hand
- * is extracted from the PNG as a transparent cut-out including the cream
- * knockout ring the logo puts between the hand and the bars.
+ * This used to be a separate drawing — the solid two-tone slabs from
+ * `Intro/logo intro.png`, in that artwork's taupe and tan — while the header
+ * and footer used the thin-stroke H from `components/ui/logo.tsx`. Two logos in
+ * two palettes, and `CLAUDE.md` carried a note to unify them before launch.
+ * This is that unification: same geometry as `ui/logo.tsx`, same gold. There is
+ * one Handle mark now.
  *
- * All geometry below is in the original artwork's coordinate space, offset so
- * the H's left edge sits at x=70 and there is room to the left for the hand to
- * fly in from.
+ * Geometry is the brand sheet's, unchanged from `ui/logo.tsx`: stems at x=6 and
+ * x=42 over a 48×52 field, stroke 5 with round caps, and a crossbar that curves
+ * rather than sitting flat, cut short of each stem — the junction detail. The
+ * gap is deliberate; the crossbar is not supposed to touch.
  */
 
-/** Palette lifted from the supplied artwork, not from the site tokens. */
-const TAUPE = "#9F8772";
-const TAN = "#D5BFA8";
+/** The centre line: where the stems start growing and where the crossbar sits. */
+const MID = 27;
 
-const BAR_W = 76;
-const BAR_H = 361;
-const LEFT_X = 70;
-const RIGHT_X = 280;
-const RADIUS = 30;
+const STROKE = 5;
 
 /**
- * Where both bars change tone — under where the hand lands.
- *
- * The two bars alternate across it: the left is dark above and light below, the
- * right light above and dark below. That diagonal is the point of the mark —
- * the hand crosses on the line where the tones swap.
+ * Each stem is two paths, both starting at the centre line and running in
+ * opposite directions, so the pair grows outward from the middle rather than
+ * unrolling from one end. A single path drawn with a dash offset can only ever
+ * start at one of its ends.
  */
-const TONE_SPLIT = 180;
+const STEMS = [
+  { id: "left-up", d: `M6 ${MID} V4` },
+  { id: "left-down", d: `M6 ${MID} V48` },
+  { id: "right-up", d: `M42 ${MID} V4` },
+  { id: "right-down", d: `M42 ${MID} V48` },
+];
 
-const VIEW_W = 426;
-
-/** Rounded on the outer side only, square where it meets the crossbar. */
-function barPath(x: number, side: "left" | "right") {
-  const r = RADIUS;
-  return side === "left"
-    ? `M${x + BAR_W} 0 L${x + r} 0 A${r} ${r} 0 0 0 ${x} ${r} L${x} ${BAR_H - r} A${r} ${r} 0 0 0 ${x + r} ${BAR_H} L${x + BAR_W} ${BAR_H} Z`
-    : `M${x} 0 L${x + BAR_W - r} 0 A${r} ${r} 0 0 1 ${x + BAR_W} ${r} L${x + BAR_W} ${BAR_H - r} A${r} ${r} 0 0 1 ${x + BAR_W - r} ${BAR_H} L${x} ${BAR_H} Z`;
-}
-
-/** The hand cut-out's box, in the same coordinate space as the bars. */
-const HAND = { x: 6, y: 92, w: 414, h: 190 };
-
-const asPercent = (value: number, total: number) => `${(value / total) * 100}%`;
+/** Curved crossbar. Rise is ~7.5% of its span, inside the guideline's 5–8%. */
+const BRIDGE = `M11.5 ${MID}C17 24.5 31 24.5 36.5 ${MID}`;
 
 interface IntroMarkProps {
-  altText: string;
   /** Timings are owned by `IntroCurtain`, which holds the whole timeline. */
   markDuration: number;
-  handDelay: number;
-  handDuration: number;
 }
 
-export function IntroMark({
-  altText,
-  markDuration,
-  handDelay,
-  handDuration,
-}: IntroMarkProps) {
+export function IntroMark({ markDuration }: IntroMarkProps) {
+  /*
+   * `pathLength={1}` normalises every stroke, so one dash pattern and one
+   * keyframe serve strokes of five different lengths. The resting
+   * `strokeDashoffset` is 0 — the state reduced motion collapses to, which is
+   * the mark fully drawn.
+   *
+   * `"1 2"` and not `1`: the gap has to be longer than the dash, or the pattern
+   * repeats within the path and a round cap lands a stray dot at one end. See
+   * the keyframe in `globals.css`.
+   */
+  const draw = {
+    pathLength: 1,
+    strokeDasharray: "1 2",
+    strokeDashoffset: 0,
+    strokeWidth: STROKE,
+    strokeLinecap: "round",
+    fill: "none",
+  } as const;
+
   return (
-    <div
-      className="relative w-[190px] sm:w-[240px]"
-      style={{ aspectRatio: `${VIEW_W} / ${BAR_H}` }}
+    <motion.svg
+      viewBox="0 0 48 52"
+      className="stroke-gold-600 w-[124px] sm:w-[158px]"
+      aria-hidden="true"
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: markDuration, ease: EASE_EXPO }}
     >
-      {/* ---- The H ---- */}
-      <motion.svg
-        viewBox={`0 0 ${VIEW_W} ${BAR_H}`}
-        fill="none"
-        className="absolute inset-0 size-full"
-        aria-hidden="true"
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: markDuration, ease: EASE_EXPO }}
-      >
-        <defs>
-          <clipPath id="intro-left-bar">
-            <path d={barPath(LEFT_X, "left")} />
-          </clipPath>
-          <clipPath id="intro-right-bar">
-            <path d={barPath(RIGHT_X, "right")} />
-          </clipPath>
-        </defs>
+      {STEMS.map((stem) => (
+        <path key={stem.id} d={stem.d} className="animate-intro-stem" {...draw} />
+      ))}
 
-        {/*
-          Each bar is laid down light, then the dark half painted over it and
-          clipped back to the bar's own rounded outline — which is what keeps
-          the corner radii intact at the top of the left bar and the bottom of
-          the right one. The seam falls where the hand lands, so neither edge is
-          ever seen hard against the other.
-
-          The group around each bar is what grows. It starts squashed to a
-          sliver about its own centre, so the mark opens as two horizontal
-          dashes on the line the hand will later cross, then extends to full
-          height. `transform-box: fill-box` puts the origin at the bar's centre
-          rather than the SVG's, which is what makes the two grow in place
-          instead of sliding toward the middle.
-
-          The growth is a CSS animation, not a Motion one. `MotionConfig
-          reducedMotion="user"` withholds a Motion transform, which here would
-          leave both bars frozen as slivers — no H at all — for exactly the
-          people that setting protects. A CSS animation with `forwards`
-          collapses to its final frame under the reduce block instead.
-        */}
-        <g className="animate-intro-bar origin-center [transform-box:fill-box]">
-          <path d={barPath(LEFT_X, "left")} fill={TAN} />
-          <rect
-            x={LEFT_X}
-            y={0}
-            width={BAR_W}
-            height={TONE_SPLIT}
-            fill={TAUPE}
-            clipPath="url(#intro-left-bar)"
-          />
-        </g>
-
-        <g className="animate-intro-bar origin-center [transform-box:fill-box]">
-          <path d={barPath(RIGHT_X, "right")} fill={TAN} />
-          <rect
-            x={RIGHT_X}
-            y={TONE_SPLIT}
-            width={BAR_W}
-            height={BAR_H - TONE_SPLIT}
-            fill={TAUPE}
-            clipPath="url(#intro-right-bar)"
-          />
-        </g>
-      </motion.svg>
-
-      {/* ---- The hand, flying in from the left ---- */}
-      <motion.div
-        className="absolute"
-        style={{
-          left: asPercent(HAND.x, VIEW_W),
-          top: asPercent(HAND.y, BAR_H),
-          width: asPercent(HAND.w, VIEW_W),
-          height: asPercent(HAND.h, BAR_H),
-        }}
-        initial={{ x: "-108%", y: "14%", opacity: 0 }}
-        animate={{ x: "0%", y: "0%", opacity: 1 }}
-        transition={{ duration: handDuration, ease: EASE_EXPO, delay: handDelay }}
-      >
-        <Image
-          src="/intro/hand.png"
-          alt={altText}
-          fill
-          sizes="(max-width: 640px) 190px, 240px"
-          className="object-contain"
-        />
-      </motion.div>
-    </div>
+      <path d={BRIDGE} className="animate-intro-bridge" {...draw} />
+    </motion.svg>
   );
 }

@@ -129,19 +129,17 @@ export function CostTable({ id, copy, items, locale, services }: CostTableProps)
                               {item.procedure}
                             </span>
                           )}
-                          <span className="text-ink-400 mt-1 block text-sm">{item.unit}</span>
-                          {item.note ? (
-                            <span className="text-ink-400 mt-2 block max-w-[34ch] text-sm">
-                              {item.note}
-                            </span>
-                          ) : null}
+                          <span className="text-ink-400 mt-1 block text-sm">
+                            {item.unit}
+                          </span>
                         </th>
 
-                        <td className="px-5 py-5 align-top">
-                          <div className="text-ink block text-[0.9375rem] font-medium">
-                            {item.note || "—"}
-                          </div>
-                          <div className="text-ink-400 mt-1 block text-sm">{item.unit}</div>
+                        {/* The note belongs to this column and only this one.
+                            Both it and the unit were being printed twice per
+                            row — once under the service name, once here — so
+                            every row read its own description back to itself. */}
+                        <td className="text-ink-600 px-5 py-5 align-top text-[0.9375rem]">
+                          {item.note || "—"}
                         </td>
 
                         <td className="px-5 py-5 text-right align-top">

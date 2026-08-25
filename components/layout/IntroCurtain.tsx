@@ -4,8 +4,12 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useState } from "react";
 
 import { IntroMark } from "@/components/layout/IntroMark";
+import { INTRO_SESSION_KEY } from "@/lib/intro";
 import { EASE_EXPO } from "@/lib/motion";
-import { INTRO_SESSION_KEY } from "@/lib/site-config";
+
+/* Re-exported so existing imports keep working; the value itself lives in a
+   non-client module — see the note there. */
+export { INTRO_SESSION_KEY } from "@/lib/intro";
 
 /**
  * Intro timeline, in seconds. Kept in one place because the steps have to stay
@@ -13,28 +17,27 @@ import { INTRO_SESSION_KEY } from "@/lib/site-config";
  * intro ends up feeling ragged.
  *
  *   0.00  the mark fades in                      (0.70s)
- *   0.12  two dashes on the centre line extend into the stems (0.62s, done 0.74)
- *   0.80  the hand flies in from the left        (1.05s, lands at 1.85)
+ *   0.12  the stems draw outward from the centre line (0.62s, done 0.74)
+ *   0.80  the crossbar draws left to right       (0.90s, lands at 1.70)
  *   0.90  the skip control fades up
  *   1.90  HANDLE and the tagline fade up together (0.40s, ends 2.30)
  *   2.30  ── one full second of stillness, so the lockup can be read ──
  *   3.30  the curtain lifts                      (0.65s)
  *
- * The bar growth is the one step not declared here: it is a CSS animation in
- * `globals.css` (`--animate-intro-bar`), because a Motion transform would be
- * withheld under reduced motion and leave the H as two slivers. Its 0.12s delay
- * and 0.62s duration are the numbers the hand's delay is set against, so the two
- * files have to move together.
+ * Two steps are not declared here. The bar growth and the crossbar draw are both
+ * CSS animations in `globals.css` (`--animate-intro-bar`,
+ * `--animate-intro-bridge`), because Motion withholds its animations under
+ * reduced motion and would leave the H as two slivers with no middle. Their
+ * delays and durations are the numbers the rest of this sequence is set against,
+ * so the two files have to move together.
  *
  * The two lines of type share one delay on purpose: they are one lockup, and
  * staggering them made the tagline read as an afterthought rather than part of
- * the mark. The type still runs quicker than the hand — that is the thing to
- * watch.
+ * the mark. The type still arrives after the crossbar has landed — the mark
+ * completing itself is the thing to watch.
  */
 const TIMING = {
   mark: { duration: 0.7 },
-  /** Starts once the stems are at full height, so the hand completes a real H. */
-  hand: { delay: 0.8, duration: 1.05 },
   skip: { delay: 0.9 },
   /** Shared by both lines of type. Keep them equal. */
   type: { delay: 1.9, duration: 0.4 },
@@ -51,8 +54,6 @@ interface IntroCurtainProps {
   skipLabel: string;
   /** Announced to screen readers while the curtain holds the viewport. */
   loadingLabel: string;
-  /** Alt text for the hand mark. */
-  markLabel: string;
 }
 
 /**
@@ -90,10 +91,10 @@ function FadeIn({
 /**
  * Brand intro.
  *
- * The H stands, then the hand flies in from the left and completes it — the
- * mark assembling itself around the gesture the brand is named for. The
- * wordmark and tagline then fade up together beneath it, quicker than the mark:
- * the hand is the thing to watch, the words only need to arrive.
+ * The two stems draw outward from the centre line, then the crossbar draws
+ * across between them, left to right, bridging the two into an H. The wordmark
+ * and tagline fade up together beneath it afterwards: the mark completing
+ * itself is the thing to watch, the words only need to arrive.
  *
  * Constraints this respects:
  * - **Once per session.** An intro you cannot get past is a toll booth. The
@@ -108,11 +109,7 @@ function FadeIn({
  *   is a cover, not a gate, so crawlers are unaffected and the `<noscript>`
  *   rule in globals.css removes it entirely without JavaScript.
  */
-export function IntroCurtain({
-  skipLabel,
-  loadingLabel,
-  markLabel,
-}: IntroCurtainProps) {
+export function IntroCurtain({ skipLabel, loadingLabel }: IntroCurtainProps) {
   const [isPlaying, setIsPlaying] = useState(true);
 
   const dismiss = useCallback(() => {
@@ -190,26 +187,26 @@ export function IntroCurtain({
           exit={{ opacity: 0, y: "-4%" }}
           transition={{ duration: TIMING.exit.duration, ease: EASE_EXPO }}
         >
-          {/* Deliberately a flat field. The hand cut-out carries the logo's
-              cream knockout ring baked into the PNG, so anything that tints the
-              background behind the mark — a bloom, a gradient — makes that ring
-              read as a visible outline instead of disappearing into the page. */}
+          {/* A flat field, and now simply because nothing needs to be behind a
+              thin gold stroke on cream. The original reason — a hand cut-out
+              carrying a baked-in cream knockout ring that any tint would expose
+              as an outline — went with the hand. */}
           <div className="relative flex flex-col items-center">
-            <IntroMark
-              altText={markLabel}
-              markDuration={TIMING.mark.duration}
-              handDelay={TIMING.hand.delay}
-              handDuration={TIMING.hand.duration}
-            />
+            <IntroMark markDuration={TIMING.mark.duration} />
 
-            {/* Type sizes are derived from the supplied artwork rather than
-                picked: there the wordmark's cap height is 0.32 of the H's, and
-                the word runs about 2.5x the H's width. `leading-[0.74]` crops
-                the line box to the caps so the gaps below match too. */}
+            {/* Wordmark and tagline take the header lockup's colours now that
+                the mark does: gold mark, ink word, `ink-400` tagline. They were
+                the old artwork's taupe and tan, which read as a third palette
+                the moment the mark stopped being that drawing.
+
+                Sizes still come from the artwork's proportions rather than
+                being picked — cap height 0.32 of the H's, the word about 2.5x
+                its width. `leading-[0.74]` crops the line box to the caps so
+                the gaps below match too. */}
             <FadeIn
               delay={TIMING.type.delay}
               duration={TIMING.type.duration}
-              className="font-brand mt-[30px] text-[clamp(2.25rem,12vw,4.25rem)] leading-[0.74] font-medium tracking-[0.12em] text-[#9F8772] sm:mt-[38px] sm:text-[5.4rem]"
+              className="font-brand text-ink mt-[30px] text-[clamp(2.25rem,12vw,4.25rem)] leading-[0.74] font-medium tracking-[0.12em] sm:mt-[38px] sm:text-[5.4rem]"
             >
               HANDLE
             </FadeIn>
@@ -217,7 +214,7 @@ export function IntroCurtain({
             <FadeIn
               delay={TIMING.type.delay}
               duration={TIMING.type.duration}
-              className="font-brand mt-[11px] text-[clamp(0.6rem,3.1vw,0.95rem)] leading-[0.74] tracking-[0.15em] text-[#C4B2A0] uppercase sm:mt-[14px] sm:text-[1.2rem]"
+              className="font-brand text-ink-400 mt-[11px] text-[clamp(0.6rem,3.1vw,0.95rem)] leading-[0.74] tracking-[0.15em] uppercase sm:mt-[14px] sm:text-[1.2rem]"
             >
               You heal. We handle the rest.
             </FadeIn>

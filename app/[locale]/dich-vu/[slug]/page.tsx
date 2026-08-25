@@ -219,7 +219,6 @@ export default async function ServicePage({
         id={BANDS.cost}
         copy={copy.cost}
         items={getCostItemsForService(locale, service.id)}
-        locale={locale}
         costHref={routePath(locale, ROUTES.cost)}
       />
 

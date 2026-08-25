@@ -20,7 +20,8 @@ import {
   getMetaDescription,
   getVerification,
 } from "@/lib/seo";
-import { INTRO_SESSION_KEY, siteConfig } from "@/lib/site-config";
+import { INTRO_SESSION_KEY } from "@/lib/intro";
+import { siteConfig } from "@/lib/site-config";
 
 import { LOCALES, type Locale } from "@/types";
 
@@ -152,6 +153,19 @@ export default async function LocaleLayout({
       suppressHydrationWarning
     >
       <body className="min-h-dvh antialiased">
+        {/* These three came back out of `app/[locale]/head.tsx`, which is not a
+            Next 16 file convention — `head` was an App Router experiment
+            removed when the Metadata API landed, and it is absent from the
+            file-conventions list that ships in `node_modules/next/dist/docs`.
+            The file rendered nothing, so moving them there silently deleted
+            the site's entire structured-data graph, let the curtain flash for
+            returning visitors, and left it stuck for anyone without
+            JavaScript. */}
+
+        {/* Runs before first paint: if the intro already played this session,
+            flag the document so CSS hides the curtain and no frame of it can
+            flash while React hydrates. Paired with the `<noscript>` rule below
+            so a visitor without JavaScript never sees a curtain at all. */}
         <script
           dangerouslySetInnerHTML={{
             __html: `try{if(sessionStorage.getItem(${JSON.stringify(
@@ -175,7 +189,6 @@ export default async function LocaleLayout({
           <IntroCurtain
             skipLabel={content.intro.skip}
             loadingLabel={content.intro.loading}
-            markLabel={content.intro.mark}
           />
 
           <SkipLink label={content.a11y.skipToContent} />
