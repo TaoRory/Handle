@@ -49,7 +49,7 @@ export function generateSiteSchema() {
         // does not reliably decode favicons.
         logo: `${baseUrl}/og.jpg`,
         email: siteConfig.email,
-        telephone: siteConfig.phone,
+        telephone: siteConfig.phones[0].dial,
         // The topics this entity is *about*. Nothing here is a claim about
         // outcomes — it is the subject matter of the page, stated in the terms
         // a query would use, which is what an answer engine matches against
@@ -81,12 +81,17 @@ export function generateSiteSchema() {
           { "@type": "Place", name: "International" },
         ],
         priceRange: "$$",
-        contactPoint: {
+        /* One point per hotline, each naming the country it answers from.
+           A single `telephone` would hide the Australian line from anything
+           reading this graph, which is the half of the audience most likely
+           to be looking for a local number. */
+        contactPoint: siteConfig.phones.map((phone) => ({
           "@type": "ContactPoint",
-          telephone: siteConfig.phone,
+          telephone: phone.dial,
           contactType: "customer service",
+          areaServed: phone.id === "vn" ? "VN" : "AU",
           availableLanguage: ["Vietnamese", "English"],
-        },
+        })),
       },
       {
         "@type": "WebSite",

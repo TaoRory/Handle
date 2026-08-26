@@ -238,7 +238,18 @@ export const en: SiteContent = {
         name: "WhatsApp",
         hint: "Best if you are overseas",
       },
-      { id: "phone", icon: "phone", name: "Call us", hint: "Office hours, GMT+7" },
+      {
+        id: "phone-vn",
+        icon: "phone",
+        name: "Vietnam hotline",
+        hint: "+84 77 333 3247 · business hours, GMT+7",
+      },
+      {
+        id: "phone-au",
+        icon: "phone",
+        name: "Australia hotline",
+        hint: "+61 424 648 595 · business hours, AEST",
+      },
       {
         id: "email",
         icon: "mail",
@@ -255,6 +266,7 @@ export const en: SiteContent = {
 
   footer: {
     tagline: "You heal. We handle the rest.",
+    phoneLabels: { vn: "Vietnam", au: "Australia" },
     columns: [
       {
         id: "company",

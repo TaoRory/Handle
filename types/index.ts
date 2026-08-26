@@ -625,6 +625,8 @@ export interface SiteContent {
   intro: { skip: string; loading: string };
   footer: {
     tagline: string;
+    /** Keyed by `siteConfig.phones[].id` — which country each hotline answers. */
+    phoneLabels: Record<string, string>;
     columns: FooterColumn[];
     contactTitle: string;
     address: string;

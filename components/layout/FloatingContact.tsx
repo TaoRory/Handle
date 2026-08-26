@@ -13,8 +13,10 @@ import type { SiteContent } from "@/types";
 const HREF: Record<string, string> = {
   zalo: contactLinks.zalo,
   whatsapp: contactLinks.whatsapp,
-  phone: contactLinks.tel,
   email: contactLinks.mail,
+  ...Object.fromEntries(
+    contactLinks.phones.map((phone) => [`phone-${phone.id}`, phone.href]),
+  ),
 };
 
 /**

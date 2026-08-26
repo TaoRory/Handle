@@ -104,12 +104,15 @@ export function MobileNav({
               {ctaLabel}
               <ArrowTrail />
             </ConsultationLink>
-            <a
-              href={contactLinks.tel}
-              className="text-ink-600 hover:text-ink text-center text-sm transition-colors duration-200"
-            >
-              {siteConfig.phone}
-            </a>
+            {contactLinks.phones.map((phone) => (
+              <a
+                key={phone.id}
+                href={phone.href}
+                className="text-ink-600 hover:text-ink text-center text-sm transition-colors duration-200"
+              >
+                {phone.display}
+              </a>
+            ))}
           </div>
         </Dialog.Content>
       </Dialog.Portal>
