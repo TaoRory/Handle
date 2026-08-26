@@ -5,11 +5,19 @@ import { CostHero } from "@/components/sections/CostHero";
 import { CostInclusions } from "@/components/sections/CostInclusions";
 import { CostTable } from "@/components/sections/CostTable";
 import { FaqBand } from "@/components/sections/FaqBand";
+import { OtherSpecialties } from "@/components/sections/OtherSpecialties";
 import { PageClosing } from "@/components/sections/PageClosing";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Container } from "@/components/ui/container";
 import { getContent, getPageContent, isLocale } from "@/content";
-import { getCostFactors, getCostInclusions, getCostItems, getServices } from "@/data";
+import {
+  getCostCategories,
+  getCostFactors,
+  getCostInclusions,
+  getCostItems,
+  getOtherSpecialties,
+  getServices,
+} from "@/data";
 import { generatePageSchema } from "@/lib/json-ld";
 import { OG_IMAGE, ROBOTS } from "@/lib/seo";
 import { ROUTES, routePath, siteConfig } from "@/lib/site-config";
@@ -30,14 +38,16 @@ import type { Metadata } from "next";
  *
  *   hero        cream
  *   table       white
- *   inclusions  cream-300
- *   factors     white
- *   faq         cream
+ *   others      cream-300
+ *   inclusions  white
+ *   factors     cream
+ *   faq         white
  *   closing     INK      ← the one accent surface
  */
 
 const BANDS = {
   table: "bang-gia",
+  others: "chuyen-khoa-khac",
   inclusions: "bao-gom",
   factors: "yeu-to",
   faq: "cau-hoi-chi-phi",
@@ -153,9 +163,16 @@ export default async function CostPage({
       <CostTable
         id={BANDS.table}
         copy={cost.table}
+        categories={getCostCategories(locale)}
         items={getCostItems(locale)}
         locale={locale}
         services={getServices(locale)}
+      />
+
+      <OtherSpecialties
+        id={BANDS.others}
+        copy={cost.others}
+        items={getOtherSpecialties(locale)}
       />
 
       <CostInclusions
@@ -170,7 +187,7 @@ export default async function CostPage({
         factors={getCostFactors(locale)}
       />
 
-      <FaqBand id={BANDS.faq} copy={cost.faq} items={cost.faq.items} />
+      <FaqBand id={BANDS.faq} copy={cost.faq} items={cost.faq.items} tone="surface" />
 
       <PageClosing id={BANDS.closing} copy={cost.closing} locale={locale} />
     </>

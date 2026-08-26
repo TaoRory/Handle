@@ -239,36 +239,70 @@ export interface TrustBadge {
 export interface PriceBand {
   from: number;
   to: number;
+  /**
+   * Renders the trailing "+". The supplied schedule uses it for procedures whose
+   * upper bound is a starting point rather than a ceiling, and dropping it would
+   * turn "from A$3,500" into a cap the clinic never agreed to.
+   */
+  isOpenEnded?: boolean;
 }
 
 /**
- * One procedure's reference cost.
+ * How one row's price is expressed.
  *
- * `vnd` is carried alongside `usd` rather than derived from it. A single
- * exchange-rate constant would be wrong the week after it was written and
- * wrong silently, and the reader who thinks in đồng is the one least served
- * by a stale conversion.
+ * A discriminated union rather than an optional band, because "we have not
+ * filled this in" and "this cannot be banded" are different statements and the
+ * table has to say which. Surgery and donor pathways are quoted case by case;
+ * a screening report is included in whichever package was bought.
  */
+export type CostPrice =
+  | { kind: "band"; aud: PriceBand }
+  | { kind: "quote" }
+  | { kind: "included" };
+
+/** One priced line inside a specialty. */
 export interface CostItem {
   id: string;
-  /** Matches a `Service.id`, so a row can link through to its specialty. */
-  serviceId: string;
+  /** The `CostCategory` this row groups under. */
+  categoryId: string;
   procedure: string;
-  /** What the band covers — "per implant", "full cycle", "per eye". */
-  unit: string;
-  /** Reference band in Vietnam, US dollars. */
-  usd?: PriceBand;
-  /** The same band in Vietnamese đồng, millions. */
-  vnd?: PriceBand;
-  /** The same procedure in a high-cost system, US dollars. */
-  abroad?: PriceBand;
-  /** Reference band in Australian dollars. */
-  aud?: PriceBand;
-  /** Optional category for the cost item. */
-  category?: string;
-  /** Which system `abroad` describes — "abroad" on its own means nothing. */
-  abroadRegion: string;
-  note?: string;
+  /** The middle column: what it covers, and what it is for. */
+  covers: string;
+  price: CostPrice;
+}
+
+/**
+ * A priced specialty, and the range its card should quote.
+ *
+ * `journey` exists because a card showing the cheapest row anchors a reader on
+ * a consultation fee and makes everything that follows feel like an upsell. The
+ * range a coordinated course of care actually costs is the honest headline.
+ */
+export interface CostCategory {
+  id: string;
+  /** Matches a `Service.id` where the specialty has a page of its own. */
+  serviceId?: string;
+  title: string;
+  intro: string;
+  journey: { id: string; label: string; aud: PriceBand }[];
+}
+
+/**
+ * A specialty Handle coordinates without running a priced schedule for it.
+ *
+ * Four columns instead of three, and deliberately a separate collection: these
+ * rows quote a whole care journey rather than a procedure, so folding them into
+ * `CostItem` would mean a table where two rows at the same indent level mean
+ * different things.
+ */
+export interface OtherSpecialty {
+  id: string;
+  name: string;
+  /** "Xương · Khớp · Cột sống · Chấn thương thể thao" */
+  covers: string;
+  journey: PriceBand;
+  /** What falls outside the range, and how it is priced instead. */
+  advanced: string;
 }
 
 /** A line in the "what the number covers" list. */
@@ -313,18 +347,19 @@ export interface CostPageContent {
   breadcrumb: string;
   hero: PageBandCopy & { primaryCta: string; secondaryCta: string };
   table: PageBandCopy & {
-    colProcedure?: string;
-    colVietnam?: string;
-    colAbroad?: string;
-    colSaving?: string;
-    colService?: string;
-    colCovers?: string;
-    colEstimated?: string;
+    colService: string;
+    colCovers: string;
+    colEstimated: string;
+    /** Rendered where a row cannot be banded at all. */
+    quoteLabel: string;
+    includedLabel: string;
     /** Screen-reader caption for the table element. */
     caption: string;
     /** Sits under the table: what these numbers are, and are not. */
     disclaimer: string;
   };
+  /** The specialties coordinated without a priced schedule of their own. */
+  others: PageBandCopy & { journeyLabel: string };
   inclusions: PageBandCopy & { includedLabel: string; excludedLabel: string };
   factors: PageBandCopy;
   faq: PageBandCopy & { items: Faq[] };
@@ -359,7 +394,13 @@ export interface ServicePageContent {
   includes: PageBandCopy;
   facts: PageBandCopy;
   suitedFor: PageBandCopy;
-  cost: PageBandCopy & { action: string; empty: string };
+  cost: PageBandCopy & {
+    action: string;
+    empty: string;
+    quoteLabel: string;
+    includedLabel: string;
+    disclaimer: string;
+  };
   faq: PageBandCopy;
   related: PageBandCopy;
   closing: PageBandCopy & { action: string };

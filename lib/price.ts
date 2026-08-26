@@ -1,66 +1,57 @@
-import type { Locale, PriceBand } from "@/types";
+import type { CostPrice, PriceBand } from "@/types";
 
 /**
- * Band formatting and the one derived figure on the cost page.
+ * Band formatting for the price schedule.
  *
- * Kept out of the components because the specialty pages render the same bands
- * in a different layout, and two copies of a rounding rule is how the same
- * procedure ends up quoted two ways on two pages of the same site.
+ * Out of the components because the cost table and the specialty pages render
+ * the same bands in different layouts, and two copies of a rounding rule is how
+ * one procedure ends up quoted two ways on two pages of the same site.
  */
 
-/** An en dash with hair spaces — a hyphen between numbers reads as minus. */
-const RANGE = " – ";
+/** An en dash with spaces — a hyphen between two numbers reads as minus. */
+const RANGE = " – ";
 
-const usd = new Intl.NumberFormat("en-US", {
-  style: "currency",
-  currency: "USD",
-  maximumFractionDigits: 0,
-});
-
-const aud = new Intl.NumberFormat("en-AU", {
-  style: "currency",
-  currency: "AUD",
-  maximumFractionDigits: 0,
-});
-
-/** `{ from: 300, to: 1200 }` → `"$300 – $1,200"`. */
-export function formatUsdBand(band: PriceBand): string {
-  if (band.from === 0 && band.to === 0) return "—";
-  return `${usd.format(band.from)}${RANGE}${usd.format(band.to)}`;
-}
+const digits = new Intl.NumberFormat("en-AU", { maximumFractionDigits: 0 });
 
 /**
- * The same band in đồng, carried in millions.
+ * `A$`, not the `$` that `currencyDisplay: "narrowSymbol"` produces.
  *
- * Vietnamese prices are spoken in triệu, not in full digits — "104 triệu" is
- * what a reader hears and repeats, while "104.000.000 ₫" is nine characters of
- * noise they have to count. English keeps the unit spelled out because "M ₫"
- * would be guesswork for a reader who has never seen it.
+ * A bare dollar sign on a page about medical tourism reads as US dollars to
+ * most of the world, and this schedule is Australian. The client's own document
+ * writes `A$` for the same reason; `AUD 40` would be unambiguous too but reads
+ * like an invoice.
  */
-export function formatVndBand(band: PriceBand, locale: Locale): string {
-  if (band.from === 0 && band.to === 0) return "—";
-  const unit = locale === "vi" ? "triệu ₫" : "million ₫";
-  const format = (value: number) => value.toLocaleString(locale === "vi" ? "vi-VN" : "en-US");
-  return `${format(band.from)}${RANGE}${format(band.to)} ${unit}`;
-}
+const money = (value: number) => `A$${digits.format(value)}`;
 
+/**
+ * `{ from: 3500, to: 8000, isOpenEnded: true }` → `"A$3,500 – A$8,000+"`.
+ *
+ * The trailing plus is data, not decoration: where the schedule writes it, the
+ * upper bound is where a case starts rather than where it stops, and printing
+ * the band without it states a ceiling the clinic never offered.
+ */
 export function formatAudBand(band: PriceBand): string {
-  if (band.from === 0 && band.to === 0) return "—";
-  return `${aud.format(band.from)}${RANGE}${aud.format(band.to)}`;
+  const range = `${money(band.from)}${RANGE}${money(band.to)}`;
+  return band.isOpenEnded ? `${range}+` : range;
 }
 
 /**
- * How far below the comparison band the Vietnamese one sits, as a percentage.
+ * One row's price, whatever kind it is.
  *
- * Measured midpoint to midpoint. Comparing the two lower bounds, or the low
- * end of one against the high end of the other, would both produce a bigger
- * number and neither would describe a case anyone actually has — the midpoint
- * is the only pairing that is not chosen for how it reads. Rounded to five so
- * the figure does not imply a precision the underlying bands do not have.
+ * The two non-band cases take their wording from content rather than from here,
+ * so "báo giá riêng" and "custom quote" stay in the dictionaries with every
+ * other string a reader sees.
  */
-export function savingPercent(vietnam: PriceBand, abroad: PriceBand): number {
-  if (vietnam.from === 0 && vietnam.to === 0) return 0;
-  const mid = (band: PriceBand) => (band.from + band.to) / 2;
-  const ratio = 1 - mid(vietnam) / mid(abroad);
-  return Math.round((ratio * 100) / 5) * 5;
+export function formatCostPrice(
+  price: CostPrice,
+  labels: { quote: string; included: string },
+): string {
+  switch (price.kind) {
+    case "band":
+      return formatAudBand(price.aud);
+    case "quote":
+      return labels.quote;
+    case "included":
+      return labels.included;
+  }
 }

@@ -1,5 +1,10 @@
 import { advantages } from "@/data/advantages";
-import { costFactors, costInclusions, costItems } from "@/data/costs";
+import {
+  costCategories,
+  costItems,
+  otherSpecialties,
+} from "@/data/cost-schedule";
+import { costFactors, costInclusions } from "@/data/costs";
 import { experiences } from "@/data/experiences";
 import { faqs } from "@/data/faqs";
 import { journeySteps } from "@/data/journey";
@@ -13,9 +18,11 @@ import { ROUTES } from "@/lib/site-config";
 
 import type {
   Advantage,
+  CostCategory,
   CostFactor,
   CostInclusion,
   CostItem,
+  OtherSpecialty,
   Experience,
   Faq,
   JourneyStep,
@@ -45,6 +52,10 @@ export const getTestimonials = (locale: Locale): Testimonial[] => testimonials[l
 export const getStats = (locale: Locale): Stat[] => stats[locale];
 export const getFaqs = (locale: Locale): Faq[] => faqs[locale];
 export const getCostItems = (locale: Locale): CostItem[] => costItems[locale];
+export const getCostCategories = (locale: Locale): CostCategory[] =>
+  costCategories[locale];
+export const getOtherSpecialties = (locale: Locale): OtherSpecialty[] =>
+  otherSpecialties[locale];
 export const getCostInclusions = (locale: Locale): CostInclusion[] =>
   costInclusions[locale];
 export const getCostFactors = (locale: Locale): CostFactor[] => costFactors[locale];
@@ -68,9 +79,21 @@ export const getServiceDetail = (
   id: string,
 ): ServiceDetail | undefined => serviceDetails[locale].find((detail) => detail.id === id);
 
-/** The rows of the cost table that belong to one specialty. Often empty. */
-export const getCostItemsForService = (locale: Locale, serviceId: string): CostItem[] =>
-  costItems[locale].filter((item) => item.serviceId === serviceId);
+/**
+ * The priced rows for one specialty, and the range its card should quote.
+ *
+ * Joined through `CostCategory.serviceId` rather than stored on every row: the
+ * schedule groups by specialty already, and repeating the link per row is a
+ * second place for it to drift.
+ */
+export function getCostForService(locale: Locale, serviceId: string) {
+  const category = costCategories[locale].find((c) => c.serviceId === serviceId);
+  if (!category) return { category: undefined, items: [] as CostItem[] };
+  return {
+    category,
+    items: costItems[locale].filter((item) => item.categoryId === category.id),
+  };
+}
 
 /**
  * A specialty's path, for the content dictionaries to store as a link.

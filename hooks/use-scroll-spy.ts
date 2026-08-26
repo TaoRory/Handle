@@ -16,7 +16,14 @@ export function useScrollSpy(ids: string[], offset = 96): string | null {
       .map((id) => document.getElementById(id))
       .filter((element): element is HTMLElement => element !== null);
 
-    if (elements.length === 0) return;
+    /* Reset, don't just bail. The navbar lives in the layout, so a client-side
+       navigation keeps this hook mounted: returning early on a route with none
+       of these sections left the *previous* page's id in state, and the header
+       went on highlighting "Trang chủ" while the reader was on /chi-phi. */
+    if (elements.length === 0) {
+      setActiveId(null);
+      return;
+    }
 
     const observer = new IntersectionObserver(
       (entries) => {

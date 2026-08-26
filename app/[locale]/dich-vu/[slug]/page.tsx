@@ -11,7 +11,7 @@ import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Container } from "@/components/ui/container";
 import { getContent, getPageContent, isLocale } from "@/content";
 import {
-  getCostItemsForService,
+  getCostForService,
   getServiceBySlug,
   getServiceDetail,
   getServices,
@@ -155,6 +155,7 @@ export default async function ServicePage({
 
   const home = content.nav.links[0].label;
   const related = getServices(locale).filter((item) => item.id !== service.id);
+  const serviceCost = getCostForService(locale, service.id);
 
   const schema = generatePageSchema({
     locale,
@@ -217,7 +218,8 @@ export default async function ServicePage({
       <ServiceCost
         id={BANDS.cost}
         copy={copy.cost}
-        items={getCostItemsForService(locale, service.id)}
+        category={serviceCost.category}
+        items={serviceCost.items}
         costHref={routePath(locale, ROUTES.cost)}
       />
 
