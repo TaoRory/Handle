@@ -18,8 +18,8 @@ import {
   getOtherSpecialties,
   getServices,
 } from "@/data";
-import { generatePageSchema } from "@/lib/json-ld";
-import { OG_IMAGE, ROBOTS } from "@/lib/seo";
+import { generatePageSchema, serializeJsonLd } from "@/lib/json-ld";
+import { ROBOTS, getOgImage, getOpenGraphLocale } from "@/lib/seo";
 import { ROUTES, routePath, siteConfig } from "@/lib/site-config";
 
 import { LOCALES, type Locale } from "@/types";
@@ -68,7 +68,6 @@ export async function generateMetadata({
 
   const locale = raw as Locale;
   const { cost } = getPageContent(locale);
-  const { htmlLang } = getContent(locale);
   const path = routePath(locale, ROUTES.cost);
 
   /*
@@ -81,6 +80,7 @@ export async function generateMetadata({
    */
   const title = cost.metaTitle;
   const socialTitle = `${cost.metaTitle} · ${siteConfig.name}`;
+  const ogImage = getOgImage(locale);
 
   return {
     title,
@@ -96,17 +96,18 @@ export async function generateMetadata({
     openGraph: {
       type: "article",
       siteName: siteConfig.name,
-      locale: htmlLang.replace("-", "_"),
+      locale: getOpenGraphLocale(locale),
       url: `${siteConfig.url}${path}`,
       title: socialTitle,
       description: cost.metaDescription,
-      images: [OG_IMAGE],
+      alternateLocale: locale === "vi" ? ["en_US"] : ["vi_VN"],
+      images: [ogImage],
     },
     twitter: {
       card: "summary_large_image",
       title: socialTitle,
       description: cost.metaDescription,
-      images: [OG_IMAGE],
+      images: [ogImage],
     },
     robots: ROBOTS,
   };
@@ -142,7 +143,7 @@ export default async function CostPage({
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(schema) }}
       />
 
       <CostHero copy={cost.hero} locale={locale} tableId={BANDS.table} />

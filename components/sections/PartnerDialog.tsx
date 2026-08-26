@@ -2,6 +2,7 @@
 
 import * as Dialog from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
+import Image from "next/image";
 
 import { ArrowTrail } from "@/components/ui/icon";
 
@@ -90,13 +91,12 @@ export function PartnerDialog({ copy, partners }: PartnerDialogProps) {
                   <div className="border-line bg-surface flex h-full items-center gap-4 rounded-sm border p-4">
                     <span className="bg-cream-100 flex size-12 shrink-0 items-center justify-center overflow-hidden rounded-md">
                       {partner.logo ? (
-                        /* eslint-disable-next-line @next/next/no-img-element --
-                           matches the marquee: these are small fixed-size marks,
-                           and routing ten of them through the optimizer for a
-                           panel that opens on demand buys nothing. */
-                        <img
+                        <Image
                           src={partner.logo}
                           alt=""
+                          width={36}
+                          height={36}
+                          sizes="36px"
                           className="size-9 object-contain"
                         />
                       ) : (

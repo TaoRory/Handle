@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import { PartnerDialog } from "@/components/sections/PartnerDialog";
 import { Container } from "@/components/ui/container";
 import { Marquee } from "@/components/ui/marquee";
@@ -21,9 +23,12 @@ function PartnerLogo({ partner }: { partner: Partner }) {
           in weight while carrying the whole label. */}
       <span className="text-ink-400 group-hover/partner:text-gold-700 font-brand flex size-14 items-center justify-center text-base leading-none tracking-[0.08em] transition-colors duration-300 sm:size-14">
         {partner.logo ? (
-          <img
+          <Image
             src={partner.logo}
             alt={`${partner.name} logo`}
+            width={56}
+            height={56}
+            sizes="56px"
             className="h-8 w-8 object-contain"
           />
         ) : (

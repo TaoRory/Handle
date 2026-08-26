@@ -9,8 +9,8 @@ import { Media } from "@/components/ui/media";
 import { Reveal } from "@/components/ui/reveal";
 import { getContent, getPageContent, isLocale } from "@/content";
 import { getServiceDetail, getServices } from "@/data";
-import { generatePageSchema } from "@/lib/json-ld";
-import { OG_IMAGE, ROBOTS } from "@/lib/seo";
+import { generatePageSchema, serializeJsonLd } from "@/lib/json-ld";
+import { ROBOTS, getOgImage, getOpenGraphLocale } from "@/lib/seo";
 import { ROUTES, routePath, siteConfig } from "@/lib/site-config";
 
 import { LOCALES, type Locale } from "@/types";
@@ -42,9 +42,9 @@ export async function generateMetadata({
 
   const locale = raw as Locale;
   const { service } = getPageContent(locale);
-  const { htmlLang } = getContent(locale);
   const path = routePath(locale, ROUTES.services);
   const socialTitle = `${service.index.metaTitle} · ${siteConfig.name}`;
+  const ogImage = getOgImage(locale);
 
   return {
     title: service.index.metaTitle,
@@ -60,17 +60,18 @@ export async function generateMetadata({
     openGraph: {
       type: "website",
       siteName: siteConfig.name,
-      locale: htmlLang.replace("-", "_"),
+      locale: getOpenGraphLocale(locale),
       url: `${siteConfig.url}${path}`,
       title: socialTitle,
       description: service.index.metaDescription,
-      images: [OG_IMAGE],
+      alternateLocale: locale === "vi" ? ["en_US"] : ["vi_VN"],
+      images: [ogImage],
     },
     twitter: {
       card: "summary_large_image",
       title: socialTitle,
       description: service.index.metaDescription,
-      images: [OG_IMAGE],
+      images: [ogImage],
     },
     robots: ROBOTS,
   };
@@ -106,7 +107,7 @@ export default async function ServicesIndexPage({
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(schema) }}
       />
 
       <section

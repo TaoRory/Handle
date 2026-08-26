@@ -8,12 +8,22 @@ import type { Locale } from "@/types";
  * images — and the card silently disappears from exactly the page that gets
  * shared.
  */
-export const OG_IMAGE = {
-  url: "/og.jpg",
-  width: 1200,
-  height: 630,
-  alt: "Handle — Chăm sóc sức khỏe tại Việt Nam, đã có chúng tôi lo.",
-};
+export function getOgImage(locale: Locale) {
+  return {
+    url: "/og.jpg",
+    width: 1200,
+    height: 630,
+    type: "image/jpeg",
+    alt:
+      locale === "vi"
+        ? "Handle — Chăm sóc sức khỏe tại Việt Nam, đã có chúng tôi lo."
+        : "Handle — Healthcare in Vietnam, with every detail handled.",
+  } as const;
+}
+
+export function getOpenGraphLocale(locale: Locale) {
+  return locale === "vi" ? "vi_VN" : "en_US";
+}
 
 /**
  * The meta description, in one place.
@@ -139,5 +149,7 @@ export const ROBOTS = {
     index: IS_INDEXABLE,
     follow: IS_INDEXABLE,
     "max-image-preview": "large",
+    "max-snippet": -1,
+    "max-video-preview": -1,
   },
 } as const;

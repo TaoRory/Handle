@@ -7,21 +7,21 @@ import { IntroCurtain } from "@/components/layout/IntroCurtain";
 import { MotionProvider } from "@/components/layout/MotionProvider";
 import { Navbar } from "@/components/layout/Navbar";
 import { ScrollProgress } from "@/components/layout/ScrollProgress";
-import { SectionNav } from "@/components/layout/SectionNav";
 import { SkipLink } from "@/components/layout/SkipLink";
 import { getContent, isLocale } from "@/content";
+import { generateSiteSchema, serializeJsonLd } from "@/lib/json-ld";
 import {
   LANGUAGE_ALTERNATES,
-  OG_IMAGE,
   ROBOTS,
+  getOgImage,
+  getOpenGraphLocale,
   getKeywords,
   getLocalePageTitle,
   getMetaDescription,
   getVerification,
 } from "@/lib/seo";
-import { sectionStep, siteConfig } from "@/lib/site-config";
 import { INTRO_SESSION_KEY } from "@/lib/intro";
-import { generateSiteSchema } from "@/lib/json-ld";
+import { siteConfig } from "@/lib/site-config";
 
 import { LOCALES, type Locale } from "@/types";
 
@@ -88,9 +88,9 @@ export async function generateMetadata({
   const { locale } = await params;
   if (!isLocale(locale)) return {};
 
-  const content = getContent(locale);
   const title = getLocalePageTitle(locale as Locale, "section");
   const description = getMetaDescription(locale as Locale);
+  const ogImage = getOgImage(locale as Locale);
 
   return {
     metadataBase: new URL(siteConfig.url),
@@ -108,12 +108,12 @@ export async function generateMetadata({
     openGraph: {
       type: "website",
       siteName: siteConfig.name,
-      locale: content.htmlLang.replace("-", "_"),
+      locale: getOpenGraphLocale(locale as Locale),
       url: `${siteConfig.url}/${locale}`,
       title: `${title} | ${siteConfig.name}`,
       description,
-      alternateLocale: ["en_US"],
-      images: [OG_IMAGE],
+      alternateLocale: locale === "vi" ? ["en_US"] : ["vi_VN"],
+      images: [ogImage],
     },
     twitter: {
       // Declaring the large card without an image is worse than declaring
@@ -123,7 +123,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: `${title} | ${siteConfig.name}`,
       description,
-      images: [OG_IMAGE],
+      images: [ogImage],
     },
     robots: ROBOTS,
     verification: getVerification(),
@@ -173,12 +173,14 @@ export default async function LocaleLayout({
             )})==="1")document.documentElement.classList.add("intro-played")}catch(e){}`,
           }}
         />
+
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(generateSiteSchema(locale as Locale, content)),
+            __html: serializeJsonLd(generateSiteSchema()),
           }}
         />
+
         <noscript>
           <style>{`#intro-curtain{display:none !important}`}</style>
         </noscript>

@@ -5,9 +5,6 @@ import { LOCALES, type Locale } from "@/types";
 
 import type { MetadataRoute } from "next";
 
-export const revalidate = 3600;
-
-
 /**
  * Every indexable URL, with its alternates.
  *
@@ -20,13 +17,16 @@ export const revalidate = 3600;
  * Service slugs differ per locale (`nha-khoa` / `dental-care`), so the
  * alternates for those entries are resolved through each locale's own record
  * rather than by substituting the locale segment.
+ *
+ * `lastModified` is deliberately omitted: using the request/build time makes
+ * every URL look freshly edited on every deployment. Search engines only use
+ * the value when it reflects a real, significant content change.
  */
 function serviceSlug(locale: Locale, id: string): string | undefined {
   return getServices(locale).find((service) => service.id === id)?.slug;
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date();
   const absolute = (path: string) => `${siteConfig.url}${path}`;
 
   const languages = (paths: Record<Locale, string>) => ({
@@ -40,7 +40,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   for (const locale of LOCALES) {
     entries.push({
       url: absolute(routePath(locale)),
-      lastModified,
       changeFrequency: locale === "vi" ? "weekly" : "monthly",
       priority: locale === "vi" ? 1 : 0.9,
       alternates: {
@@ -53,7 +52,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
     entries.push({
       url: absolute(routePath(locale, ROUTES.cost)),
-      lastModified,
       changeFrequency: "monthly",
       priority: 0.9,
       alternates: {
@@ -66,7 +64,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
     entries.push({
       url: absolute(routePath(locale, ROUTES.services)),
-      lastModified,
       changeFrequency: "monthly",
       priority: 0.9,
       alternates: {
@@ -83,7 +80,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
       entries.push({
         url: absolute(routePath(locale, ROUTES.services, service.slug)),
-        lastModified,
         changeFrequency: "monthly",
         priority: 0.8,
         alternates:
