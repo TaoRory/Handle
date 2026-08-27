@@ -241,10 +241,16 @@ export const vi: SiteContent = {
         hint: "Dành cho khách ở nước ngoài",
       },
       {
-        id: "phone",
+        id: "phone-vn",
         icon: "phone",
-        name: "Gọi điện",
-        hint: "Giờ hành chính, GMT+7",
+        name: "Hotline Việt Nam",
+        hint: "+84 77 333 3247 · giờ hành chính, GMT+7",
+      },
+      {
+        id: "phone-au",
+        icon: "phone",
+        name: "Hotline Úc",
+        hint: "+61 424 648 595 · giờ hành chính, AEST",
       },
       { id: "email", icon: "mail", name: "Email", hint: "Gửi kèm hồ sơ y tế" },
     ],
@@ -257,6 +263,7 @@ export const vi: SiteContent = {
 
   footer: {
     tagline: "You heal. We handle the rest.",
+    phoneLabels: { vn: "Việt Nam", au: "Úc" },
     columns: [
       {
         id: "company",

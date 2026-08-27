@@ -6,32 +6,39 @@ import { ArrowTrail } from "@/components/ui/icon";
 import { Reveal } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { formatAudBand } from "@/lib/price";
+import { formatAudBand, formatCostPrice } from "@/lib/price";
 
-import type { CostItem, ServicePageContent } from "@/types";
+import type { CostCategory, CostItem, ServicePageContent } from "@/types";
 
 interface ServiceCostProps {
   id: string;
   copy: ServicePageContent["cost"];
+  category?: CostCategory;
   items: CostItem[];
-  /** Link through to the full table. */
+  /** Link through to the full schedule. */
   costHref: string;
 }
 
 /**
- * This specialty's rows from the cost table.
+ * This specialty's rows from the published schedule.
  *
- * Cards rather than the table used on `/chi-phi`: one or two rows do not need a
- * header row, and a two-row table with four columns reads as a fragment of
- * something else. The numbers come from the same `costItems` records, so the
- * two pages cannot disagree — which is the failure worth designing against
- * here, since a reader who finds two different prices for one procedure on one
- * site stops believing either.
+ * A definition list rather than the table used on `/chi-phi`: one specialty in
+ * isolation has no other specialty to be compared against, so the header row
+ * that makes the full table a table has nothing left to organise here. Each row
+ * is a term and its price, with the description under it.
  *
- * A specialty with no rows renders the fallback line instead of an empty band.
+ * The journey range leads, ahead of every individual line. The schedule's own
+ * guidance is explicit about this and the reason is sound — a page that opens
+ * on the cheapest consultation fee anchors the reader there and makes the rest
+ * of the care read as an upsell.
+ *
+ * The numbers come from the same records the cost page renders, so the two
+ * cannot disagree. That is the failure worth designing against: a reader who
+ * finds two prices for one procedure on one site stops believing either.
  */
-export function ServiceCost({ id, copy, items, costHref }: ServiceCostProps) {
+export function ServiceCost({ id, copy, category, items, costHref }: ServiceCostProps) {
   const headingId = `${id}-title`;
+  const priceLabels = { quote: copy.quoteLabel, included: copy.includedLabel };
 
   return (
     <Section id={id} labelledBy={headingId} tone="surface">
@@ -52,40 +59,61 @@ export function ServiceCost({ id, copy, items, costHref }: ServiceCostProps) {
         />
 
         {items.length ? (
-          <ul className="mt-12 grid gap-[var(--gap-card)] lg:mt-14 lg:grid-cols-2">
-            {items.map((item, index) => (
-              <li key={item.id}>
-                <Reveal index={index}>
-                  <div className="border-line bg-cream-100 flex h-full flex-col gap-5 rounded-lg border p-7">
-                    <div className="flex flex-col gap-1">
-                      <h3 className="text-ink text-[1.0625rem] font-medium">
-                        {item.procedure}
-                      </h3>
-                      <p className="text-ink-400 text-sm">{item.unit}</p>
-                    </div>
+          <>
+            {category?.journey.length ? (
+              <Reveal index={3} className="mt-10">
+                <ul className="flex flex-wrap gap-3">
+                  {category.journey.map((entry) => (
+                    <li
+                      key={entry.id}
+                      className="border-gold-700/25 bg-gold-100/50 flex flex-col gap-1 rounded-sm border px-5 py-4"
+                    >
+                      <span className="text-ink-600 text-sm">{entry.label}</span>
+                      <span className="font-brand text-gold-700 text-xl tracking-tight">
+                        {formatAudBand(entry.aud)}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </Reveal>
+            ) : null}
 
-                    {/* One figure, in the currency the table publishes. The
-                        card used to carry a USD band, a đồng band, a comparison
-                        band and a saving percentage; the cost model is AUD now
-                        and the comparison column is gone, so quoting a saving
-                        here would be arithmetic on numbers the table no longer
-                        shows. `formatAudBand` renders an em dash while a band
-                        is still zeroed out, which is the honest state until
-                        real prices land. */}
-                    <span className="font-brand text-ink text-2xl tracking-tight">
-                      {formatAudBand(item.aud ?? { from: 0, to: 0 })}
-                    </span>
+            <Reveal index={4} className="mt-10">
+              <dl className="border-line border-t">
+                {items.map((item) => (
+                  <div
+                    key={item.id}
+                    className="border-line/70 grid gap-x-8 gap-y-2 border-b py-5 sm:grid-cols-[minmax(0,1fr)_auto]"
+                  >
+                    <dt className="text-ink text-[0.9375rem] font-medium">
+                      {item.procedure}
+                    </dt>
 
-                    {item.note ? (
-                      <p className="text-ink-600 border-line/70 mt-auto border-t pt-4 text-sm">
-                        {item.note}
-                      </p>
-                    ) : null}
+                    <dd
+                      className={
+                        item.price.kind === "band"
+                          ? "text-gold-700 font-brand text-[1.0625rem] tracking-tight sm:row-span-2 sm:self-start sm:text-right"
+                          : "text-ink-400 text-sm sm:row-span-2 sm:self-start sm:text-right"
+                      }
+                    >
+                      {formatCostPrice(item.price, priceLabels)}
+                    </dd>
+
+                    {/* Second `dd` for the same term: the description belongs to
+                        the row, and a `<p>` here would close the definition
+                        list item early. */}
+                    <dd className="text-ink-600 max-w-[68ch] text-sm leading-relaxed">
+                      {item.covers}
+                    </dd>
                   </div>
-                </Reveal>
-              </li>
-            ))}
-          </ul>
+                ))}
+              </dl>
+            </Reveal>
+
+            <Reveal index={5}>
+              <p className="text-ink-400 mt-6 max-w-[72ch] text-sm">{copy.disclaimer}</p>
+            </Reveal>
+          </>
         ) : (
           <Reveal index={3}>
             <p className="text-ink-600 mt-10 max-w-[60ch] text-[1.0625rem]">

@@ -18,13 +18,13 @@ export const pages: Localized<PagesContent> = {
     cost: {
       metaTitle: "Chi phí điều trị tại Việt Nam — bảng giá 2026",
       metaDescription:
-        "Chi phí điều trị tại Việt Nam theo từng chuyên khoa: implant, IVF, LASIK, tim mạch. Khoảng giá tham khảo, so sánh với Mỹ, và những gì báo giá đã bao gồm.",
+        "Bảng giá tham khảo theo chuyên khoa tại Việt Nam: IVF, nội soi tiêu hóa, tầm soát, mắt và tim mạch. Chi phí ước tính bằng AUD và những gì mỗi khoản bao gồm.",
       breadcrumb: "Chi phí",
 
       hero: {
         title: "Chi phí điều trị tại",
         accent: "Việt Nam.",
-        lead: "Đây là các khoảng giá tham khảo theo mặt bằng thị trường, kèm phần so sánh với Mỹ. Chúng tôi công bố khoảng giá thay vì một con số, vì một con số duy nhất là một lời hứa mà không ai giữ được trước khi đọc hồ sơ của bạn.",
+        lead: "Bảng giá tham khảo theo từng chuyên khoa, tính bằng đô la Úc. Chúng tôi công bố khoảng giá thay vì một con số, vì một con số duy nhất là một lời hứa mà không ai giữ được trước khi đọc hồ sơ của bạn.",
         primaryCta: "Nhận báo giá cho ca của bạn",
         secondaryCta: "Xem bảng giá",
       },
@@ -32,14 +32,23 @@ export const pages: Localized<PagesContent> = {
       table: {
         title: "Bảng giá theo",
         accent: "chuyên khoa.",
-        lead: "Mẫu bảng này đang chờ bạn điền tên dịch vụ và chi phí thực tế cho từng chuyên khoa. Mỗi nhóm có mục lớn riêng để dễ cập nhật cho khách hàng.",
+        lead: "Mỗi nhóm mở đầu bằng khoảng chi phí cho cả hành trình, rồi mới đến từng hạng mục. Đọc theo thứ tự đó, vì phần lớn ca điều trị là một chuỗi dịch vụ đi cùng nhau chứ không phải một dòng đơn lẻ.",
         colService: "Dịch vụ",
-        colCovers: "Bao gồm",
+        colCovers: "Bao gồm những gì",
         colEstimated: "Chi phí ước tính (AUD)",
+        quoteLabel: "Báo giá riêng",
+        includedLabel: "Đã gồm / tùy gói",
         caption:
-          "Mẫu bảng chi phí theo chuyên khoa điều trị tại Việt Nam, chờ điền dịch vụ và giá thực tế",
+          "Khoảng chi phí tham khảo theo chuyên khoa và theo từng dịch vụ, tính bằng đô la Úc",
         disclaimer:
-          "Đây là bảng mẫu để điền dữ liệu thực tế. Bạn có thể thay tên dịch vụ, khoảng giá và mô tả từng gói sau khi có thông tin từ bệnh viện hoặc bác sĩ.",
+          "Đây là khoảng chi phí tham khảo, không phải báo giá của Handle. Con số thực tế phụ thuộc vào cơ sở thực hiện, vật tư sử dụng và tình trạng cụ thể của bạn, và chỉ xác định được sau khi bác sĩ đọc hồ sơ. Dấu cộng nghĩa là mức trên là điểm khởi đầu chứ không phải mức trần. Chúng tôi gửi báo giá bằng văn bản trước khi bạn đặt vé.",
+      },
+
+      others: {
+        title: "Chuyên khoa khác chúng tôi",
+        accent: "điều phối.",
+        lead: "Ngoài mạng lưới chuyên khoa chính, Handle vẫn kết nối bạn với bệnh viện tư, bác sĩ chuyên khoa và trung tâm y tế trên khắp Việt Nam theo nhu cầu từng người.",
+        journeyLabel: "Hành trình ước tính",
       },
 
       inclusions: {
@@ -61,10 +70,10 @@ export const pages: Localized<PagesContent> = {
         accent: "chi phí.",
         items: [
           {
-            id: "how-much-cheaper",
-            question: "Điều trị tại Việt Nam rẻ hơn bao nhiêu so với Mỹ?",
+            id: "why-aud",
+            question: "Vì sao bảng giá tính bằng đô la Úc?",
             answer:
-              "Theo các khoảng giá trong bảng trên, phần lớn thủ thuật thấp hơn 60–80% so với mặt bằng tại Mỹ. Chênh lệch lớn nhất nằm ở nhóm can thiệp phức tạp như tim mạch; nhỏ nhất ở nhóm chỉnh nha và tầm soát. Con số này chưa tính vé máy bay và lưu trú, nên với các thủ thuật ở đầu thấp của bảng, bạn nên cộng thêm chi phí đi lại trước khi so sánh.",
+              "Vì phần lớn khách hàng của chúng tôi đang sống tại Úc, và một bảng giá bằng đồng tiền của họ là bảng giá họ tự tính được mà không phải quy đổi. Chi phí y tế được thanh toán trực tiếp cho cơ sở điều trị bằng tiền đồng theo tỷ giá tại thời điểm thanh toán, nên con số đô la Úc là mức tham chiếu để lập kế hoạch, không phải số tiền cố định.",
           },
           {
             id: "handle-fee",
@@ -83,6 +92,12 @@ export const pages: Localized<PagesContent> = {
             question: "Bảo hiểm ở nước tôi có chi trả cho điều trị tại Việt Nam không?",
             answer:
               "Tùy hợp đồng. Một số bảo hiểm quốc tế chi trả điều trị ngoài nước sở tại, một số chỉ chi trả trường hợp cấp cứu. Chúng tôi chuẩn bị hồ sơ, hóa đơn và tóm tắt bệnh án bằng tiếng Anh theo định dạng các công ty bảo hiểm thường yêu cầu, nhưng quyết định chi trả thuộc về công ty bảo hiểm của bạn.",
+          },
+          {
+            id: "plus-sign",
+            question: "Dấu cộng sau khoảng giá nghĩa là gì?",
+            answer:
+              "Nghĩa là mức trên của khoảng đó là điểm khởi đầu, không phải mức trần. Với những hạng mục như IVF hay tầm soát chuyên sâu, phần vượt lên phụ thuộc vào thuốc, vật tư và số kỹ thuật cần làm thêm, những thứ chỉ biết được khi đã có phác đồ. Chúng tôi để dấu này thay vì đưa một con số gọn gàng rồi báo phát sinh sau.",
           },
           {
             id: "overrun",
@@ -157,10 +172,13 @@ export const pages: Localized<PagesContent> = {
       cost: {
         title: "Khoảng chi phí",
         accent: "tham khảo.",
-        lead: "Khoảng giá theo mặt bằng thị trường, không phải báo giá của Handle. Chi phí thực tế xác định sau khi bác sĩ đọc hồ sơ của bạn.",
+        lead: "Khoảng chi phí tham khảo tính bằng đô la Úc, không phải báo giá của Handle. Con số thực tế xác định sau khi bác sĩ đọc hồ sơ của bạn.",
         action: "Xem toàn bộ bảng giá",
-        empty:
-          "Chuyên khoa này được báo giá theo từng ca. Gửi hồ sơ để nhận khoảng chi phí cụ thể.",
+        empty: "Chuyên khoa này được báo giá theo từng ca. Gửi hồ sơ để nhận khoảng chi phí cụ thể.",
+        quoteLabel: "Báo giá riêng",
+        includedLabel: "Đã gồm / tùy gói",
+        disclaimer:
+          "Dấu cộng nghĩa là mức trên là điểm khởi đầu chứ không phải mức trần. Chi phí phụ thuộc vào cơ sở thực hiện, vật tư và tình trạng cụ thể của bạn.",
       },
       faq: {
         title: "Câu hỏi thường",
@@ -183,29 +201,38 @@ export const pages: Localized<PagesContent> = {
     cost: {
       metaTitle: "Cost of Treatment in Vietnam — 2026 Price Guide",
       metaDescription:
-        "What treatment in Vietnam costs by specialty: implants, IVF, LASIK, cardiac care. Reference price bands, compared against the US, and what a quote covers.",
+        "What treatment in Vietnam costs by specialty: IVF, endoscopy, screening, eye and cardiac care. Reference bands in AUD and what each one covers.",
 
       breadcrumb: "Cost",
 
       hero: {
         title: "What treatment in Vietnam",
         accent: "costs.",
-        lead: "These are market reference bands, set beside the equivalent in the United States. We publish a range rather than a figure, because a single figure is a promise nobody can keep before reading your records.",
+        lead: "Reference bands by specialty, quoted in Australian dollars. We publish a range rather than a figure, because a single figure is a promise nobody can keep before reading your records.",
         primaryCta: "Get a quote for your case",
         secondaryCta: "See the bands",
       },
 
       table: {
-        title: "Price template by",
+        title: "The schedule, by",
         accent: "specialty.",
-        lead: "This table is a working template for you to enter each service name and price band by specialty. The five groups below make it easier to manage and update later.",
+        lead: "Each group opens with the range a coordinated course of care actually costs, then lists the individual services. Read it in that order — most treatment is a sequence of services that go together, not a single line.",
         colService: "Service",
         colCovers: "What it covers",
         colEstimated: "Estimated cost (AUD)",
+        quoteLabel: "Custom quote",
+        includedLabel: "Included / package dependent",
         caption:
-          "Price template by specialty for Vietnam treatment services, ready for final service and pricing entries",
+          "Reference cost bands by specialty and by service, quoted in Australian dollars",
         disclaimer:
-          "This is a draft pricing template. Replace the placeholder service names and pricing ranges with the final quotes from the hospital or physician once they are confirmed.",
+          "These are reference bands, not a Handle quote. Your actual cost depends on the facility, the materials used and your own case, and is settled once a doctor has read your records. A trailing plus means the upper figure is where a case starts rather than where it stops. We send the written quote before you book a flight.",
+      },
+
+      others: {
+        title: "Other specialties we",
+        accent: "coordinate.",
+        lead: "Beyond our core specialist network, Handle can still arrange access to private hospitals, specialist doctors and medical centres across Vietnam, based on what you need.",
+        journeyLabel: "Estimated journey",
       },
 
       inclusions: {
@@ -227,10 +254,10 @@ export const pages: Localized<PagesContent> = {
         accent: "cost.",
         items: [
           {
-            id: "how-much-cheaper",
-            question: "How much cheaper is treatment in Vietnam than in the US?",
+            id: "why-aud",
+            question: "Why is the schedule quoted in Australian dollars?",
             answer:
-              "Across the bands above, most procedures run 60–80% below US pricing. The gap is widest for complex intervention such as cardiac work and narrowest for orthodontics and screening. Those figures exclude flights and accommodation, so for procedures at the lower end of the table you should add travel before comparing.",
+              "Because most of the people we work with live in Australia, and a schedule in their own currency is one they can plan against without doing arithmetic first. Medical costs are settled directly with the treating facility in Vietnamese đồng at the rate on the day, so the Australian figure is a planning reference rather than a fixed amount.",
           },
           {
             id: "handle-fee",
@@ -249,6 +276,12 @@ export const pages: Localized<PagesContent> = {
             question: "Will my insurer at home cover treatment in Vietnam?",
             answer:
               "It depends on the policy. Some international plans cover elective treatment outside your country of residence; others cover emergencies only. We prepare records, invoices and a discharge summary in English in the format insurers usually ask for, but the coverage decision is your insurer's.",
+          },
+          {
+            id: "plus-sign",
+            question: "What does the plus after a range mean?",
+            answer:
+              "That the upper figure is where a case starts, not where it stops. For work like IVF or advanced screening, what sits above it depends on medication, materials and how many additional procedures are needed — none of which is known until there is a protocol. We print the sign rather than quote a tidy number and bill the difference later.",
           },
           {
             id: "overrun",
@@ -323,10 +356,13 @@ export const pages: Localized<PagesContent> = {
       cost: {
         title: "Reference",
         accent: "cost.",
-        lead: "Market reference bands, not a Handle quote. Your actual cost is settled once a surgeon has read your records.",
-        action: "See the full price guide",
-        empty:
-          "This specialty is quoted case by case. Send your records for a band on yours.",
+        lead: "Reference bands in Australian dollars, not a Handle quote. Your actual cost is settled once a doctor has read your records.",
+        action: "See the full schedule",
+        empty: "This specialty is quoted case by case. Send your records for a band on yours.",
+        quoteLabel: "Custom quote",
+        includedLabel: "Included / package dependent",
+        disclaimer:
+          "A trailing plus means the upper figure is where a case starts rather than where it stops. Cost depends on the facility, the materials and your own case.",
       },
       faq: {
         title: "Common",

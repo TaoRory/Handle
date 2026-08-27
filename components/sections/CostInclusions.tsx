@@ -87,7 +87,7 @@ export function CostInclusions({ id, copy, items }: CostInclusionsProps) {
   const headingId = `${id}-title`;
 
   return (
-    <Section id={id} labelledBy={headingId} tone="cream300">
+    <Section id={id} labelledBy={headingId} tone="surface">
       <Container>
         <SectionHeading
           id={headingId}

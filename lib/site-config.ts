@@ -24,7 +24,8 @@ export const SITE_URL = `https://${DOMAIN}`;
  * Single source of truth for anything that is the same in every language:
  * URLs, phone numbers, section anchors.
  *
- * Placeholder contact details — replace before launch.
+ * The hotlines and the email are the real ones. The street address and the
+ * social handles are still placeholders — replace before launch.
  */
 export const siteConfig = {
   name: "Handle",
@@ -34,11 +35,35 @@ export const siteConfig = {
   wordmark: "HANDLE",
   domain: DOMAIN,
   url: SITE_URL,
-  email: "contact@handle.vn",
-  phone: "+84 28 1234 5678",
-  whatsapp: "+84 28 1234 5678",
-  /* Zalo is how Vietnamese patients and their families actually message. */
-  zalo: "+84 28 1234 5678",
+  email: "handlevietnam@gmail.com",
+
+  /**
+   * Two hotlines, in reading order: Vietnam first because it is the primary
+   * market, Australia second because it is where most of the overseas audience
+   * calls from.
+   *
+   * `display` carries the international prefix even for the Vietnamese line,
+   * which locally is dialled as 077. A reader in Sydney cannot use 077, and a
+   * reader in Hanoi can use +84 — the form that works for everybody is the one
+   * that ships. `dial` is what the `tel:` href needs: digits and a plus, no
+   * spaces.
+   */
+  phones: [
+    { id: "vn", display: "+84 77 333 3247", dial: "+84773333247" },
+    { id: "au", display: "+61 424 648 595", dial: "+61424648595" },
+  ],
+
+  /*
+   * ⚠️ Which line each messaging app is registered to is an assumption.
+   *
+   * Zalo is a Vietnamese app, so it points at the Vietnamese number; WhatsApp
+   * is what the Australian audience uses, so it points at the Australian one.
+   * Both are guesses about where an account actually exists, and a chat link
+   * to a number with no account fails silently — the visitor sees WhatsApp
+   * shrug rather than an error. Confirm both before launch.
+   */
+  whatsapp: "+61424648595",
+  zalo: "+84773333247",
   addressLines: ["Tầng 5, 123 Nguyễn Huệ", "Quận 1, TP. Hồ Chí Minh, Việt Nam"],
   socials: {
     facebook: "https://facebook.com/handle.vn",
@@ -49,7 +74,13 @@ export const siteConfig = {
 } as const;
 
 export const contactLinks = {
-  tel: `tel:${toDialString(siteConfig.phone)}`,
+  /** The Vietnamese line, for the single-number places. */
+  tel: `tel:${siteConfig.phones[0].dial}`,
+  /** Both lines, in order, ready to render. */
+  phones: siteConfig.phones.map((phone) => ({
+    ...phone,
+    href: `tel:${phone.dial}`,
+  })),
   mail: `mailto:${siteConfig.email}`,
   whatsapp: `https://wa.me/${toDialString(siteConfig.whatsapp).replace("+", "")}`,
   zalo: `https://zalo.me/${toDialString(siteConfig.zalo).replace("+", "")}`,

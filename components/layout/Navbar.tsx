@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
 import { LocaleSwitcher } from "@/components/layout/LocaleSwitcher";
@@ -9,7 +10,7 @@ import { ConsultationLink } from "@/components/layout/ConsultationLink";
 import { ArrowTrail } from "@/components/ui/icon";
 import { Logo } from "@/components/ui/logo";
 import { useScrollSpy } from "@/hooks/use-scroll-spy";
-import { resolveHref } from "@/lib/site-config";
+import { resolveHref, routePath } from "@/lib/site-config";
 import { cn } from "@/lib/utils";
 
 import type { Locale, NavLink } from "@/types";
@@ -45,11 +46,35 @@ export function Navbar({
 }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
 
+  const pathname = usePathname();
+
+  /* Only the anchor links can be observed; a route link names a page, not a
+     section of this one. */
   const sectionIds = useMemo(
-    () => links.map((link) => link.href.replace("#", "")),
+    () =>
+      links
+        .filter((link) => link.href.startsWith("#"))
+        .map((link) => link.href.slice(1)),
     [links],
   );
   const activeId = useScrollSpy(sectionIds);
+
+  /**
+   * Two kinds of link, two ways of being current.
+   *
+   * A route link is active when the URL is inside it — `/vi/dich-vu/nha-khoa`
+   * lights "Dịch vụ" as well as `/vi/dich-vu` does. An anchor link is active
+   * only when the reader is actually on the page those anchors belong to, which
+   * is why the homepage check is there: without it, the last section observed
+   * before navigating away stayed lit on the next page.
+   */
+  const isCurrent = (href: string) => {
+    const target = resolveHref(href, locale);
+    if (!href.startsWith("#")) {
+      return pathname === target || pathname.startsWith(`${target}/`);
+    }
+    return pathname === routePath(locale) && activeId === href.slice(1);
+  };
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 24);
@@ -83,7 +108,7 @@ export function Navbar({
         <nav aria-label={navLabel} className="hidden lg:block">
           <ul className="flex items-center gap-1">
             {links.map((link) => {
-              const isActive = activeId === link.href.replace("#", "");
+              const isActive = isCurrent(link.href);
               return (
                 <li key={link.id}>
                   <Link

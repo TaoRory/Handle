@@ -25,7 +25,7 @@ export function CostFactors({ id, copy, factors }: CostFactorsProps) {
   const headingId = `${id}-title`;
 
   return (
-    <Section id={id} labelledBy={headingId} tone="surface">
+    <Section id={id} labelledBy={headingId} tone="cream">
       <Container>
         <SectionHeading
           id={headingId}

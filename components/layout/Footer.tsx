@@ -24,7 +24,10 @@ export function Footer({ content, locale }: { content: SiteContent; locale: Loca
             <Logo variant="wordmark" />
             <p className="text-ink-600 max-w-[34ch] text-sm">{footer.tagline}</p>
 
-            <ul className="flex items-center gap-2.5">
+            {/* Wraps. Four 44px targets plus their gaps come to 206px against
+                a 170px track at `lg`, so on one line the column pushed the grid
+                past the page. */}
+            <ul className="flex flex-wrap items-center gap-2.5">
               {footer.socials.map((social) => (
                 <li key={social.id}>
                   <a
@@ -73,19 +76,35 @@ export function Footer({ content, locale }: { content: SiteContent; locale: Loca
               {footer.contactTitle}
             </h2>
             <ul className="flex flex-col gap-1 text-sm">
-              <li>
-                <a
-                  href={contactLinks.tel}
-                  className="group/link text-ink-600 hover:text-gold-700 flex min-h-11 items-center gap-3 transition-colors duration-200"
-                >
-                  <Phone
-                    className="text-gold mt-0.5 size-4 shrink-0"
-                    strokeWidth={1.5}
-                    aria-hidden="true"
-                  />
-                  {siteConfig.phone}
-                </a>
-              </li>
+              {/* Both hotlines. The country label is not decoration: two
+                  numbers with no explanation reads as one of them being out of
+                  date, and a reader in Australia should be able to see at a
+                  glance which one is a local call for them. */}
+              {contactLinks.phones.map((phone) => (
+                <li key={phone.id}>
+                  <a
+                    href={phone.href}
+                    className="group/link text-ink-600 hover:text-gold-700 flex min-h-11 items-center gap-3 transition-colors duration-200"
+                  >
+                    <Phone
+                      className="text-gold mt-0.5 size-4 shrink-0"
+                      strokeWidth={1.5}
+                      aria-hidden="true"
+                    />
+                    {/* Label under the number, not beside it. The contact
+                        column is ~170px wide at `lg`, and "+84 77 333 3247
+                        Việt Nam" on one line pushed the five-column grid 45px
+                        past the page and gave the whole site a horizontal
+                        scrollbar at 1024. */}
+                    <span className="flex flex-col leading-tight">
+                      <span>{phone.display}</span>
+                      <span className="text-ink-400 text-xs">
+                        {footer.phoneLabels[phone.id]}
+                      </span>
+                    </span>
+                  </a>
+                </li>
+              ))}
               <li>
                 <a
                   href={contactLinks.mail}
@@ -96,7 +115,12 @@ export function Footer({ content, locale }: { content: SiteContent; locale: Loca
                     strokeWidth={1.5}
                     aria-hidden="true"
                   />
-                  {siteConfig.email}
+                  {/* `anywhere`, because an email address is one unbroken token:
+                      `handlevietnam@gmail.com` is 215px wide in a 170px column
+                      and normal wrapping has nowhere to break it. */}
+                  <span className="[overflow-wrap:anywhere] min-w-0">
+                    {siteConfig.email}
+                  </span>
                 </a>
               </li>
               <li className="text-ink-600 mt-3 flex items-start gap-3">
