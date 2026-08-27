@@ -2,7 +2,7 @@ import { getFaqs, getServices } from "@/data";
 import { getKeywords } from "@/lib/seo";
 import { ROUTES, routePath, siteConfig } from "@/lib/site-config";
 
-import type { Faq, Locale, SiteContent } from "@/types";
+import type { Faq, Locale, Service, SiteContent } from "@/types";
 
 /**
  * The site-wide graph: who this business is. Emitted by the layout, so it is
@@ -247,4 +247,57 @@ export function generatePageSchema({
   }
 
   return { "@context": "https://schema.org", "@graph": graph };
+}
+
+/** Collection semantics for the services landing page and its linked routes. */
+export function generateServicesIndexSchema({
+  locale,
+  htmlLang,
+  name,
+  description,
+  trail,
+  services,
+}: {
+  locale: Locale;
+  htmlLang: string;
+  name: string;
+  description: string;
+  trail: { label: string; path: string[] }[];
+  services: Service[];
+}) {
+  const baseUrl = siteConfig.url;
+  const path = [ROUTES.services];
+  const pageUrl = `${baseUrl}${routePath(locale, ...path)}`;
+  const schema = generatePageSchema({
+    locale,
+    htmlLang,
+    path,
+    name,
+    description,
+    trail,
+  });
+
+  const page = schema["@graph"][0];
+  page["@type"] = "CollectionPage";
+  page.mainEntity = { "@id": `${pageUrl}#service-list` };
+
+  schema["@graph"].push({
+    "@type": "ItemList",
+    "@id": `${pageUrl}#service-list`,
+    name,
+    numberOfItems: services.length,
+    itemListElement: services.map((service, index) => {
+      const url = `${baseUrl}${routePath(locale, ROUTES.services, service.slug)}`;
+
+      return {
+        "@type": "ListItem",
+        position: index + 1,
+        name: service.title,
+        url,
+        item: { "@id": `${url}#webpage` },
+      };
+    }),
+  });
+
+  return schema;
 }

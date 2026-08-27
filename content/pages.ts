@@ -110,12 +110,35 @@ export const pages: Localized<PagesContent> = {
     service: {
       breadcrumbRoot: "Dịch vụ",
       index: {
-        metaTitle: "Dịch vụ y tế tại Việt Nam cho khách quốc tế",
+        metaTitle: "Dịch vụ khám chữa bệnh tại Việt Nam",
         metaDescription:
-          "Sáu chuyên khoa Handle điều phối tại Việt Nam: tầm soát sức khỏe, IVF, mắt, nha khoa, thẩm mỹ và tim mạch. Thời gian, chi phí tham khảo và cách chúng tôi hỗ trợ.",
-        title: "Chuyên khoa chúng tôi",
-        accent: "điều phối.",
-        lead: "Với mỗi chuyên khoa, bạn cần biết ba điều trước khi đặt vé: mất bao lâu, tốn khoảng bao nhiêu, và ai chịu trách nhiệm khi có việc phát sinh. Mỗi trang dưới đây trả lời cả ba.",
+          "Handle hỗ trợ người nước ngoài và Việt kiều khám chữa bệnh tại Việt Nam: chọn bệnh viện, đặt lịch, phiên dịch, di chuyển và theo dõi sau điều trị.",
+        title: "Dịch vụ khám chữa bệnh",
+        accent: "tại Việt Nam.",
+        lead: "Handle giúp người nước ngoài và Việt kiều tìm cơ sở y tế phù hợp, chuẩn bị hồ sơ và điều phối hành trình điều trị. Bác sĩ và bệnh viện chịu trách nhiệm chuyên môn; Handle phụ trách phần hỗ trợ.",
+        overview: {
+          title: "Handle hỗ trợ hành trình",
+          accent: "như thế nào.",
+          lead: "Handle không phải bệnh viện và không thay thế tư vấn của bác sĩ. Chúng tôi là đơn vị hỗ trợ điều phối, giúp người bệnh tiếp cận cơ sở khám chữa bệnh phù hợp tại Việt Nam và theo sát các đầu việc ngoài chuyên môn y khoa.",
+          items: [
+            {
+              id: "before",
+              title: "Trước khi đến Việt Nam",
+              body: "Tiếp nhận nhu cầu và hồ sơ hiện có, hỗ trợ tìm bệnh viện hoặc bác sĩ phù hợp, sắp xếp lịch và cung cấp kế hoạch dự kiến để bạn chủ động thời gian.",
+            },
+            {
+              id: "during",
+              title: "Trong quá trình khám và điều trị",
+              body: "Điều phối lịch hẹn, phiên dịch y tế, di chuyển và thông tin giữa người bệnh với cơ sở y tế khi lịch trình hoặc yêu cầu thay đổi.",
+            },
+            {
+              id: "after",
+              title: "Sau khi hoàn tất điều trị",
+              body: "Hỗ trợ nhận tài liệu xuất viện, lịch tái khám và phối hợp các đầu việc theo dõi sau điều trị khi bạn trở về nơi cư trú.",
+            },
+          ],
+        },
+        listTitle: "Các chuyên khoa Handle đang hỗ trợ",
         cardAction: "Xem chi tiết",
       },
       includes: {
@@ -136,7 +159,8 @@ export const pages: Localized<PagesContent> = {
         accent: "tham khảo.",
         lead: "Khoảng giá theo mặt bằng thị trường, không phải báo giá của Handle. Chi phí thực tế xác định sau khi bác sĩ đọc hồ sơ của bạn.",
         action: "Xem toàn bộ bảng giá",
-        empty: "Chuyên khoa này được báo giá theo từng ca. Gửi hồ sơ để nhận khoảng chi phí cụ thể.",
+        empty:
+          "Chuyên khoa này được báo giá theo từng ca. Gửi hồ sơ để nhận khoảng chi phí cụ thể.",
       },
       faq: {
         title: "Câu hỏi thường",
@@ -254,10 +278,33 @@ export const pages: Localized<PagesContent> = {
       index: {
         metaTitle: "Medical Services in Vietnam for International Patients",
         metaDescription:
-          "The six specialties Handle coordinates in Vietnam: health screening, IVF, eye surgery, dental, cosmetic surgery and cardiology. Timings, reference costs and what we handle.",
-        title: "The specialties we",
-        accent: "coordinate.",
-        lead: "For any specialty you need three things settled before booking a flight: how long it takes, roughly what it costs, and who is accountable when something changes. Each page below answers all three.",
+          "Handle helps international patients access medical services in Vietnam, including hospital matching, appointments, interpreters, transfers and follow-up.",
+        title: "Medical services",
+        accent: "in Vietnam.",
+        lead: "Handle helps international patients find an appropriate healthcare provider, prepare records and coordinate the treatment journey. Hospitals and physicians remain responsible for all clinical decisions; Handle manages the support around them.",
+        overview: {
+          title: "How Handle supports your",
+          accent: "care journey.",
+          lead: "Handle is not a hospital and does not replace medical advice. We coordinate non-clinical support so international patients can access suitable licensed healthcare providers in Vietnam with fewer logistical and language barriers.",
+          items: [
+            {
+              id: "before",
+              title: "Before you travel",
+              body: "We review your request and available records, help identify a suitable hospital or physician, arrange appointments and outline an expected schedule.",
+            },
+            {
+              id: "during",
+              title: "During consultation and treatment",
+              body: "We coordinate appointments, medical interpretation, local transfers and communication with the healthcare provider when plans or requirements change.",
+            },
+            {
+              id: "after",
+              title: "After treatment",
+              body: "We help collect discharge documents, confirm follow-up dates and coordinate non-clinical follow-up tasks after you return home.",
+            },
+          ],
+        },
+        listTitle: "Specialties currently supported by Handle",
         cardAction: "Read more",
       },
       includes: {
@@ -278,7 +325,8 @@ export const pages: Localized<PagesContent> = {
         accent: "cost.",
         lead: "Market reference bands, not a Handle quote. Your actual cost is settled once a surgeon has read your records.",
         action: "See the full price guide",
-        empty: "This specialty is quoted case by case. Send your records for a band on yours.",
+        empty:
+          "This specialty is quoted case by case. Send your records for a band on yours.",
       },
       faq: {
         title: "Common",

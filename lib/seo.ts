@@ -61,6 +61,8 @@ export function getMetaDescription(locale: Locale) {
 export function getKeywords(locale: Locale) {
   return locale === "vi"
     ? [
+        "dịch vụ khám chữa bệnh tại Việt Nam",
+        "hỗ trợ khám chữa bệnh tại Việt Nam",
         "chăm sóc sức khỏe tại Việt Nam",
         "du lịch y tế Việt Nam",
         "khám chữa bệnh cho người nước ngoài tại Việt Nam",

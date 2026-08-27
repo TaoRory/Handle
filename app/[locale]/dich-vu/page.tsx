@@ -9,7 +9,7 @@ import { Media } from "@/components/ui/media";
 import { Reveal } from "@/components/ui/reveal";
 import { getContent, getPageContent, isLocale } from "@/content";
 import { getServiceDetail, getServices } from "@/data";
-import { generatePageSchema, serializeJsonLd } from "@/lib/json-ld";
+import { generateServicesIndexSchema, serializeJsonLd } from "@/lib/json-ld";
 import { ROBOTS, getOgImage, getOpenGraphLocale } from "@/lib/seo";
 import { ROUTES, routePath, siteConfig } from "@/lib/site-config";
 
@@ -20,9 +20,9 @@ import type { Metadata } from "next";
 /**
  * `/[locale]/dich-vu` — the specialty listing.
  *
- * Exists so the six pages have a parent. Without it the middle breadcrumb crumb
- * is either a link to a 404 or a `ListItem` with no `item`, and the set reads
- * as six pages that happen to share a layout rather than a section of a site.
+ * Exists so the specialty pages have a parent. Without it the middle breadcrumb
+ * crumb is either a link to a 404 or a `ListItem` with no `item`, and the set
+ * reads as unrelated pages rather than a section of a site.
  *
  * It carries its own query as well — "dịch vụ y tế tại Việt Nam" is broader
  * than any one specialty — so the cards show each page's own summary rather
@@ -91,16 +91,16 @@ export default async function ServicesIndexPage({
   const services = getServices(locale);
 
   const home = content.nav.links[0].label;
-  const schema = generatePageSchema({
+  const schema = generateServicesIndexSchema({
     locale,
     htmlLang: content.htmlLang,
-    path: [ROUTES.services],
     name: copy.index.metaTitle,
     description: copy.index.metaDescription,
     trail: [
       { label: home, path: [] },
       { label: copy.breadcrumbRoot, path: [ROUTES.services] },
     ],
+    services,
   });
 
   return (
@@ -148,10 +148,60 @@ export default async function ServicesIndexPage({
       </Container>
 
       <section
-        aria-label={copy.index.title}
+        aria-labelledby="services-overview-title"
+        className="bg-cream-100 border-line/70 border-y py-[clamp(56px,7vw,96px)]"
+      >
+        <Container>
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.35fr)] lg:gap-16">
+            <div>
+              <h2
+                id="services-overview-title"
+                className="text-h2 text-ink max-w-[18ch]"
+              >
+                {copy.index.overview.title}{" "}
+                <span className="font-display text-gold-700 italic">
+                  {copy.index.overview.accent}
+                </span>
+              </h2>
+              <p className="text-ink-600 mt-6 max-w-[58ch] leading-relaxed">
+                {copy.index.overview.lead}
+              </p>
+            </div>
+
+            <ol className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
+              {copy.index.overview.items.map((item, index) => (
+                <li
+                  key={item.id}
+                  className="border-line bg-surface grid gap-3 rounded-lg border p-6 lg:grid-cols-[2.5rem_1fr]"
+                >
+                  <span
+                    aria-hidden="true"
+                    className="font-brand text-gold-700 text-sm tracking-[0.12em]"
+                  >
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <div>
+                    <h3 className="text-ink font-medium">{item.title}</h3>
+                    <p className="text-ink-600 mt-2 text-sm leading-relaxed">
+                      {item.body}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </Container>
+      </section>
+
+      <section
+        aria-labelledby="services-list-title"
         className="bg-surface relative overflow-hidden pt-[clamp(48px,6vw,88px)] pb-[clamp(64px,8vw,120px)]"
       >
         <Container>
+          <h2 id="services-list-title" className="text-h2 text-ink mb-10 max-w-[24ch]">
+            {copy.index.listTitle}
+          </h2>
+
           <ul className="grid gap-[var(--gap-card)] md:grid-cols-2 lg:grid-cols-3">
             {services.map((item, index) => {
               const detail = getServiceDetail(locale, item.id);

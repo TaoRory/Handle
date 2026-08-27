@@ -332,11 +332,11 @@ export interface CostPageContent {
 }
 
 /**
- * The chrome shared by all six specialty pages.
+ * The chrome shared by all specialty pages.
  *
  * Band headings live here rather than in each `ServiceDetail`, because they are
- * the same sentence six times over — repeating them per record is six places to
- * fix a typo and six chances for one page to drift out of the set.
+ * the same sentence across the set — repeating them per record creates several
+ * places to fix a typo and several chances for one page to drift.
  */
 export interface ServicePageContent {
   /** Parent crumb: "Dịch vụ" / "Services". */
@@ -344,16 +344,22 @@ export interface ServicePageContent {
   /**
    * The listing at `/dich-vu`.
    *
-   * A real page and not a bare path segment: the six specialty pages need a
+   * A real page and not a bare path segment: the specialty pages need a
    * parent that exists, or the middle breadcrumb crumb is either a link to a
    * 404 or a `ListItem` with no `item`. It also gives the set a hub, which is
-   * the difference between six pages and a section.
+   * the difference between unrelated pages and a section.
    */
   index: PageBandCopy & {
     metaTitle: string;
     metaDescription: string;
+    /** Explains Handle's non-clinical role before the specialty catalogue. */
+    overview: PageBandCopy & {
+      items: { id: string; title: string; body: string }[];
+    };
+    /** Visible heading for the linked specialty collection. */
+    listTitle: string;
     /** Label on each card. Its own string: the homepage's "see all services"
-        was reused here and appeared on six cards that each lead to one. */
+        was reused here and appeared on every card even though each leads to one. */
     cardAction: string;
   };
   includes: PageBandCopy;
